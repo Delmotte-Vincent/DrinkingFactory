@@ -1,5 +1,7 @@
 package fr.univcotedazur.polytech.si4.fsm.project;
 
+import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.DefaultSMStatemachine;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -25,8 +27,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
-import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.DefaultSMStatemachine;
-
 
 
 public class DrinkFactoryMachine extends JFrame {
@@ -37,6 +37,7 @@ public class DrinkFactoryMachine extends JFrame {
 	private static final long serialVersionUID = 2030629304432075314L;
 	private JPanel contentPane;
 	private DefaultSMStatemachine theFSM;
+	private TimerService timer;
 	/**
 	 * @wbp.nonvisual location=311,475
 	 */
@@ -67,7 +68,15 @@ public class DrinkFactoryMachine extends JFrame {
 	 */
 	public DrinkFactoryMachine() {
 		
-	
+		
+		theFSM = new DefaultSMStatemachine();
+        timer = new TimerService();
+        theFSM.setTimer(timer);
+
+        theFSM.init();
+        theFSM.enter();
+        theFSM.getSCInterface().getListeners().add(new DrinkingMachineInterfaceImplementation(this));
+		
 		
 		setForeground(Color.WHITE);
 		setFont(new Font("Cantarell", Font.BOLD, 22));
@@ -101,12 +110,12 @@ public class DrinkFactoryMachine extends JFrame {
 		coffeeButton.setBackground(Color.DARK_GRAY);
 		coffeeButton.setBounds(12, 34, 96, 25);
 		contentPane.add(coffeeButton);
-		/*coffeeButton.addActionListener(new ActionListener() {
+		coffeeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.raiseLeftButton();
+				//frame.raiseLeftButton();
 			}
-		});*/
+		});
 
 		JButton expressoButton = new JButton("Expresso");
 		expressoButton.setForeground(Color.WHITE);
@@ -289,5 +298,29 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 		});
 
+	}
+
+	public void doRefund() {
+	}
+
+	public void doReset() {
+	}
+
+	public void doResetTimer() {
+	}
+
+	public void doWaterHeat() {
+	}
+
+	public void doCoffee() {
+	}
+
+	public void doExpresso() {
+	}
+
+	public void doTea() {
+	}
+
+	public void doReady() {
 	}
 }
