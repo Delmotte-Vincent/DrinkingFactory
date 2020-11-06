@@ -25,6 +25,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
+import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.DefaultSMStatemachine;
+
 
 
 public class DrinkFactoryMachine extends JFrame {
@@ -65,20 +67,7 @@ public class DrinkFactoryMachine extends JFrame {
 	 */
 	public DrinkFactoryMachine() {
 		
-		
-		theFSM = new DefaultSMStatemachine();
-        timer = new TimerService();
-        theFSM.setTimer(timer);
-        // Implementation des méthodes de callBack !!
-        DrinkingFactoryCallBackInterfaceImplementation callback = new DrinkingFactoryCallBackInterfaceImplementation(this);
-        theFSM.getSCInterface().setSCInterfaceOperationCallback(callback);
-
-        theFSM.init();
-        theFSM.enter();
-        theFSM.getSCInterface().getListeners().add(
-                new DrinkingMachineInterfaceImplementation(this)
-        );
-		
+	
 		
 		setForeground(Color.WHITE);
 		setFont(new Font("Cantarell", Font.BOLD, 22));
