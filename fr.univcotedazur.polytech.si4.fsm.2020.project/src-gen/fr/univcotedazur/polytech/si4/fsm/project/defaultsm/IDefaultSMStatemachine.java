@@ -3,6 +3,11 @@ package fr.univcotedazur.polytech.si4.fsm.project.defaultsm;
 
 import fr.univcotedazur.polytech.si4.fsm.project.IStatemachine;
 import fr.univcotedazur.polytech.si4.fsm.project.ITimerCallback;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 	public interface SCInterface {
@@ -59,7 +64,20 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public void setIsInfused(boolean value);
 		
+	public List<SCInterfaceListener> getListeners();
 	}
+	
+	public interface SCInterfaceListener {
+	
+		public void onDoRefundRaised();
+		public void onDoResetRaised();
+		public void onDoResetTimerRaised();
+		public void onDoWaterHeatRaised();
+		public void onDoCoffeeRaised();
+		public void onDoExpressoRaised();
+		public void onDoTeaRaised();
+		public void onReadyRaised();
+		}
 	
 	public SCInterface getSCInterface();
 	

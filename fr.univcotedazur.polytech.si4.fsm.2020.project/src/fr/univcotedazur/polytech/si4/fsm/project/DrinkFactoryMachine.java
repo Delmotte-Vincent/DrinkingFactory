@@ -3,6 +3,8 @@ package fr.univcotedazur.polytech.si4.fsm.project;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -23,6 +25,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
+
+
 public class DrinkFactoryMachine extends JFrame {
 
 	/**
@@ -30,6 +34,7 @@ public class DrinkFactoryMachine extends JFrame {
 	 */
 	private static final long serialVersionUID = 2030629304432075314L;
 	private JPanel contentPane;
+	private DefaultSMStatemachine theFSM;
 	/**
 	 * @wbp.nonvisual location=311,475
 	 */
@@ -50,11 +55,31 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 		});
 	}
+	
+	
+	
+	
 
 	/**
 	 * Create the frame.
 	 */
 	public DrinkFactoryMachine() {
+		
+		
+		theFSM = new DefaultSMStatemachine();
+        timer = new TimerService();
+        theFSM.setTimer(timer);
+        // Implementation des méthodes de callBack !!
+        DrinkingFactoryCallBackInterfaceImplementation callback = new DrinkingFactoryCallBackInterfaceImplementation(this);
+        theFSM.getSCInterface().setSCInterfaceOperationCallback(callback);
+
+        theFSM.init();
+        theFSM.enter();
+        theFSM.getSCInterface().getListeners().add(
+                new DrinkingMachineInterfaceImplementation(this)
+        );
+		
+		
 		setForeground(Color.WHITE);
 		setFont(new Font("Cantarell", Font.BOLD, 22));
 		setBackground(Color.DARK_GRAY);
@@ -87,6 +112,12 @@ public class DrinkFactoryMachine extends JFrame {
 		coffeeButton.setBackground(Color.DARK_GRAY);
 		coffeeButton.setBounds(12, 34, 96, 25);
 		contentPane.add(coffeeButton);
+		coffeeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.raiseLeftButton();
+			}
+		});
 
 		JButton expressoButton = new JButton("Expresso");
 		expressoButton.setForeground(Color.WHITE);

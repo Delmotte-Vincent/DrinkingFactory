@@ -757,7 +757,7 @@
     <edges xmi:id="_-bvsER-WEeuFTeKj50r7ng" type="Transition" element="_-bvsEB-WEeuFTeKj50r7ng" source="_ogDQ0x-WEeuFTeKj50r7ng" target="_24O3Ux-WEeuFTeKj50r7ng">
       <children xsi:type="notation:DecorationNode" xmi:id="_-bzWcB-WEeuFTeKj50r7ng" type="TransitionExpression">
         <styles xsi:type="notation:ShapeStyle" xmi:id="_-bzWcR-WEeuFTeKj50r7ng"/>
-        <layoutConstraint xsi:type="notation:Location" xmi:id="_-bzWch-WEeuFTeKj50r7ng" x="16" y="16"/>
+        <layoutConstraint xsi:type="notation:Location" xmi:id="_-bzWch-WEeuFTeKj50r7ng" x="65" y="24"/>
       </children>
       <styles xsi:type="notation:ConnectorStyle" xmi:id="_-bvsEh-WEeuFTeKj50r7ng" routing="Rectilinear" lineColor="4210752"/>
       <styles xsi:type="notation:FontStyle" xmi:id="_-bvsFB-WEeuFTeKj50r7ng" fontName="Verdana"/>

@@ -2,198 +2,332 @@
 package fr.univcotedazur.polytech.si4.fsm.project.defaultsm;
 
 import fr.univcotedazur.polytech.si4.fsm.project.ITimer;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	protected class SCInterfaceImpl implements SCInterface {
 	
+		private List<SCInterfaceListener> listeners = new LinkedList<SCInterfaceListener>();
+		
+		public List<SCInterfaceListener> getListeners() {
+			return listeners;
+		}
 		private boolean cancelB;
 		
 		
 		public void raiseCancelB() {
-			cancelB = true;
-			runCycle();
+			synchronized(DefaultSMStatemachine.this) {
+				inEventQueue.add(
+					new Runnable() {
+						@Override
+						public void run() {
+							cancelB = true;
+							singleCycle();
+						}
+					}
+				);
+				runCycle();
+			}
 		}
 		
 		private boolean nfcTrigger;
 		
 		
 		public void raiseNfcTrigger() {
-			nfcTrigger = true;
-			runCycle();
+			synchronized(DefaultSMStatemachine.this) {
+				inEventQueue.add(
+					new Runnable() {
+						@Override
+						public void run() {
+							nfcTrigger = true;
+							singleCycle();
+						}
+					}
+				);
+				runCycle();
+			}
 		}
 		
 		private boolean coinTrigger;
 		
 		
 		public void raiseCoinTrigger() {
-			coinTrigger = true;
-			runCycle();
+			synchronized(DefaultSMStatemachine.this) {
+				inEventQueue.add(
+					new Runnable() {
+						@Override
+						public void run() {
+							coinTrigger = true;
+							singleCycle();
+						}
+					}
+				);
+				runCycle();
+			}
 		}
 		
 		private boolean addCupB;
 		
 		
 		public void raiseAddCupB() {
-			addCupB = true;
-			runCycle();
+			synchronized(DefaultSMStatemachine.this) {
+				inEventQueue.add(
+					new Runnable() {
+						@Override
+						public void run() {
+							addCupB = true;
+							singleCycle();
+						}
+					}
+				);
+				runCycle();
+			}
 		}
 		
 		private boolean doRefund;
 		
 		
 		public boolean isRaisedDoRefund() {
-			return doRefund;
+			synchronized(DefaultSMStatemachine.this) {
+				return doRefund;
+			}
 		}
 		
 		protected void raiseDoRefund() {
-			doRefund = true;
+			synchronized(DefaultSMStatemachine.this) {
+				doRefund = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoRefundRaised();
+				}
+			}
 		}
 		
 		private boolean doReset;
 		
 		
 		public boolean isRaisedDoReset() {
-			return doReset;
+			synchronized(DefaultSMStatemachine.this) {
+				return doReset;
+			}
 		}
 		
 		protected void raiseDoReset() {
-			doReset = true;
+			synchronized(DefaultSMStatemachine.this) {
+				doReset = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoResetRaised();
+				}
+			}
 		}
 		
 		private boolean doResetTimer;
 		
 		
 		public boolean isRaisedDoResetTimer() {
-			return doResetTimer;
+			synchronized(DefaultSMStatemachine.this) {
+				return doResetTimer;
+			}
 		}
 		
 		protected void raiseDoResetTimer() {
-			doResetTimer = true;
+			synchronized(DefaultSMStatemachine.this) {
+				doResetTimer = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoResetTimerRaised();
+				}
+			}
 		}
 		
 		private boolean doWaterHeat;
 		
 		
 		public boolean isRaisedDoWaterHeat() {
-			return doWaterHeat;
+			synchronized(DefaultSMStatemachine.this) {
+				return doWaterHeat;
+			}
 		}
 		
 		protected void raiseDoWaterHeat() {
-			doWaterHeat = true;
+			synchronized(DefaultSMStatemachine.this) {
+				doWaterHeat = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoWaterHeatRaised();
+				}
+			}
 		}
 		
 		private boolean doCoffee;
 		
 		
 		public boolean isRaisedDoCoffee() {
-			return doCoffee;
+			synchronized(DefaultSMStatemachine.this) {
+				return doCoffee;
+			}
 		}
 		
 		protected void raiseDoCoffee() {
-			doCoffee = true;
+			synchronized(DefaultSMStatemachine.this) {
+				doCoffee = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoCoffeeRaised();
+				}
+			}
 		}
 		
 		private boolean doExpresso;
 		
 		
 		public boolean isRaisedDoExpresso() {
-			return doExpresso;
+			synchronized(DefaultSMStatemachine.this) {
+				return doExpresso;
+			}
 		}
 		
 		protected void raiseDoExpresso() {
-			doExpresso = true;
+			synchronized(DefaultSMStatemachine.this) {
+				doExpresso = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoExpressoRaised();
+				}
+			}
 		}
 		
 		private boolean doTea;
 		
 		
 		public boolean isRaisedDoTea() {
-			return doTea;
+			synchronized(DefaultSMStatemachine.this) {
+				return doTea;
+			}
 		}
 		
 		protected void raiseDoTea() {
-			doTea = true;
+			synchronized(DefaultSMStatemachine.this) {
+				doTea = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoTeaRaised();
+				}
+			}
 		}
 		
 		private boolean ready;
 		
 		
 		public boolean isRaisedReady() {
-			return ready;
+			synchronized(DefaultSMStatemachine.this) {
+				return ready;
+			}
 		}
 		
 		protected void raiseReady() {
-			ready = true;
+			synchronized(DefaultSMStatemachine.this) {
+				ready = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onReadyRaised();
+				}
+			}
 		}
 		
 		private String selection;
 		
-		public String getSelection() {
-			return selection;
+		public synchronized String getSelection() {
+			synchronized(DefaultSMStatemachine.this) {
+				return selection;
+			}
 		}
 		
 		public void setSelection(String value) {
-			this.selection = value;
+			synchronized(DefaultSMStatemachine.this) {
+				this.selection = value;
+			}
 		}
 		
 		private boolean hotWater;
 		
-		public boolean getHotWater() {
-			return hotWater;
+		public synchronized boolean getHotWater() {
+			synchronized(DefaultSMStatemachine.this) {
+				return hotWater;
+			}
 		}
 		
 		public void setHotWater(boolean value) {
-			this.hotWater = value;
+			synchronized(DefaultSMStatemachine.this) {
+				this.hotWater = value;
+			}
 		}
 		
 		private boolean enoughtMoney;
 		
-		public boolean getEnoughtMoney() {
-			return enoughtMoney;
+		public synchronized boolean getEnoughtMoney() {
+			synchronized(DefaultSMStatemachine.this) {
+				return enoughtMoney;
+			}
 		}
 		
 		public void setEnoughtMoney(boolean value) {
-			this.enoughtMoney = value;
+			synchronized(DefaultSMStatemachine.this) {
+				this.enoughtMoney = value;
+			}
 		}
 		
 		private long time;
 		
-		public long getTime() {
-			return time;
+		public synchronized long getTime() {
+			synchronized(DefaultSMStatemachine.this) {
+				return time;
+			}
 		}
 		
 		public void setTime(long value) {
-			this.time = value;
+			synchronized(DefaultSMStatemachine.this) {
+				this.time = value;
+			}
 		}
 		
 		private boolean isHot;
 		
-		public boolean getIsHot() {
-			return isHot;
+		public synchronized boolean getIsHot() {
+			synchronized(DefaultSMStatemachine.this) {
+				return isHot;
+			}
 		}
 		
 		public void setIsHot(boolean value) {
-			this.isHot = value;
+			synchronized(DefaultSMStatemachine.this) {
+				this.isHot = value;
+			}
 		}
 		
 		private boolean isComplete;
 		
-		public boolean getIsComplete() {
-			return isComplete;
+		public synchronized boolean getIsComplete() {
+			synchronized(DefaultSMStatemachine.this) {
+				return isComplete;
+			}
 		}
 		
 		public void setIsComplete(boolean value) {
-			this.isComplete = value;
+			synchronized(DefaultSMStatemachine.this) {
+				this.isComplete = value;
+			}
 		}
 		
 		private boolean isInfused;
 		
-		public boolean getIsInfused() {
-			return isInfused;
+		public synchronized boolean getIsInfused() {
+			synchronized(DefaultSMStatemachine.this) {
+				return isInfused;
+			}
 		}
 		
 		public void setIsInfused(boolean value) {
-			this.isInfused = value;
+			synchronized(DefaultSMStatemachine.this) {
+				this.isInfused = value;
+			}
 		}
 		
 		protected void clearEvents() {
@@ -252,11 +386,13 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	private final boolean[] timeEvents = new boolean[11];
 	
+	private BlockingQueue<Runnable> inEventQueue = new LinkedBlockingQueue<Runnable>();
+	private boolean isRunningCycle = false;
 	public DefaultSMStatemachine() {
 		sCInterface = new SCInterfaceImpl();
 	}
 	
-	public void init() {
+	public synchronized void init() {
 		this.initialized = true;
 		if (timer == null) {
 			throw new IllegalStateException("timer not set.");
@@ -281,7 +417,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.setIsInfused(false);
 	}
 	
-	public void enter() {
+	public synchronized void enter() {
 		if (!initialized) {
 			throw new IllegalStateException(
 				"The state machine needs to be initialized first by calling the init() function."
@@ -293,11 +429,33 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		enterSequence_main_region_default();
 	}
 	
-	public void runCycle() {
+	public synchronized void runCycle() {
 		if (!initialized)
 			throw new IllegalStateException(
 					"The state machine needs to be initialized first by calling the init() function.");
+		
+		if (isRunningCycle) {
+			return;
+		}
+		isRunningCycle = true;
+		
 		clearOutEvents();
+	
+		Runnable task = getNextEvent();
+		if (task == null) {
+			task = getDefaultEvent();
+		}
+		
+		while (task != null) {
+			task.run();
+			clearEvents();
+			task = getNextEvent();
+		}
+		
+		isRunningCycle = false;
+	}
+	
+	protected synchronized void singleCycle() {
 		for (nextStateIndex = 0; nextStateIndex < stateVector.length; nextStateIndex++) {
 			switch (stateVector[nextStateIndex]) {
 			case main_region_Init:
@@ -355,16 +513,32 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				// $NullState$
 			}
 		}
-		clearEvents();
 	}
-	public void exit() {
+	
+	protected Runnable getNextEvent() {
+		if(!inEventQueue.isEmpty()) {
+			return inEventQueue.poll();
+		}
+		return null;
+	}
+	
+	protected Runnable getDefaultEvent() {
+		return new Runnable() {
+			@Override
+			public void run() {
+				singleCycle();
+			}
+		};
+	}
+	
+	public synchronized void exit() {
 		exitSequence_main_region();
 	}
 	
 	/**
 	 * @see IStatemachine#isActive()
 	 */
-	public boolean isActive() {
+	public synchronized boolean isActive() {
 		return stateVector[0] != State.$NullState$||stateVector[1] != State.$NullState$||stateVector[2] != State.$NullState$;
 	}
 	
@@ -373,7 +547,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	*
 	* @see IStatemachine#isFinal()
 	*/
-	public boolean isFinal() {
+	public synchronized boolean isFinal() {
 		return false;
 	}
 	/**
@@ -396,7 +570,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	/**
 	* Returns true if the given state is currently active otherwise false.
 	*/
-	public boolean isStateActive(State state) {
+	public synchronized boolean isStateActive(State state) {
 	
 		switch (state) {
 		case main_region_Init:
@@ -451,7 +625,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	* 
 	* @param timer
 	*/
-	public void setTimer(ITimer timer) {
+	public synchronized void setTimer(ITimer timer) {
 		this.timer = timer;
 	}
 	
@@ -464,8 +638,14 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return timer;
 	}
 	
-	public void timeElapsed(int eventID) {
-		timeEvents[eventID] = true;
+	public synchronized void timeElapsed(int eventID) {
+		inEventQueue.add(new Runnable() {
+			@Override
+			public void run() {
+				timeEvents[eventID] = true;
+				singleCycle();
+			}
+		});
 		runCycle();
 	}
 	
@@ -473,107 +653,107 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface;
 	}
 	
-	public void raiseCancelB() {
+	public synchronized void raiseCancelB() {
 		sCInterface.raiseCancelB();
 	}
 	
-	public void raiseNfcTrigger() {
+	public synchronized void raiseNfcTrigger() {
 		sCInterface.raiseNfcTrigger();
 	}
 	
-	public void raiseCoinTrigger() {
+	public synchronized void raiseCoinTrigger() {
 		sCInterface.raiseCoinTrigger();
 	}
 	
-	public void raiseAddCupB() {
+	public synchronized void raiseAddCupB() {
 		sCInterface.raiseAddCupB();
 	}
 	
-	public boolean isRaisedDoRefund() {
+	public synchronized boolean isRaisedDoRefund() {
 		return sCInterface.isRaisedDoRefund();
 	}
 	
-	public boolean isRaisedDoReset() {
+	public synchronized boolean isRaisedDoReset() {
 		return sCInterface.isRaisedDoReset();
 	}
 	
-	public boolean isRaisedDoResetTimer() {
+	public synchronized boolean isRaisedDoResetTimer() {
 		return sCInterface.isRaisedDoResetTimer();
 	}
 	
-	public boolean isRaisedDoWaterHeat() {
+	public synchronized boolean isRaisedDoWaterHeat() {
 		return sCInterface.isRaisedDoWaterHeat();
 	}
 	
-	public boolean isRaisedDoCoffee() {
+	public synchronized boolean isRaisedDoCoffee() {
 		return sCInterface.isRaisedDoCoffee();
 	}
 	
-	public boolean isRaisedDoExpresso() {
+	public synchronized boolean isRaisedDoExpresso() {
 		return sCInterface.isRaisedDoExpresso();
 	}
 	
-	public boolean isRaisedDoTea() {
+	public synchronized boolean isRaisedDoTea() {
 		return sCInterface.isRaisedDoTea();
 	}
 	
-	public boolean isRaisedReady() {
+	public synchronized boolean isRaisedReady() {
 		return sCInterface.isRaisedReady();
 	}
 	
-	public String getSelection() {
+	public synchronized String getSelection() {
 		return sCInterface.getSelection();
 	}
 	
-	public void setSelection(String value) {
+	public synchronized void setSelection(String value) {
 		sCInterface.setSelection(value);
 	}
 	
-	public boolean getHotWater() {
+	public synchronized boolean getHotWater() {
 		return sCInterface.getHotWater();
 	}
 	
-	public void setHotWater(boolean value) {
+	public synchronized void setHotWater(boolean value) {
 		sCInterface.setHotWater(value);
 	}
 	
-	public boolean getEnoughtMoney() {
+	public synchronized boolean getEnoughtMoney() {
 		return sCInterface.getEnoughtMoney();
 	}
 	
-	public void setEnoughtMoney(boolean value) {
+	public synchronized void setEnoughtMoney(boolean value) {
 		sCInterface.setEnoughtMoney(value);
 	}
 	
-	public long getTime() {
+	public synchronized long getTime() {
 		return sCInterface.getTime();
 	}
 	
-	public void setTime(long value) {
+	public synchronized void setTime(long value) {
 		sCInterface.setTime(value);
 	}
 	
-	public boolean getIsHot() {
+	public synchronized boolean getIsHot() {
 		return sCInterface.getIsHot();
 	}
 	
-	public void setIsHot(boolean value) {
+	public synchronized void setIsHot(boolean value) {
 		sCInterface.setIsHot(value);
 	}
 	
-	public boolean getIsComplete() {
+	public synchronized boolean getIsComplete() {
 		return sCInterface.getIsComplete();
 	}
 	
-	public void setIsComplete(boolean value) {
+	public synchronized void setIsComplete(boolean value) {
 		sCInterface.setIsComplete(value);
 	}
 	
-	public boolean getIsInfused() {
+	public synchronized boolean getIsInfused() {
 		return sCInterface.getIsInfused();
 	}
 	
-	public void setIsInfused(boolean value) {
+	public synchronized void setIsInfused(boolean value) {
 		sCInterface.setIsInfused(value);
 	}
 	
