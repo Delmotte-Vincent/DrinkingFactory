@@ -44,8 +44,9 @@ public class DrinkingMachineInterfaceImplementation implements IDefaultSMStatema
         theDF.doTea();
     }
 
-    @Override
-    public void onReadyRaised() {
-        theDF.doReady();
-    }
+
+	@Override
+	public void onDoWaterFlowRaised() {
+		theDF.doWaterFlow();
+	}
 }

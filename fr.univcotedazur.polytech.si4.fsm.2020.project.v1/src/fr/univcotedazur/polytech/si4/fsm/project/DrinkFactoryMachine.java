@@ -323,4 +323,9 @@ public class DrinkFactoryMachine extends JFrame {
 
 	public void doReady() {
 	}
+
+	public void doWaterFlow() {
+		
+		
+	}
 }

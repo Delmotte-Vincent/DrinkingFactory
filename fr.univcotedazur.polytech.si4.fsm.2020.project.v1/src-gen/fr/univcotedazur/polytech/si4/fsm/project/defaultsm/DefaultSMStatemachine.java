@@ -214,20 +214,20 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
-		private boolean ready;
+		private boolean doWaterFlow;
 		
 		
-		public boolean isRaisedReady() {
+		public boolean isRaisedDoWaterFlow() {
 			synchronized(DefaultSMStatemachine.this) {
-				return ready;
+				return doWaterFlow;
 			}
 		}
 		
-		protected void raiseReady() {
+		protected void raiseDoWaterFlow() {
 			synchronized(DefaultSMStatemachine.this) {
-				ready = true;
+				doWaterFlow = true;
 				for (SCInterfaceListener listener : listeners) {
-					listener.onReadyRaised();
+					listener.onDoWaterFlowRaised();
 				}
 			}
 		}
@@ -330,6 +330,20 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean ready;
+		
+		public synchronized boolean getReady() {
+			synchronized(DefaultSMStatemachine.this) {
+				return ready;
+			}
+		}
+		
+		public void setReady(boolean value) {
+			synchronized(DefaultSMStatemachine.this) {
+				this.ready = value;
+			}
+		}
+		
 		protected void clearEvents() {
 			cancelB = false;
 			nfcTrigger = false;
@@ -345,7 +359,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		doCoffee = false;
 		doExpresso = false;
 		doTea = false;
-		ready = false;
+		doWaterFlow = false;
 		}
 		
 	}
@@ -384,7 +398,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	private ITimer timer;
 	
-	private final boolean[] timeEvents = new boolean[11];
+	private final boolean[] timeEvents = new boolean[12];
 	
 	private BlockingQueue<Runnable> inEventQueue = new LinkedBlockingQueue<Runnable>();
 	private boolean isRunningCycle = false;
@@ -415,6 +429,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.setIsComplete(false);
 		
 		sCInterface.setIsInfused(false);
+		
+		sCInterface.setReady(false);
 	}
 	
 	public synchronized void enter() {
@@ -697,8 +713,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface.isRaisedDoTea();
 	}
 	
-	public synchronized boolean isRaisedReady() {
-		return sCInterface.isRaisedReady();
+	public synchronized boolean isRaisedDoWaterFlow() {
+		return sCInterface.isRaisedDoWaterFlow();
 	}
 	
 	public synchronized String getSelection() {
@@ -757,6 +773,14 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.setIsInfused(value);
 	}
 	
+	public synchronized boolean getReady() {
+		return sCInterface.getReady();
+	}
+	
+	public synchronized void setReady(boolean value) {
+		sCInterface.setReady(value);
+	}
+	
 	private void effect_main_region_UserSelction_tr1() {
 		exitSequence_main_region_UserSelction();
 		enterSequence_main_region_HotDrinkPreparation_default();
@@ -771,12 +795,9 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	/* Entry action for state 'Init'. */
 	private void entryAction_main_region_Init() {
+		timer.setTimer(this, 0, (1 * 1000), false);
+		
 		sCInterface.raiseDoReset();
-	}
-	
-	/* Entry action for state 'Coins'. */
-	private void entryAction_main_region_UserSelction_Payment_Coins() {
-		timer.setTimer(this, 0, 200, true);
 	}
 	
 	/* Entry action for state 'waterHeat'. */
@@ -786,55 +807,60 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.raiseDoWaterHeat();
 	}
 	
+	/* Entry action for state 'pause'. */
+	private void entryAction_main_region_HotDrinkPreparation_r1_pause() {
+		timer.setTimer(this, 2, 7, true);
+	}
+	
 	/* Entry action for state 'coffee'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_coffee() {
-		timer.setTimer(this, 2, (sCInterface.getTime() * 1000), false);
+		timer.setTimer(this, 3, (sCInterface.getTime() * 1000), false);
 		
 		sCInterface.raiseDoCoffee();
 	}
 	
 	/* Entry action for state 'expresso'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_expresso() {
-		timer.setTimer(this, 3, (sCInterface.getTime() * 1000), false);
+		timer.setTimer(this, 4, (sCInterface.getTime() * 1000), false);
 		
 		sCInterface.raiseDoExpresso();
 	}
 	
 	/* Entry action for state 'tea'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_tea() {
-		timer.setTimer(this, 4, (sCInterface.getTime() * 1000), false);
+		timer.setTimer(this, 5, (sCInterface.getTime() * 1000), false);
 		
 		sCInterface.raiseDoTea();
 	}
 	
 	/* Entry action for state 'putCup'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_putCup() {
-		timer.setTimer(this, 5, 7, true);
+		timer.setTimer(this, 6, 7, true);
 	}
 	
 	/* Entry action for state 'waterFlow'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_waterFlow() {
-		timer.setTimer(this, 6, 100, true);
-		
 		timer.setTimer(this, 7, 100, true);
 		
 		timer.setTimer(this, 8, 100, true);
 		
-		sCInterface.raiseReady();
+		timer.setTimer(this, 9, 100, true);
+		
+		sCInterface.raiseDoWaterFlow();
 	}
 	
 	/* Entry action for state 'infusion'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_infusion() {
-		timer.setTimer(this, 9, 100, true);
+		timer.setTimer(this, 10, 100, true);
 	}
 	
 	/* Entry action for state 'finish'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_finish() {
-		timer.setTimer(this, 10, 7, false);
+		timer.setTimer(this, 11, 7, false);
 	}
 	
-	/* Exit action for state 'Coins'. */
-	private void exitAction_main_region_UserSelction_Payment_Coins() {
+	/* Exit action for state 'Init'. */
+	private void exitAction_main_region_Init() {
 		timer.unsetTimer(this, 0);
 	}
 	
@@ -843,43 +869,48 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		timer.unsetTimer(this, 1);
 	}
 	
+	/* Exit action for state 'pause'. */
+	private void exitAction_main_region_HotDrinkPreparation_r1_pause() {
+		timer.unsetTimer(this, 2);
+	}
+	
 	/* Exit action for state 'coffee'. */
 	private void exitAction_main_region_HotDrinkPreparation_r2_coffee() {
-		timer.unsetTimer(this, 2);
+		timer.unsetTimer(this, 3);
 	}
 	
 	/* Exit action for state 'expresso'. */
 	private void exitAction_main_region_HotDrinkPreparation_r2_expresso() {
-		timer.unsetTimer(this, 3);
+		timer.unsetTimer(this, 4);
 	}
 	
 	/* Exit action for state 'tea'. */
 	private void exitAction_main_region_HotDrinkPreparation_r2_tea() {
-		timer.unsetTimer(this, 4);
+		timer.unsetTimer(this, 5);
 	}
 	
 	/* Exit action for state 'putCup'. */
 	private void exitAction_main_region_HotDrinkPreparation_r2_putCup() {
-		timer.unsetTimer(this, 5);
+		timer.unsetTimer(this, 6);
 	}
 	
 	/* Exit action for state 'waterFlow'. */
 	private void exitAction_main_region_HotDrinkPreparation_r2_waterFlow() {
-		timer.unsetTimer(this, 6);
-		
 		timer.unsetTimer(this, 7);
 		
 		timer.unsetTimer(this, 8);
+		
+		timer.unsetTimer(this, 9);
 	}
 	
 	/* Exit action for state 'infusion'. */
 	private void exitAction_main_region_HotDrinkPreparation_r2_infusion() {
-		timer.unsetTimer(this, 9);
+		timer.unsetTimer(this, 10);
 	}
 	
 	/* Exit action for state 'finish'. */
 	private void exitAction_main_region_HotDrinkPreparation_r2_finish() {
-		timer.unsetTimer(this, 10);
+		timer.unsetTimer(this, 11);
 	}
 	
 	/* 'default' enter sequence for state Init */
@@ -904,7 +935,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	/* 'default' enter sequence for state Coins */
 	private void enterSequence_main_region_UserSelction_Payment_Coins_default() {
-		entryAction_main_region_UserSelction_Payment_Coins();
 		nextStateIndex = 0;
 		stateVector[0] = State.main_region_UserSelction_Payment_Coins;
 	}
@@ -948,6 +978,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	/* 'default' enter sequence for state pause */
 	private void enterSequence_main_region_HotDrinkPreparation_r1_pause_default() {
+		entryAction_main_region_HotDrinkPreparation_r1_pause();
 		nextStateIndex = 0;
 		stateVector[0] = State.main_region_HotDrinkPreparation_r1_pause;
 	}
@@ -1041,6 +1072,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	private void exitSequence_main_region_Init() {
 		nextStateIndex = 0;
 		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_Init();
 	}
 	
 	/* Default exit sequence for state UserSelction */
@@ -1060,8 +1093,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	private void exitSequence_main_region_UserSelction_Payment_Coins() {
 		nextStateIndex = 0;
 		stateVector[0] = State.$NullState$;
-		
-		exitAction_main_region_UserSelction_Payment_Coins();
 	}
 	
 	/* Default exit sequence for state NFC */
@@ -1106,6 +1137,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	private void exitSequence_main_region_HotDrinkPreparation_r1_pause() {
 		nextStateIndex = 0;
 		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_HotDrinkPreparation_r1_pause();
 	}
 	
 	/* Default exit sequence for state start */
@@ -1375,9 +1408,13 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			exitSequence_main_region_Init();
-			enterSequence_main_region_UserSelction_default();
-			react();
+			if (timeEvents[0]) {
+				exitSequence_main_region_Init();
+				enterSequence_main_region_UserSelction_default();
+				react();
+			} else {
+				did_transition = false;
+			}
 		}
 		if (did_transition==false) {
 			did_transition = react();
@@ -1432,7 +1469,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((timeEvents[0]) && (sCInterface.getEnoughtMoney()))) {
+			if (((sCInterface.addCupB) && (sCInterface.getEnoughtMoney()))) {
 				exitSequence_main_region_UserSelction_Payment_Coins();
 				react_main_region_UserSelction_Payment__exit_Default();
 			} else {
@@ -1529,7 +1566,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (sCInterface.ready) {
+			if (((timeEvents[2]) && (sCInterface.getReady()))) {
 				exitSequence_main_region_HotDrinkPreparation_r1_pause();
 				enterSequence_main_region_HotDrinkPreparation_r1_sugarAdd_default();
 			} else {
@@ -1573,7 +1610,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[2]) {
+			if (timeEvents[3]) {
 				exitSequence_main_region_HotDrinkPreparation_r2_coffee();
 				enterSequence_main_region_HotDrinkPreparation_r2_putCup_default();
 				main_region_HotDrinkPreparation_react(false);
@@ -1591,7 +1628,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[3]) {
+			if (timeEvents[4]) {
 				exitSequence_main_region_HotDrinkPreparation_r2_expresso();
 				enterSequence_main_region_HotDrinkPreparation_r2_putCup_default();
 				main_region_HotDrinkPreparation_react(false);
@@ -1609,7 +1646,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[4]) {
+			if (timeEvents[5]) {
 				exitSequence_main_region_HotDrinkPreparation_r2_tea();
 				enterSequence_main_region_HotDrinkPreparation_r2_putCup_default();
 				main_region_HotDrinkPreparation_react(false);
@@ -1627,7 +1664,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((timeEvents[5]) && (sCInterface.getIsHot()))) {
+			if (((timeEvents[6]) && (sCInterface.getIsHot()))) {
 				exitSequence_main_region_HotDrinkPreparation_r2_putCup();
 				enterSequence_main_region_HotDrinkPreparation_r2_waterFlow_default();
 				main_region_HotDrinkPreparation_react(false);
@@ -1645,17 +1682,17 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((timeEvents[6]) && ((sCInterface.getIsComplete() && (sCInterface.getSelection()== null?"Tea" ==null :sCInterface.getSelection().equals("Tea")))))) {
+			if (((timeEvents[7]) && ((sCInterface.getIsComplete() && (sCInterface.getSelection()== null?"Tea" ==null :sCInterface.getSelection().equals("Tea")))))) {
 				exitSequence_main_region_HotDrinkPreparation_r2_waterFlow();
 				enterSequence_main_region_HotDrinkPreparation_r2_infusion_default();
 				main_region_HotDrinkPreparation_react(false);
 			} else {
-				if (((timeEvents[7]) && ((sCInterface.getIsComplete() && (sCInterface.getSelection()== null?"Coffee" ==null :sCInterface.getSelection().equals("Coffee")))))) {
+				if (((timeEvents[8]) && ((sCInterface.getIsComplete() && (sCInterface.getSelection()== null?"Coffee" ==null :sCInterface.getSelection().equals("Coffee")))))) {
 					exitSequence_main_region_HotDrinkPreparation_r2_waterFlow();
 					enterSequence_main_region_HotDrinkPreparation_r2_finish_default();
 					main_region_HotDrinkPreparation_react(false);
 				} else {
-					if (((timeEvents[8]) && ((sCInterface.getIsComplete() && (sCInterface.getSelection()== null?"Expresso" ==null :sCInterface.getSelection().equals("Expresso")))))) {
+					if (((timeEvents[9]) && ((sCInterface.getIsComplete() && (sCInterface.getSelection()== null?"Expresso" ==null :sCInterface.getSelection().equals("Expresso")))))) {
 						exitSequence_main_region_HotDrinkPreparation_r2_waterFlow();
 						enterSequence_main_region_HotDrinkPreparation_r2_finish_default();
 						main_region_HotDrinkPreparation_react(false);
@@ -1675,7 +1712,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((timeEvents[9]) && (sCInterface.getIsInfused()))) {
+			if (((timeEvents[10]) && (sCInterface.getIsInfused()))) {
 				exitSequence_main_region_HotDrinkPreparation_r2_infusion();
 				enterSequence_main_region_HotDrinkPreparation_r2_finish_default();
 				main_region_HotDrinkPreparation_react(false);
@@ -1693,7 +1730,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[10]) {
+			if (timeEvents[11]) {
 				exitSequence_main_region_HotDrinkPreparation_r2_finish();
 				react_main_region_HotDrinkPreparation_r2__exit_Default();
 			} else {
