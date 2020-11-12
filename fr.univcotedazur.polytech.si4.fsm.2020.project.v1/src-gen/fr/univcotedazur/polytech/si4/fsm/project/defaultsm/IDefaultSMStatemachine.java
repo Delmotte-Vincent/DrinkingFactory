@@ -20,6 +20,14 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public void raiseAddCupB();
 		
+		public void raiseSugarTrigger();
+		
+		public void raiseSizeTrigger();
+		
+		public void raiseTemperatureTrigger();
+		
+		public void raiseSelectionTrigger();
+		
 		public boolean isRaisedDoRefund();
 		
 		public boolean isRaisedDoReset();
@@ -36,9 +44,25 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoWaterFlow();
 		
+		public boolean isRaisedDoPutCup();
+		
+		public boolean isRaisedDoCheckNFC();
+		
 		public String getSelection();
 		
 		public void setSelection(String value);
+		
+		public long getSliderSugar();
+		
+		public void setSliderSugar(long value);
+		
+		public long getSliderSize();
+		
+		public void setSliderSize(long value);
+		
+		public long getSliderTemperature();
+		
+		public void setSliderTemperature(long value);
 		
 		public boolean getHotWater();
 		
@@ -51,10 +75,6 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public long getTime();
 		
 		public void setTime(long value);
-		
-		public boolean getIsHot();
-		
-		public void setIsHot(boolean value);
 		
 		public boolean getIsComplete();
 		
@@ -69,6 +89,8 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void setReady(boolean value);
 		
 	public List<SCInterfaceListener> getListeners();
+		public void setSCInterfaceOperationCallback(SCInterfaceOperationCallback operationCallback);
+	
 	}
 	
 	public interface SCInterfaceListener {
@@ -81,7 +103,25 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoExpressoRaised();
 		public void onDoTeaRaised();
 		public void onDoWaterFlowRaised();
+		public void onDoPutCupRaised();
+		public void onDoCheckNFCRaised();
 		}
+	
+	public interface SCInterfaceOperationCallback {
+	
+		public String getSelection();
+		
+		public boolean isHot();
+		
+		public long getSugar();
+		
+		public long getSize();
+		
+		public long getTemperature();
+		
+		public boolean isPaid();
+		
+	}
 	
 	public SCInterface getSCInterface();
 	

@@ -1,8 +1,8 @@
 package fr.univcotedazur.polytech.si4.fsm.project;
 
-import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.IDefaultSMStatemachine;
+import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.IDefaultSMStatemachine.SCInterfaceListener;
 
-public class DrinkingMachineInterfaceImplementation implements IDefaultSMStatemachine.SCInterfaceListener {
+public class DrinkingMachineInterfaceImplementation implements SCInterfaceListener {
     DrinkFactoryMachine theDF;
 
     public DrinkingMachineInterfaceImplementation(DrinkFactoryMachine df) {
