@@ -1,8 +1,8 @@
 package fr.univcotedazur.polytech.si4.fsm.project;
 
-import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.IDefaultSMStatemachine;
+import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.IDefaultSMStatemachine.SCInterfaceListener;
 
-public class DrinkingMachineInterfaceImplementation implements IDefaultSMStatemachine.SCInterfaceListener {
+public class DrinkingMachineInterfaceImplementation implements SCInterfaceListener {
     DrinkFactoryMachine theDF;
 
     public DrinkingMachineInterfaceImplementation(DrinkFactoryMachine df) {
@@ -17,11 +17,6 @@ public class DrinkingMachineInterfaceImplementation implements IDefaultSMStatema
     @Override
     public void onDoResetRaised() {
         theDF.doReset();
-    }
-
-    @Override
-    public void onDoResetTimerRaised() {
-        theDF.doResetTimer();
     }
 
     @Override
@@ -52,6 +47,18 @@ public class DrinkingMachineInterfaceImplementation implements IDefaultSMStatema
 	@Override
 	public void onDoPutCupRaised() {
 		theDF.doPutCup();
+		
+	}
+
+	@Override
+	public void onDoCheckNFCRaised() {
+		theDF.doCheckNFC();
+		
+	}
+
+	@Override
+	public void onDoAddSugarRaised() {
+		theDF.doAddSugar();
 		
 	}
 

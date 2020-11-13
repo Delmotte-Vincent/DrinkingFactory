@@ -25,7 +25,8 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
-
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 public class DrinkFactoryMachine extends JFrame {
@@ -37,6 +38,13 @@ public class DrinkFactoryMachine extends JFrame {
 	private JPanel contentPane;
 	private DefaultSMStatemachine theFSM;
 	private TimerService timer;
+	public JSlider sugarSlider;
+    public JSlider sizeSlider;
+    public JSlider temperatureSlider;
+    public double payment;
+    public double price;
+    public int temperature;
+
 	/**
 	 * @wbp.nonvisual location=311,475
 	 */
@@ -71,11 +79,12 @@ public class DrinkFactoryMachine extends JFrame {
 		theFSM = new DefaultSMStatemachine();
         timer = new TimerService();
         theFSM.setTimer(timer);
+        DrinkingFactoryCallBackInterfaceImplementation callback = new DrinkingFactoryCallBackInterfaceImplementation(this);
+        theFSM.getSCInterface().setSCInterfaceOperationCallback(callback);
         theFSM.init();
         theFSM.enter();
         theFSM.getSCInterface().getListeners().add(new DrinkingMachineInterfaceImplementation(this));
-		DrinkingFactoryCallBackInterfaceImplementation callback = new DrinkingFactoryCallBackInterfaceImplementation(this);
-		theFSM.getSCInterface().setSCInterfaceOperationCallback(callback);
+
 		
 		
 		setForeground(Color.WHITE);
@@ -114,6 +123,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				theFSM.setSelection("Coffee");
+				price = 0.35;
 				System.out.println(theFSM.getSelection());
 			}
 		});
@@ -127,6 +137,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				theFSM.setSelection("Expresso");
+                price = 0.50;
 				System.out.println(theFSM.getSelection());
 			}
 		});
@@ -140,6 +151,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				theFSM.setSelection("Tea");
+                price = 0.40;
 				System.out.println(theFSM.getSelection());
 			}
 		});
@@ -165,7 +177,7 @@ public class DrinkFactoryMachine extends JFrame {
 		progressBar.setBounds(12, 254, 622, 26);
 		contentPane.add(progressBar);
 
-		JSlider sugarSlider = new JSlider();
+		sugarSlider = new JSlider();
 		sugarSlider.setValue(1);
 		sugarSlider.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		sugarSlider.setBackground(Color.DARK_GRAY);
@@ -176,9 +188,15 @@ public class DrinkFactoryMachine extends JFrame {
 		sugarSlider.setMaximum(4);
 		sugarSlider.setBounds(301, 51, 200, 36);
 		contentPane.add(sugarSlider);
+		sugarSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                theFSM.raiseSugarTrigger();
+            }
+        });
 
 
-		JSlider sizeSlider = new JSlider();
+		sizeSlider = new JSlider();
 		sizeSlider.setPaintTicks(true);
 		sizeSlider.setValue(1);
 		sizeSlider.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -189,8 +207,15 @@ public class DrinkFactoryMachine extends JFrame {
 		sizeSlider.setMajorTickSpacing(1);
 		sizeSlider.setBounds(301, 125, 200, 36);
 		contentPane.add(sizeSlider);
+        sizeSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                theFSM.raiseSizeTrigger();
+            }
+        });
 
-		JSlider temperatureSlider = new JSlider();
+
+        temperatureSlider = new JSlider();
 		temperatureSlider.setPaintLabels(true);
 		temperatureSlider.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		temperatureSlider.setValue(2);
@@ -200,8 +225,15 @@ public class DrinkFactoryMachine extends JFrame {
 		temperatureSlider.setMajorTickSpacing(1);
 		temperatureSlider.setMaximum(3);
 		temperatureSlider.setBounds(301, 188, 200, 54);
+        temperatureSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                theFSM.raiseTemperatureTrigger();
+            }
+        });
 
-		Hashtable<Integer, JLabel> temperatureTable = new Hashtable<Integer, JLabel>();
+
+        Hashtable<Integer, JLabel> temperatureTable = new Hashtable<Integer, JLabel>();
 		temperatureTable.put(0, new JLabel("20°C"));
 		temperatureTable.put(1, new JLabel("35°C"));
 		temperatureTable.put(2, new JLabel("60°C"));
@@ -260,7 +292,10 @@ public class DrinkFactoryMachine extends JFrame {
 		money50centsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+			    theFSM.raiseCoinTrigger();
 				System.out.println("add 50 cent to payment");
+				payment += 0.50;
+
 			}
 		});
 
@@ -271,7 +306,9 @@ public class DrinkFactoryMachine extends JFrame {
 		money25centsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+                theFSM.raiseCoinTrigger();
 				System.out.println("add 25 cent to payment");
+                payment += 0.25;
 			}
 		});
 
@@ -282,7 +319,9 @@ public class DrinkFactoryMachine extends JFrame {
 		money10centsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+                theFSM.raiseCoinTrigger();
 				System.out.println("add 10 cent to payment");
+                payment += 0.10;
 			}
 		});
 
@@ -299,6 +338,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("nfcTrigger");
+				theFSM.raiseNfcTrigger();
 			}
 		});
 
@@ -321,8 +361,15 @@ public class DrinkFactoryMachine extends JFrame {
 		addCupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseAddCupB();
-				System.out.println("add a cup");
+                double delta = price - payment;
+			    if (payment >= price) {
+                    theFSM.raiseAddCupB();
+                    System.out.println("add a cup and refund " + Math.abs(delta));
+                }
+			    else {
+                    System.out.println("You need to insert " + delta + "€");
+                }
+
 			}
 		});
 
@@ -345,6 +392,12 @@ public class DrinkFactoryMachine extends JFrame {
 		cancelButton.setForeground(Color.WHITE);
 		cancelButton.setBackground(Color.DARK_GRAY);
 		panel_2.add(cancelButton);
+		cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theFSM.raiseCancelB();
+            }
+        });
 
 		// listeners
 		addCupButton.addMouseListener(new MouseAdapter() {
@@ -363,34 +416,69 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	public void doRefund() {
+        System.out.println("you're refund of " + this.payment +"€");
 	}
 
 	public void doReset() {
-	}
-
-	public void doResetTimer() {
+        System.out.println("Reset the machine");
+        temperature = 0;
+        theFSM.setSelection("Coffee");
+        payment = 0;
 	}
 
 	public void doWaterHeat() {
+        temperature += 2;
+		System.out.println("+2°,  temperature : " + temperature +"°");
 	}
 
+
+
 	public void doCoffee() {
+        System.out.println("Coffe Preparation");
 	}
 
 	public void doExpresso() {
+        System.out.println("Expresso Preparation");
 	}
 
 	public void doTea() {
-	}
-
-	public void doReady() {
+        System.out.println("Tea Preparation");
 	}
 
 	public void doWaterFlow() {
-		
+        System.out.println("water flow");
+
 	}
 
 	public void doPutCup() {
+        System.out.println("Put a cup");
 		
 	}
+
+    public String getSelection() {
+	    return theFSM.getSelection();
+    }
+
+	public void doCheckNFC() {
+
+	}
+	
+	public void doAddSugar() {
+		System.out.println("Adding " + (sugarSlider.getValue()+1) + " doses of sugar");
+		
+	}
+
+    public boolean isHot() {
+		switch(temperatureSlider.getValue()){
+			case 0:
+				return temperature >= 20;
+			case 1:
+				return temperature >= 35;
+			case 2:
+				return temperature >= 60;
+			case 3:
+				return temperature >= 85;
+			default : return false;
+		}
+    }
 }

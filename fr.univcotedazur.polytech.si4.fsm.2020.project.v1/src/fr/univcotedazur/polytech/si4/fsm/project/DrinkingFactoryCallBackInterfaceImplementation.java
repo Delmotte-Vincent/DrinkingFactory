@@ -13,31 +13,81 @@ public class DrinkingFactoryCallBackInterfaceImplementation implements SCInterfa
 
     @Override
     public String getSelection() {
-        return null;
+        return theGUI.getSelection();
     }
 
     @Override
     public boolean isHot() {
-        return false;
+        return theGUI.isHot();
     }
 
     @Override
     public long getSugar() {
-        return 0;
+        switch(theGUI.sugarSlider.getValue()){
+            case 0:
+                System.out.println("0 sugar dose");
+                return 0;
+            case 1:
+                System.out.println("1 sugar dose");
+                return 1;
+            case 2:
+                System.out.println("2 sugar dose");
+                return 2;
+            case 3:
+                System.out.println("3 sugar dose");
+                return 3;
+            case 4:
+                System.out.println("4 sugar dose");
+                return 4;
+
+            default : return 0;
+        }
     }
 
     @Override
     public long getSize() {
-        return 0;
+        switch(theGUI.sizeSlider.getValue()){
+            case 0:
+                System.out.println("short");
+                return 0;
+            case 1:
+                System.out.println("medium");
+                return 1;
+            case 2:
+                System.out.println("long");
+                return 2;
+
+            default : return 0;
+        }
+
     }
 
     @Override
     public long getTemperature() {
-        return 0;
+        switch(theGUI.temperatureSlider.getValue()){
+            case 0:
+                System.out.println("20°");
+                return 20;
+            case 1:
+                System.out.println("35°");
+                return 35;
+            case 2:
+                System.out.println("60°");
+                return 60;
+            case 3:
+                System.out.println("85°");
+                return 85;
+            default : return 0;
+        }
     }
 
 	@Override
 	public boolean isPaid() {
-		return false;
+		return true;
+	}
+
+	@Override
+	public boolean isReady() {
+		return true;
 	}
 }

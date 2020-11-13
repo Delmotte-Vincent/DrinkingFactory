@@ -32,8 +32,6 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoReset();
 		
-		public boolean isRaisedDoResetTimer();
-		
 		public boolean isRaisedDoWaterHeat();
 		
 		public boolean isRaisedDoCoffee();
@@ -47,6 +45,8 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public boolean isRaisedDoPutCup();
 		
 		public boolean isRaisedDoCheckNFC();
+		
+		public boolean isRaisedDoAddSugar();
 		
 		public String getSelection();
 		
@@ -63,18 +63,6 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public long getSliderTemperature();
 		
 		public void setSliderTemperature(long value);
-		
-		public boolean getHotWater();
-		
-		public void setHotWater(boolean value);
-		
-		public boolean getEnoughtMoney();
-		
-		public void setEnoughtMoney(boolean value);
-		
-		public long getTime();
-		
-		public void setTime(long value);
 		
 		public boolean getIsComplete();
 		
@@ -97,7 +85,6 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 	
 		public void onDoRefundRaised();
 		public void onDoResetRaised();
-		public void onDoResetTimerRaised();
 		public void onDoWaterHeatRaised();
 		public void onDoCoffeeRaised();
 		public void onDoExpressoRaised();
@@ -105,6 +92,7 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoWaterFlowRaised();
 		public void onDoPutCupRaised();
 		public void onDoCheckNFCRaised();
+		public void onDoAddSugarRaised();
 		}
 	
 	public interface SCInterfaceOperationCallback {
@@ -120,6 +108,8 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public long getTemperature();
 		
 		public boolean isPaid();
+		
+		public boolean isReady();
 		
 	}
 	
