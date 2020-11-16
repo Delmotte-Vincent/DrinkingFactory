@@ -1005,7 +1005,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	/* Entry action for state 'infusion'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_infusion() {
-		timer.setTimer(this, 12, (15 * 1000), false);
+		timer.setTimer(this, 12, 100, true);
 	}
 	
 	/* Entry action for state 'finish'. */
@@ -1891,7 +1891,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[12]) {
+			if (((timeEvents[12]) && (sCInterface.getIsInfused()))) {
 				exitSequence_main_region_HotDrinkPreparation_r2_infusion();
 				enterSequence_main_region_HotDrinkPreparation_r2_finish_default();
 				main_region_HotDrinkPreparation_react(false);

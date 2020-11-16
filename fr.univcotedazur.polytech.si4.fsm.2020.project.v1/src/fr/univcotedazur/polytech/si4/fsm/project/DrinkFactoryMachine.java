@@ -38,12 +38,14 @@ public class DrinkFactoryMachine extends JFrame {
 	private JPanel contentPane;
 	private DefaultSMStatemachine theFSM;
 	private TimerService timer;
+	private JLabel messagesToUser;
 	public JSlider sugarSlider;
     public JSlider sizeSlider;
     public JSlider temperatureSlider;
     public double payment;
     public double price;
     public int temperature;
+    public PayType paymentType;
 
 	/**
 	 * @wbp.nonvisual location=311,475
@@ -99,7 +101,7 @@ public class DrinkFactoryMachine extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel messagesToUser = new JLabel("<html>This is<br>place to communicate <br> with the user");
+		messagesToUser = new JLabel("<html>Bienvenue");
 		messagesToUser.setForeground(Color.WHITE);
 		messagesToUser.setHorizontalAlignment(SwingConstants.LEFT);
 		messagesToUser.setVerticalAlignment(SwingConstants.TOP);
@@ -124,7 +126,7 @@ public class DrinkFactoryMachine extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				theFSM.setSelection("Coffee");
 				price = 0.35;
-				System.out.println(theFSM.getSelection());
+				updateUI();
 			}
 		});
 
@@ -138,7 +140,7 @@ public class DrinkFactoryMachine extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				theFSM.setSelection("Expresso");
                 price = 0.50;
-				System.out.println(theFSM.getSelection());
+				updateUI();
 			}
 		});
 
@@ -152,7 +154,7 @@ public class DrinkFactoryMachine extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				theFSM.setSelection("Tea");
                 price = 0.40;
-				System.out.println(theFSM.getSelection());
+				updateUI();
 			}
 		});
 
@@ -165,7 +167,8 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				theFSM.setSelection("Soup");
-				System.out.println(theFSM.getSelection());
+				price = 1.0;
+				updateUI();
 			}
 		});
 
@@ -254,7 +257,8 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				theFSM.setSelection("IcedTea");
-				System.out.println(theFSM.getSelection());
+				price = 1.0;
+				updateUI();
 			}
 		});
 
@@ -292,9 +296,12 @@ public class DrinkFactoryMachine extends JFrame {
 		money50centsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			    theFSM.raiseCoinTrigger();
-				System.out.println("add 50 cent to payment");
-				payment += 0.50;
+				if (paymentType != PayType.NFC) {
+					paymentType = PayType.COIN;
+					theFSM.raiseCoinTrigger();
+					payment += 0.50;
+					updateUI();
+				}
 
 			}
 		});
@@ -306,9 +313,12 @@ public class DrinkFactoryMachine extends JFrame {
 		money25centsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-                theFSM.raiseCoinTrigger();
-				System.out.println("add 25 cent to payment");
-                payment += 0.25;
+				if (paymentType != PayType.NFC) {
+					paymentType = PayType.COIN;
+					theFSM.raiseCoinTrigger();
+					payment += 0.25;
+					updateUI();
+				}
 			}
 		});
 
@@ -319,9 +329,13 @@ public class DrinkFactoryMachine extends JFrame {
 		money10centsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-                theFSM.raiseCoinTrigger();
-				System.out.println("add 10 cent to payment");
-                payment += 0.10;
+				if (paymentType != PayType.NFC) {
+					paymentType = PayType.COIN;
+					theFSM.raiseCoinTrigger();
+					payment += 0.10;
+					updateUI();
+				}
+
 			}
 		});
 
@@ -337,8 +351,11 @@ public class DrinkFactoryMachine extends JFrame {
 		nfcBiiiipButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("nfcTrigger");
-				theFSM.raiseNfcTrigger();
+				if (paymentType != PayType.COIN) {
+					paymentType = PayType.NFC;
+					theFSM.raiseNfcTrigger();
+				}
+
 			}
 		});
 
@@ -361,7 +378,7 @@ public class DrinkFactoryMachine extends JFrame {
 		addCupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-                double delta = price - payment;
+				double delta = price - payment;
 			    if (payment >= price) {
                     theFSM.raiseAddCupB();
                     System.out.println("add a cup and refund " + Math.abs(delta));
@@ -420,10 +437,12 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	public void doReset() {
-        System.out.println("Reset the machine");
-        temperature = 0;
-        theFSM.setSelection("Coffee");
-        payment = 0;
+		this.paymentType = PayType.DEFAULT;
+        this.temperature = 0;
+		this.payment = 0;
+		this.price = 0;
+		theFSM.setSelection("Coffee");
+		messagesToUser.setText("<html>Welcome");
 	}
 
 	public void doWaterHeat() {
@@ -481,4 +500,12 @@ public class DrinkFactoryMachine extends JFrame {
 			default : return false;
 		}
     }
+
+    private void updateUI() {
+		messagesToUser.setText(
+				"<html>Bienvenue<br>Selection : " + theFSM.getSelection()
+				+ "<br>Coût : " + this.price + "€"
+				+ "<br>Paiement : " + this.payment + "€"
+		);
+	}
 }
