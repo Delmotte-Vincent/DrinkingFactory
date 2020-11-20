@@ -382,6 +382,24 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean doNotify;
+		
+		
+		public boolean isRaisedDoNotify() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doNotify;
+			}
+		}
+		
+		protected void raiseDoNotify() {
+			synchronized(DefaultSMStatemachine.this) {
+				doNotify = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoNotifyRaised();
+				}
+			}
+		}
+		
 		private String selection;
 		
 		public synchronized String getSelection() {
@@ -476,6 +494,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		doCheckNFC = false;
 		doAddSugar = false;
 		doDecrement = false;
+		doNotify = false;
 		}
 		
 	}
@@ -863,6 +882,10 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface.isRaisedDoDecrement();
 	}
 	
+	public synchronized boolean isRaisedDoNotify() {
+		return sCInterface.isRaisedDoNotify();
+	}
+	
 	public synchronized String getSelection() {
 		return sCInterface.getSelection();
 	}
@@ -1020,7 +1043,9 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	/* Entry action for state 'finish'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_finish() {
-		timer.setTimer(this, 15, 7, false);
+		timer.setTimer(this, 15, (10 * 1000), false);
+		
+		sCInterface.raiseDoNotify();
 	}
 	
 	/* Exit action for state 'Init'. */

@@ -607,10 +607,13 @@ public class DrinkFactoryMachine extends JFrame {
     }
 
     public boolean isDispo() {
-	    //TODO getSelection a changer
 		if (!theFSM.getSelection().equals(" ")) {
 			return isInStock(theFSM.getSelection());
 		}
         return false;
     }
+
+	public void doNotify() {
+		
+	}
 }

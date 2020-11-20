@@ -52,6 +52,8 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoDecrement();
 		
+		public boolean isRaisedDoNotify();
+		
 		public String getSelection();
 		
 		public void setSelection(String value);
@@ -90,6 +92,7 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoCheckNFCRaised();
 		public void onDoAddSugarRaised();
 		public void onDoDecrementRaised();
+		public void onDoNotifyRaised();
 		}
 	
 	public interface SCInterfaceOperationCallback {
@@ -109,8 +112,6 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public boolean isReady();
 		
 		public boolean isComplete();
-		
-		public boolean isInfused();
 		
 		public boolean isDispo();
 		

@@ -97,11 +97,6 @@ public class DrinkingFactoryCallBackInterfaceImplementation implements SCInterfa
     }
 
     @Override
-    public boolean isInfused() {
-        return theGUI.isInfused();
-    }
-
-    @Override
     public boolean isDispo() {
         return theGUI.isDispo();
     }
