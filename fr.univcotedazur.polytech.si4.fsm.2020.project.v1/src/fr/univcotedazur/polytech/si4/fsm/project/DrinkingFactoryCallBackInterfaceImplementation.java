@@ -83,11 +83,26 @@ public class DrinkingFactoryCallBackInterfaceImplementation implements SCInterfa
 
 	@Override
 	public boolean isPaid() {
-		return true;
+        return theGUI.isPaid();
 	}
 
 	@Override
 	public boolean isReady() {
 		return true;
 	}
+
+    @Override
+    public boolean isComplete() {
+        return theGUI.isComplete();
+    }
+
+    @Override
+    public boolean isInfused() {
+        return theGUI.isInfused();
+    }
+
+    @Override
+    public boolean isDispo() {
+        return theGUI.isDispo();
+    }
 }
