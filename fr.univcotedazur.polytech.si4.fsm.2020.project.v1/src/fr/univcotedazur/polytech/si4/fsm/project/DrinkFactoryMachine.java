@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.IdentityHashMap;
@@ -29,7 +30,7 @@ public class DrinkFactoryMachine extends JFrame {
 	 */
 	private static final long serialVersionUID = 2030629304432075314L;
 	private Hashtable<String, Integer> stock;
-
+	private ArrayList<CarteBancaire> carteBancaires;
 	private JPanel contentPane;
 	private DefaultSMStatemachine theFSM;
 	private TimerService timer;
@@ -71,6 +72,7 @@ public class DrinkFactoryMachine extends JFrame {
 	 * Create the frame.
 	 */
 	public DrinkFactoryMachine() {
+		carteBancaires = new ArrayList<CarteBancaire>();
 
         stock = new Hashtable<>();
         stock.put("Coffee", 1);
@@ -389,8 +391,15 @@ public class DrinkFactoryMachine extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String input = nfcTextField.getText();
 				System.out.println("Bip:" + input);
+
 				if (paymentType != PayType.COIN) {
 					paymentType = PayType.NFC;
+
+					if (!alreadyRegister(input)) {
+						carteBancaires.add(new CarteBancaire(input));
+					}
+
+					payment = price;
 					theFSM.raiseNfcTrigger();
 				}
 			}
@@ -614,6 +623,27 @@ public class DrinkFactoryMachine extends JFrame {
     }
 
 	public void doNotify() {
-		
+		messagesToUser.setText("<html>Votre boisson est prête" +
+				"<br>Bonne dégustation !" +
+				"<br>A bientôt"
+		);
+	}
+
+	public boolean alreadyRegister(String idCB) {
+		for (CarteBancaire cb : carteBancaires) {
+			if (cb.getId().equals(idCB)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private CarteBancaire getCB(String idCB) {
+		for (CarteBancaire cb : carteBancaires) {
+			if (cb.getId().equals(idCB)) {
+				return cb;
+			}
+		}
+		return null;
 	}
 }
