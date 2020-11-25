@@ -46,6 +46,7 @@ public class DrinkFactoryMachine extends JFrame {
     public double price;
     public int temperature;
     public PayType paymentType;
+    public double reduction;
 
 	/**
 	 * @wbp.nonvisual location=311,475
@@ -174,7 +175,7 @@ public class DrinkFactoryMachine extends JFrame {
 
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);
-		progressBar.setValue(10);
+		progressBar.setValue(0);
 		progressBar.setForeground(Color.LIGHT_GRAY);
 		progressBar.setBackground(Color.DARK_GRAY);
 		progressBar.setBounds(12, 254, 622, 26);
@@ -370,16 +371,38 @@ public class DrinkFactoryMachine extends JFrame {
 		separator.setBounds(12, 292, 622, 15);
 		contentPane.add(separator);
 
+		JButton addOwnCupButton = new JButton("Add your cup");
+		addOwnCupButton.setForeground(Color.WHITE);
+		addOwnCupButton.setBackground(Color.DARK_GRAY);
+		addOwnCupButton.setBounds(45, 336, 128, 25);
+		contentPane.add(addOwnCupButton);
+		addOwnCupButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				reduction = 0.10;
+				updateUI();
+				double delta = (price-reduction) - payment;
+			    if (payment >= (price-reduction)) {
+                    theFSM.raiseAddCupB();
+                    System.out.println("add a cup and refund " + Math.abs(delta));
+                }
+			    else {
+                    System.out.println("You need to insert " + delta + "€");
+                }
+
+			}
+		});
+		
 		JButton addCupButton = new JButton("Add cup");
 		addCupButton.setForeground(Color.WHITE);
 		addCupButton.setBackground(Color.DARK_GRAY);
-		addCupButton.setBounds(45, 336, 96, 25);
+		addCupButton.setBounds(45, 376, 96, 25);
 		contentPane.add(addCupButton);
 		addCupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				double delta = price - payment;
-			    if (payment >= price) {
+				double delta = (price-reduction) - payment;
+			    if (payment >= (price-reduction)) {
                     theFSM.raiseAddCupB();
                     System.out.println("add a cup and refund " + Math.abs(delta));
                 }
@@ -441,6 +464,7 @@ public class DrinkFactoryMachine extends JFrame {
         this.temperature = 0;
 		this.payment = 0;
 		this.price = 0;
+		this.reduction = 0;
 		theFSM.setSelection("Coffee");
 		messagesToUser.setText("<html>Welcome");
 	}
@@ -504,7 +528,7 @@ public class DrinkFactoryMachine extends JFrame {
     private void updateUI() {
 		messagesToUser.setText(
 				"<html>Bienvenue<br>Selection : " + theFSM.getSelection()
-				+ "<br>Coût : " + this.price + "€"
+				+ "<br>Coût : " + String.format("%.2f", this.price-this.reduction) + "€"
 				+ "<br>Paiement : " + this.payment + "€"
 		);
 	}
