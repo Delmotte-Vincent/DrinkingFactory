@@ -1,9 +1,8 @@
 package fr.univcotedazur.polytech.si4.fsm.project;
 
 import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.DefaultSMStatemachine;
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Font;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -11,18 +10,13 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.IdentityHashMap;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JSeparator;
-import javax.swing.JSlider;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
@@ -32,9 +26,11 @@ import javax.swing.event.ChangeListener;
 public class DrinkFactoryMachine extends JFrame {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 2030629304432075314L;
+	private Hashtable<String, Integer> stock;
+	private ArrayList<CarteBancaire> carteBancaires;
 	private JPanel contentPane;
 	private DefaultSMStatemachine theFSM;
 	private TimerService timer;
@@ -68,17 +64,28 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 		});
 	}
-	
-	
-	
-	
+
+
+
+
 
 	/**
 	 * Create the frame.
 	 */
 	public DrinkFactoryMachine() {
-		
-		
+		carteBancaires = new ArrayList<CarteBancaire>();
+
+        stock = new Hashtable<>();
+        stock.put("Coffee", 1);
+        stock.put("Expresso", 0);
+        stock.put("Tea", 8);
+        stock.put("Soup", 1);
+        stock.put("IcedTea", 5);
+        stock.put("Nuage de lait", 5);
+        stock.put("Croutons", 5);
+        stock.put("Glace vanille", 5);
+        stock.put("Sirop d'erable", 5);
+
 		theFSM = new DefaultSMStatemachine();
         timer = new TimerService();
         theFSM.setTimer(timer);
@@ -88,8 +95,8 @@ public class DrinkFactoryMachine extends JFrame {
         theFSM.enter();
         theFSM.getSCInterface().getListeners().add(new DrinkingMachineInterfaceImplementation(this));
 
-		
-		
+		theFSM.setSelection(" ");
+
 		setForeground(Color.WHITE);
 		setFont(new Font("Cantarell", Font.BOLD, 22));
 		setBackground(Color.DARK_GRAY);
@@ -125,9 +132,14 @@ public class DrinkFactoryMachine extends JFrame {
 		coffeeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.setSelection("Coffee");
-				price = 0.35;
-				updateUI();
+				if (isInStock("Coffee")) {
+					theFSM.setSelection("Coffee");
+					price = 0.35;
+					updateUI();
+				}
+				else {
+					ruptureDeStockMessage();
+				}
 			}
 		});
 
@@ -139,9 +151,14 @@ public class DrinkFactoryMachine extends JFrame {
 		expressoButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.setSelection("Expresso");
-                price = 0.50;
-				updateUI();
+				if (isInStock("Expresso")) {
+					theFSM.setSelection("Expresso");
+					price = 0.50;
+					updateUI();
+				}
+				else {
+					ruptureDeStockMessage();
+				}
 			}
 		});
 
@@ -153,9 +170,15 @@ public class DrinkFactoryMachine extends JFrame {
 		teaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.setSelection("Tea");
-                price = 0.40;
-				updateUI();
+				if (isInStock("Tea")) {
+					theFSM.setSelection("Tea");
+					price = 0.40;
+					updateUI();
+				}
+				else {
+					ruptureDeStockMessage();
+				}
+
 			}
 		});
 
@@ -182,7 +205,7 @@ public class DrinkFactoryMachine extends JFrame {
 		contentPane.add(progressBar);
 
 		sugarSlider = new JSlider();
-		sugarSlider.setValue(1);
+		sugarSlider.setValue(0);
 		sugarSlider.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		sugarSlider.setBackground(Color.DARK_GRAY);
 		sugarSlider.setForeground(Color.WHITE);
@@ -202,7 +225,7 @@ public class DrinkFactoryMachine extends JFrame {
 
 		sizeSlider = new JSlider();
 		sizeSlider.setPaintTicks(true);
-		sizeSlider.setValue(1);
+		sizeSlider.setValue(0);
 		sizeSlider.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		sizeSlider.setBackground(Color.DARK_GRAY);
 		sizeSlider.setForeground(Color.WHITE);
@@ -222,7 +245,7 @@ public class DrinkFactoryMachine extends JFrame {
         temperatureSlider = new JSlider();
 		temperatureSlider.setPaintLabels(true);
 		temperatureSlider.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		temperatureSlider.setValue(2);
+		temperatureSlider.setValue(0);
 		temperatureSlider.setBackground(Color.DARK_GRAY);
 		temperatureSlider.setForeground(Color.WHITE);
 		temperatureSlider.setPaintTicks(true);
@@ -257,9 +280,15 @@ public class DrinkFactoryMachine extends JFrame {
 		icedTeaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.setSelection("IcedTea");
-				price = 1.0;
-				updateUI();
+				if (isInStock("IcedTea")) {
+					theFSM.setSelection("IcedTea");
+					price = 1.0;
+					updateUI();
+				}
+				else {
+					ruptureDeStockMessage();
+				}
+
 			}
 		});
 
@@ -345,6 +374,15 @@ public class DrinkFactoryMachine extends JFrame {
 		panel_1.setBounds(538, 154, 96, 40);
 		contentPane.add(panel_1);
 
+		JPanel panel_4 = new JPanel();
+		panel_4.setBackground(Color.DARK_GRAY);
+		panel_4.setBounds(538, 187, 96, 40);
+		contentPane.add(panel_4);
+
+		JTextField nfcTextField = new JTextField();
+		nfcTextField.setColumns(7);
+		panel_4.add(nfcTextField);
+
 		JButton nfcBiiiipButton = new JButton("biiip");
 		nfcBiiiipButton.setForeground(Color.WHITE);
 		nfcBiiiipButton.setBackground(Color.DARK_GRAY);
@@ -352,13 +390,23 @@ public class DrinkFactoryMachine extends JFrame {
 		nfcBiiiipButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String input = nfcTextField.getText();
+				System.out.println("Bip:" + input);
+
 				if (paymentType != PayType.COIN) {
 					paymentType = PayType.NFC;
+
+					if (!alreadyRegister(input)) {
+						carteBancaires.add(new CarteBancaire(input));
+					}
+
+					payment = price;
 					theFSM.raiseNfcTrigger();
 				}
-
 			}
 		});
+
+
 
 
 		JLabel lblNfc = new JLabel("NFC");
@@ -392,7 +440,7 @@ public class DrinkFactoryMachine extends JFrame {
 
 			}
 		});
-		
+
 		JButton addCupButton = new JButton("Add cup");
 		addCupButton.setForeground(Color.WHITE);
 		addCupButton.setBackground(Color.DARK_GRAY);
@@ -410,6 +458,7 @@ public class DrinkFactoryMachine extends JFrame {
                     System.out.println("You need to insert " + delta + "€");
                 }
 
+				theFSM.raiseAddCupB();
 			}
 		});
 
@@ -425,19 +474,25 @@ public class DrinkFactoryMachine extends JFrame {
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.DARK_GRAY);
-		panel_2.setBounds(538, 217, 96, 33);
+		panel_2.setBounds(538, 185, 96, 33);
 		contentPane.add(panel_2);
+
+		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(Color.DARK_GRAY);
+		panel_3.setBounds(538, 217, 96, 33);
+		contentPane.add(panel_3);
 
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.setForeground(Color.WHITE);
 		cancelButton.setBackground(Color.DARK_GRAY);
-		panel_2.add(cancelButton);
+		panel_3.add(cancelButton);
 		cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theFSM.raiseCancelB();
             }
         });
+
 
 		// listeners
 		addCupButton.addMouseListener(new MouseAdapter() {
@@ -460,20 +515,25 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	public void doReset() {
-		this.paymentType = PayType.DEFAULT;
+
+        System.out.println("RESET");
+        this.paymentType = PayType.DEFAULT;
         this.temperature = 0;
-		this.payment = 0;
-		this.price = 0;
-		this.reduction = 0;
-		theFSM.setSelection("Coffee");
-		messagesToUser.setText("<html>Welcome");
+				this.reduction = 0;
+        this.payment = 0;
+        this.price = 0;
+        theFSM.setSelection(" ");
+        messagesToUser.setText("<html>Welcome");
+        sugarSlider.setValue(0);
+        sizeSlider.setValue(0);
+        temperatureSlider.setValue(0);
+
 	}
 
 	public void doWaterHeat() {
         temperature += 2;
 		System.out.println("+2°,  temperature : " + temperature +"°");
 	}
-
 
 
 	public void doCoffee() {
@@ -491,11 +551,12 @@ public class DrinkFactoryMachine extends JFrame {
 	public void doWaterFlow() {
         System.out.println("water flow");
 
+
 	}
 
 	public void doPutCup() {
         System.out.println("Put a cup");
-		
+
 	}
 
     public String getSelection() {
@@ -505,10 +566,10 @@ public class DrinkFactoryMachine extends JFrame {
 	public void doCheckNFC() {
 
 	}
-	
+
 	public void doAddSugar() {
-		System.out.println("Adding " + (sugarSlider.getValue()+1) + " doses of sugar");
-		
+		System.out.println("Adding " + sugarSlider.getValue() + " doses of sugar");
+
 	}
 
     public boolean isHot() {
@@ -525,11 +586,97 @@ public class DrinkFactoryMachine extends JFrame {
 		}
     }
 
+	/**
+	 * Permet de verifier s'il y a rupture de stock
+	 * @param produit
+	 * @return true si présent dans le stock
+	 * @return false sinon
+	 */
+	public boolean isInStock(String produit) {
+		return (stock.get(produit) > 0);
+	}
+
+	/**
+	 * Méthode qui s'occupe de l'affichage utilisateur
+	 */
     private void updateUI() {
 		messagesToUser.setText(
 				"<html>Bienvenue<br>Selection : " + theFSM.getSelection()
 				+ "<br>Coût : " + String.format("%.2f", this.price-this.reduction) + "€"
 				+ "<br>Paiement : " + this.payment + "€"
 		);
+	}
+
+	/**
+	 * Envoie un message de rupture de stock à l'utilisateur
+	 */
+	private void ruptureDeStockMessage() {
+		messagesToUser.setText(
+				"<html>Désolé, la boisson que vous avez selectionné est momentanément indisponible " +
+				"<br>Veuillez choisir une autre boisson"
+		);
+	}
+
+	/**
+	 * Une fois la boisson réalisé on décrémente les dosettes
+	 */
+	private void decrementStock() {
+		String selection = getSelection();
+
+		if (stock.get(selection) != null) {
+			int quantité = stock.get(selection);
+			stock.put(selection, quantité - 1);
+			System.out.println("Stock decrementé");
+		}
+
+
+	}
+
+	public void doDecrement() {
+		decrementStock();
+	}
+
+    public boolean isPaid() {
+	    return (payment >= price);
+    }
+
+    public boolean isComplete() {
+	    return true;
+    }
+
+    public boolean isInfused() {
+	    return true;
+    }
+
+    public boolean isDispo() {
+		if (!theFSM.getSelection().equals(" ")) {
+			return isInStock(theFSM.getSelection());
+		}
+        return false;
+    }
+
+	public void doNotify() {
+		messagesToUser.setText("<html>Votre boisson est prête" +
+				"<br>Bonne dégustation !" +
+				"<br>A bientôt"
+		);
+	}
+
+	public boolean alreadyRegister(String idCB) {
+		for (CarteBancaire cb : carteBancaires) {
+			if (cb.getId().equals(idCB)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private CarteBancaire getCB(String idCB) {
+		for (CarteBancaire cb : carteBancaires) {
+			if (cb.getId().equals(idCB)) {
+				return cb;
+			}
+		}
+		return null;
 	}
 }

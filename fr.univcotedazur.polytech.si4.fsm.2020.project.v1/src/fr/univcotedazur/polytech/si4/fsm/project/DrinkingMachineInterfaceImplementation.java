@@ -62,6 +62,18 @@ public class DrinkingMachineInterfaceImplementation implements SCInterfaceListen
 		
 	}
 
+	@Override
+	public void onDoDecrementRaised() {
+		theDF.doDecrement();
+		
+	}
+
+	@Override
+	public void onDoNotifyRaised() {
+		theDF.doNotify();
+		
+	}
+
     /*
     @Override
     public void onReadyRaised() {

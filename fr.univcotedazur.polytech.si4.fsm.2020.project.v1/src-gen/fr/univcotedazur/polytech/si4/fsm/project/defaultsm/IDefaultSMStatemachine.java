@@ -14,6 +14,8 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 	
 		public void raiseCancelB();
 		
+		public void raiseValidateB();
+		
 		public void raiseNfcTrigger();
 		
 		public void raiseCoinTrigger();
@@ -48,6 +50,10 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoAddSugar();
 		
+		public boolean isRaisedDoDecrement();
+		
+		public boolean isRaisedDoNotify();
+		
 		public String getSelection();
 		
 		public void setSelection(String value);
@@ -63,14 +69,6 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public long getSliderTemperature();
 		
 		public void setSliderTemperature(long value);
-		
-		public boolean getIsComplete();
-		
-		public void setIsComplete(boolean value);
-		
-		public boolean getIsInfused();
-		
-		public void setIsInfused(boolean value);
 		
 		public boolean getReady();
 		
@@ -93,6 +91,8 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoPutCupRaised();
 		public void onDoCheckNFCRaised();
 		public void onDoAddSugarRaised();
+		public void onDoDecrementRaised();
+		public void onDoNotifyRaised();
 		}
 	
 	public interface SCInterfaceOperationCallback {
@@ -110,6 +110,10 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public boolean isPaid();
 		
 		public boolean isReady();
+		
+		public boolean isComplete();
+		
+		public boolean isDispo();
 		
 	}
 	
