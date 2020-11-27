@@ -30,6 +30,14 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public void raiseSelectionTrigger();
 		
+		public void raiseClassicDrinkTrigger();
+		
+		public void raiseSoupTrigger();
+		
+		public void raiseIceTeaTrigger();
+		
+		public void raiseCoolingDone();
+		
 		public boolean isRaisedDoRefund();
 		
 		public boolean isRaisedDoReset();
@@ -42,6 +50,10 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoTea();
 		
+		public boolean isRaisedDoSoup();
+		
+		public boolean isRaisedDoIceTea();
+		
 		public boolean isRaisedDoWaterFlow();
 		
 		public boolean isRaisedDoPutCup();
@@ -50,9 +62,19 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoAddSugar();
 		
+		public boolean isRaisedDoAddSpices();
+		
 		public boolean isRaisedDoDecrement();
 		
 		public boolean isRaisedDoNotify();
+		
+		public boolean isRaisedSetClassicSliders();
+		
+		public boolean isRaisedSetSoupSliders();
+		
+		public boolean isRaisedSetIceTeaSliders();
+		
+		public boolean isRaisedDoCooling();
 		
 		public String getSelection();
 		
@@ -87,12 +109,19 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoCoffeeRaised();
 		public void onDoExpressoRaised();
 		public void onDoTeaRaised();
+		public void onDoSoupRaised();
+		public void onDoIceTeaRaised();
 		public void onDoWaterFlowRaised();
 		public void onDoPutCupRaised();
 		public void onDoCheckNFCRaised();
 		public void onDoAddSugarRaised();
+		public void onDoAddSpicesRaised();
 		public void onDoDecrementRaised();
 		public void onDoNotifyRaised();
+		public void onSetClassicSlidersRaised();
+		public void onSetSoupSlidersRaised();
+		public void onSetIceTeaSlidersRaised();
+		public void onDoCoolingRaised();
 		}
 	
 	public interface SCInterfaceOperationCallback {

@@ -184,6 +184,78 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean classicDrinkTrigger;
+		
+		
+		public void raiseClassicDrinkTrigger() {
+			synchronized(DefaultSMStatemachine.this) {
+				inEventQueue.add(
+					new Runnable() {
+						@Override
+						public void run() {
+							classicDrinkTrigger = true;
+							singleCycle();
+						}
+					}
+				);
+				runCycle();
+			}
+		}
+		
+		private boolean soupTrigger;
+		
+		
+		public void raiseSoupTrigger() {
+			synchronized(DefaultSMStatemachine.this) {
+				inEventQueue.add(
+					new Runnable() {
+						@Override
+						public void run() {
+							soupTrigger = true;
+							singleCycle();
+						}
+					}
+				);
+				runCycle();
+			}
+		}
+		
+		private boolean iceTeaTrigger;
+		
+		
+		public void raiseIceTeaTrigger() {
+			synchronized(DefaultSMStatemachine.this) {
+				inEventQueue.add(
+					new Runnable() {
+						@Override
+						public void run() {
+							iceTeaTrigger = true;
+							singleCycle();
+						}
+					}
+				);
+				runCycle();
+			}
+		}
+		
+		private boolean coolingDone;
+		
+		
+		public void raiseCoolingDone() {
+			synchronized(DefaultSMStatemachine.this) {
+				inEventQueue.add(
+					new Runnable() {
+						@Override
+						public void run() {
+							coolingDone = true;
+							singleCycle();
+						}
+					}
+				);
+				runCycle();
+			}
+		}
+		
 		private boolean doRefund;
 		
 		
@@ -292,6 +364,42 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean doSoup;
+		
+		
+		public boolean isRaisedDoSoup() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doSoup;
+			}
+		}
+		
+		protected void raiseDoSoup() {
+			synchronized(DefaultSMStatemachine.this) {
+				doSoup = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoSoupRaised();
+				}
+			}
+		}
+		
+		private boolean doIceTea;
+		
+		
+		public boolean isRaisedDoIceTea() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doIceTea;
+			}
+		}
+		
+		protected void raiseDoIceTea() {
+			synchronized(DefaultSMStatemachine.this) {
+				doIceTea = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoIceTeaRaised();
+				}
+			}
+		}
+		
 		private boolean doWaterFlow;
 		
 		
@@ -364,6 +472,24 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean doAddSpices;
+		
+		
+		public boolean isRaisedDoAddSpices() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doAddSpices;
+			}
+		}
+		
+		protected void raiseDoAddSpices() {
+			synchronized(DefaultSMStatemachine.this) {
+				doAddSpices = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoAddSpicesRaised();
+				}
+			}
+		}
+		
 		private boolean doDecrement;
 		
 		
@@ -396,6 +522,78 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				doNotify = true;
 				for (SCInterfaceListener listener : listeners) {
 					listener.onDoNotifyRaised();
+				}
+			}
+		}
+		
+		private boolean setClassicSliders;
+		
+		
+		public boolean isRaisedSetClassicSliders() {
+			synchronized(DefaultSMStatemachine.this) {
+				return setClassicSliders;
+			}
+		}
+		
+		protected void raiseSetClassicSliders() {
+			synchronized(DefaultSMStatemachine.this) {
+				setClassicSliders = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onSetClassicSlidersRaised();
+				}
+			}
+		}
+		
+		private boolean setSoupSliders;
+		
+		
+		public boolean isRaisedSetSoupSliders() {
+			synchronized(DefaultSMStatemachine.this) {
+				return setSoupSliders;
+			}
+		}
+		
+		protected void raiseSetSoupSliders() {
+			synchronized(DefaultSMStatemachine.this) {
+				setSoupSliders = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onSetSoupSlidersRaised();
+				}
+			}
+		}
+		
+		private boolean setIceTeaSliders;
+		
+		
+		public boolean isRaisedSetIceTeaSliders() {
+			synchronized(DefaultSMStatemachine.this) {
+				return setIceTeaSliders;
+			}
+		}
+		
+		protected void raiseSetIceTeaSliders() {
+			synchronized(DefaultSMStatemachine.this) {
+				setIceTeaSliders = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onSetIceTeaSlidersRaised();
+				}
+			}
+		}
+		
+		private boolean doCooling;
+		
+		
+		public boolean isRaisedDoCooling() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doCooling;
+			}
+		}
+		
+		protected void raiseDoCooling() {
+			synchronized(DefaultSMStatemachine.this) {
+				doCooling = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoCoolingRaised();
 				}
 			}
 		}
@@ -480,6 +678,10 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			sizeTrigger = false;
 			temperatureTrigger = false;
 			selectionTrigger = false;
+			classicDrinkTrigger = false;
+			soupTrigger = false;
+			iceTeaTrigger = false;
+			coolingDone = false;
 		}
 		protected void clearOutEvents() {
 		
@@ -489,12 +691,19 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		doCoffee = false;
 		doExpresso = false;
 		doTea = false;
+		doSoup = false;
+		doIceTea = false;
 		doWaterFlow = false;
 		doPutCup = false;
 		doCheckNFC = false;
 		doAddSugar = false;
+		doAddSpices = false;
 		doDecrement = false;
 		doNotify = false;
+		setClassicSliders = false;
+		setSoupSliders = false;
+		setIceTeaSliders = false;
+		doCooling = false;
 		}
 		
 	}
@@ -511,11 +720,15 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		main_region_UserSelction_Payment_Coins,
 		main_region_UserSelction_Payment_NFC,
 		main_region_UserSelction_produceSelection_SelectionWait,
+		main_region_UserSelction_sliderType_classicSliders,
+		main_region_UserSelction_sliderType_soupSliders,
+		main_region_UserSelction_sliderType_IceTeaSLiders,
 		main_region_UserSelction_time_timer,
 		main_region_HotDrinkPreparation,
 		main_region_HotDrinkPreparation_r1_waterHeat,
 		main_region_HotDrinkPreparation_r1_sugarAdd,
 		main_region_HotDrinkPreparation_r1_pause,
+		main_region_HotDrinkPreparation_r1_spicesAdd,
 		main_region_HotDrinkPreparation_r2_start,
 		main_region_HotDrinkPreparation_r2_coffee,
 		main_region_HotDrinkPreparation_r2_expresso,
@@ -524,16 +737,19 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		main_region_HotDrinkPreparation_r2_waterFlow,
 		main_region_HotDrinkPreparation_r2_infusion,
 		main_region_HotDrinkPreparation_r2_finish,
+		main_region_HotDrinkPreparation_r2_soup,
+		main_region_HotDrinkPreparation_r2_ice_tea,
+		main_region_HotDrinkPreparation_r2_cooling,
 		$NullState$
 	};
 	
-	private final State[] stateVector = new State[3];
+	private final State[] stateVector = new State[4];
 	
 	private int nextStateIndex;
 	
 	private ITimer timer;
 	
-	private final boolean[] timeEvents = new boolean[16];
+	private final boolean[] timeEvents = new boolean[20];
 	
 	private BlockingQueue<Runnable> inEventQueue = new LinkedBlockingQueue<Runnable>();
 	private boolean isRunningCycle = false;
@@ -550,7 +766,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			throw new IllegalStateException("Operation callback for interface sCInterface must be set.");
 		}
 		
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			stateVector[i] = State.$NullState$;
 		}
 		clearEvents();
@@ -622,6 +838,15 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				case main_region_UserSelction_produceSelection_SelectionWait:
 					main_region_UserSelction_produceSelection_SelectionWait_react(true);
 					break;
+				case main_region_UserSelction_sliderType_classicSliders:
+					main_region_UserSelction_sliderType_classicSliders_react(true);
+					break;
+				case main_region_UserSelction_sliderType_soupSliders:
+					main_region_UserSelction_sliderType_soupSliders_react(true);
+					break;
+				case main_region_UserSelction_sliderType_IceTeaSLiders:
+					main_region_UserSelction_sliderType_IceTeaSLiders_react(true);
+					break;
 				case main_region_UserSelction_time_timer:
 					main_region_UserSelction_time_timer_react(true);
 					break;
@@ -633,6 +858,9 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 					break;
 				case main_region_HotDrinkPreparation_r1_pause:
 					main_region_HotDrinkPreparation_r1_pause_react(true);
+					break;
+				case main_region_HotDrinkPreparation_r1_spicesAdd:
+					main_region_HotDrinkPreparation_r1_spicesAdd_react(true);
 					break;
 				case main_region_HotDrinkPreparation_r2_start:
 					main_region_HotDrinkPreparation_r2_start_react(true);
@@ -657,6 +885,15 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 					break;
 				case main_region_HotDrinkPreparation_r2_finish:
 					main_region_HotDrinkPreparation_r2_finish_react(true);
+					break;
+				case main_region_HotDrinkPreparation_r2_soup:
+					main_region_HotDrinkPreparation_r2_soup_react(true);
+					break;
+				case main_region_HotDrinkPreparation_r2_ice_tea:
+					main_region_HotDrinkPreparation_r2_ice_tea_react(true);
+					break;
+				case main_region_HotDrinkPreparation_r2_cooling:
+					main_region_HotDrinkPreparation_r2_cooling_react(true);
 					break;
 			default:
 				// $NullState$
@@ -688,7 +925,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	 * @see IStatemachine#isActive()
 	 */
 	public synchronized boolean isActive() {
-		return stateVector[0] != State.$NullState$||stateVector[1] != State.$NullState$||stateVector[2] != State.$NullState$;
+		return stateVector[0] != State.$NullState$||stateVector[1] != State.$NullState$||stateVector[2] != State.$NullState$||stateVector[3] != State.$NullState$;
 	}
 	
 	/** 
@@ -735,17 +972,25 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			return stateVector[0] == State.main_region_UserSelction_Payment_NFC;
 		case main_region_UserSelction_produceSelection_SelectionWait:
 			return stateVector[1] == State.main_region_UserSelction_produceSelection_SelectionWait;
+		case main_region_UserSelction_sliderType_classicSliders:
+			return stateVector[2] == State.main_region_UserSelction_sliderType_classicSliders;
+		case main_region_UserSelction_sliderType_soupSliders:
+			return stateVector[2] == State.main_region_UserSelction_sliderType_soupSliders;
+		case main_region_UserSelction_sliderType_IceTeaSLiders:
+			return stateVector[2] == State.main_region_UserSelction_sliderType_IceTeaSLiders;
 		case main_region_UserSelction_time_timer:
-			return stateVector[2] == State.main_region_UserSelction_time_timer;
+			return stateVector[3] == State.main_region_UserSelction_time_timer;
 		case main_region_HotDrinkPreparation:
 			return stateVector[0].ordinal() >= State.
-					main_region_HotDrinkPreparation.ordinal()&& stateVector[0].ordinal() <= State.main_region_HotDrinkPreparation_r2_finish.ordinal();
+					main_region_HotDrinkPreparation.ordinal()&& stateVector[0].ordinal() <= State.main_region_HotDrinkPreparation_r2_cooling.ordinal();
 		case main_region_HotDrinkPreparation_r1_waterHeat:
 			return stateVector[0] == State.main_region_HotDrinkPreparation_r1_waterHeat;
 		case main_region_HotDrinkPreparation_r1_sugarAdd:
 			return stateVector[0] == State.main_region_HotDrinkPreparation_r1_sugarAdd;
 		case main_region_HotDrinkPreparation_r1_pause:
 			return stateVector[0] == State.main_region_HotDrinkPreparation_r1_pause;
+		case main_region_HotDrinkPreparation_r1_spicesAdd:
+			return stateVector[0] == State.main_region_HotDrinkPreparation_r1_spicesAdd;
 		case main_region_HotDrinkPreparation_r2_start:
 			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_start;
 		case main_region_HotDrinkPreparation_r2_coffee:
@@ -762,6 +1007,12 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_infusion;
 		case main_region_HotDrinkPreparation_r2_finish:
 			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_finish;
+		case main_region_HotDrinkPreparation_r2_soup:
+			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_soup;
+		case main_region_HotDrinkPreparation_r2_ice_tea:
+			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_ice_tea;
+		case main_region_HotDrinkPreparation_r2_cooling:
+			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_cooling;
 		default:
 			return false;
 		}
@@ -838,6 +1089,22 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.raiseSelectionTrigger();
 	}
 	
+	public synchronized void raiseClassicDrinkTrigger() {
+		sCInterface.raiseClassicDrinkTrigger();
+	}
+	
+	public synchronized void raiseSoupTrigger() {
+		sCInterface.raiseSoupTrigger();
+	}
+	
+	public synchronized void raiseIceTeaTrigger() {
+		sCInterface.raiseIceTeaTrigger();
+	}
+	
+	public synchronized void raiseCoolingDone() {
+		sCInterface.raiseCoolingDone();
+	}
+	
 	public synchronized boolean isRaisedDoRefund() {
 		return sCInterface.isRaisedDoRefund();
 	}
@@ -862,6 +1129,14 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface.isRaisedDoTea();
 	}
 	
+	public synchronized boolean isRaisedDoSoup() {
+		return sCInterface.isRaisedDoSoup();
+	}
+	
+	public synchronized boolean isRaisedDoIceTea() {
+		return sCInterface.isRaisedDoIceTea();
+	}
+	
 	public synchronized boolean isRaisedDoWaterFlow() {
 		return sCInterface.isRaisedDoWaterFlow();
 	}
@@ -878,12 +1153,32 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface.isRaisedDoAddSugar();
 	}
 	
+	public synchronized boolean isRaisedDoAddSpices() {
+		return sCInterface.isRaisedDoAddSpices();
+	}
+	
 	public synchronized boolean isRaisedDoDecrement() {
 		return sCInterface.isRaisedDoDecrement();
 	}
 	
 	public synchronized boolean isRaisedDoNotify() {
 		return sCInterface.isRaisedDoNotify();
+	}
+	
+	public synchronized boolean isRaisedSetClassicSliders() {
+		return sCInterface.isRaisedSetClassicSliders();
+	}
+	
+	public synchronized boolean isRaisedSetSoupSliders() {
+		return sCInterface.isRaisedSetSoupSliders();
+	}
+	
+	public synchronized boolean isRaisedSetIceTeaSliders() {
+		return sCInterface.isRaisedSetIceTeaSliders();
+	}
+	
+	public synchronized boolean isRaisedDoCooling() {
+		return sCInterface.isRaisedDoCooling();
 	}
 	
 	public synchronized String getSelection() {
@@ -968,6 +1263,21 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.setSliderTemperature(sCInterface.operationCallback.getTemperature());
 	}
 	
+	/* Entry action for state 'classicSliders'. */
+	private void entryAction_main_region_UserSelction_sliderType_classicSliders() {
+		sCInterface.raiseSetClassicSliders();
+	}
+	
+	/* Entry action for state 'soupSliders'. */
+	private void entryAction_main_region_UserSelction_sliderType_soupSliders() {
+		sCInterface.raiseSetSoupSliders();
+	}
+	
+	/* Entry action for state 'IceTeaSLiders'. */
+	private void entryAction_main_region_UserSelction_sliderType_IceTeaSLiders() {
+		sCInterface.raiseSetIceTeaSliders();
+	}
+	
 	/* Entry action for state 'timer'. */
 	private void entryAction_main_region_UserSelction_time_timer() {
 		timer.setTimer(this, 3, (45 * 1000), false);
@@ -990,6 +1300,13 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	/* Entry action for state 'pause'. */
 	private void entryAction_main_region_HotDrinkPreparation_r1_pause() {
 		timer.setTimer(this, 6, 7, true);
+		
+		timer.setTimer(this, 7, 7, true);
+	}
+	
+	/* Entry action for state 'spicesAdd'. */
+	private void entryAction_main_region_HotDrinkPreparation_r1_spicesAdd() {
+		sCInterface.raiseDoAddSpices();
 	}
 	
 	/* Entry action for state 'start'. */
@@ -999,53 +1316,74 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	/* Entry action for state 'coffee'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_coffee() {
-		timer.setTimer(this, 7, (2 * 1000), false);
+		timer.setTimer(this, 8, (2 * 1000), false);
 		
 		sCInterface.raiseDoCoffee();
 	}
 	
 	/* Entry action for state 'expresso'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_expresso() {
-		timer.setTimer(this, 8, (2 * 1000), false);
+		timer.setTimer(this, 9, (2 * 1000), false);
 		
 		sCInterface.raiseDoExpresso();
 	}
 	
 	/* Entry action for state 'tea'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_tea() {
-		timer.setTimer(this, 9, (2 * 1000), false);
+		timer.setTimer(this, 10, (2 * 1000), false);
 		
 		sCInterface.raiseDoTea();
 	}
 	
 	/* Entry action for state 'putCup'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_putCup() {
-		timer.setTimer(this, 10, 7, true);
+		timer.setTimer(this, 11, 7, true);
 		
 		sCInterface.raiseDoPutCup();
 	}
 	
 	/* Entry action for state 'waterFlow'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_waterFlow() {
-		timer.setTimer(this, 11, 100, true);
-		
 		timer.setTimer(this, 12, 100, true);
 		
 		timer.setTimer(this, 13, 100, true);
+		
+		timer.setTimer(this, 14, 100, true);
 		
 		sCInterface.raiseDoWaterFlow();
 	}
 	
 	/* Entry action for state 'infusion'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_infusion() {
-		timer.setTimer(this, 14, (30 * 1000), false);
+		timer.setTimer(this, 15, (30 * 1000), false);
 	}
 	
 	/* Entry action for state 'finish'. */
 	private void entryAction_main_region_HotDrinkPreparation_r2_finish() {
-		timer.setTimer(this, 15, (10 * 1000), false);
+		timer.setTimer(this, 16, (10 * 1000), false);
 		
 		sCInterface.raiseDoNotify();
+	}
+	
+	/* Entry action for state 'soup'. */
+	private void entryAction_main_region_HotDrinkPreparation_r2_soup() {
+		timer.setTimer(this, 17, (2 * 1000), false);
+		
+		sCInterface.raiseDoSoup();
+	}
+	
+	/* Entry action for state 'ice tea'. */
+	private void entryAction_main_region_HotDrinkPreparation_r2_ice_tea() {
+		timer.setTimer(this, 18, (2 * 1000), false);
+		
+		sCInterface.raiseDoIceTea();
+	}
+	
+	/* Entry action for state 'cooling'. */
+	private void entryAction_main_region_HotDrinkPreparation_r2_cooling() {
+		timer.setTimer(this, 19, (1 * 1000), true);
+		
+		sCInterface.raiseDoCooling();
 	}
 	
 	/* Exit action for state 'Init'. */
@@ -1078,45 +1416,62 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	/* Exit action for state 'pause'. */
 	private void exitAction_main_region_HotDrinkPreparation_r1_pause() {
 		timer.unsetTimer(this, 6);
+		
+		timer.unsetTimer(this, 7);
 	}
 	
 	/* Exit action for state 'coffee'. */
 	private void exitAction_main_region_HotDrinkPreparation_r2_coffee() {
-		timer.unsetTimer(this, 7);
+		timer.unsetTimer(this, 8);
 	}
 	
 	/* Exit action for state 'expresso'. */
 	private void exitAction_main_region_HotDrinkPreparation_r2_expresso() {
-		timer.unsetTimer(this, 8);
+		timer.unsetTimer(this, 9);
 	}
 	
 	/* Exit action for state 'tea'. */
 	private void exitAction_main_region_HotDrinkPreparation_r2_tea() {
-		timer.unsetTimer(this, 9);
+		timer.unsetTimer(this, 10);
 	}
 	
 	/* Exit action for state 'putCup'. */
 	private void exitAction_main_region_HotDrinkPreparation_r2_putCup() {
-		timer.unsetTimer(this, 10);
+		timer.unsetTimer(this, 11);
 	}
 	
 	/* Exit action for state 'waterFlow'. */
 	private void exitAction_main_region_HotDrinkPreparation_r2_waterFlow() {
-		timer.unsetTimer(this, 11);
-		
 		timer.unsetTimer(this, 12);
 		
 		timer.unsetTimer(this, 13);
+		
+		timer.unsetTimer(this, 14);
 	}
 	
 	/* Exit action for state 'infusion'. */
 	private void exitAction_main_region_HotDrinkPreparation_r2_infusion() {
-		timer.unsetTimer(this, 14);
+		timer.unsetTimer(this, 15);
 	}
 	
 	/* Exit action for state 'finish'. */
 	private void exitAction_main_region_HotDrinkPreparation_r2_finish() {
-		timer.unsetTimer(this, 15);
+		timer.unsetTimer(this, 16);
+	}
+	
+	/* Exit action for state 'soup'. */
+	private void exitAction_main_region_HotDrinkPreparation_r2_soup() {
+		timer.unsetTimer(this, 17);
+	}
+	
+	/* Exit action for state 'ice tea'. */
+	private void exitAction_main_region_HotDrinkPreparation_r2_ice_tea() {
+		timer.unsetTimer(this, 18);
+	}
+	
+	/* Exit action for state 'cooling'. */
+	private void exitAction_main_region_HotDrinkPreparation_r2_cooling() {
+		timer.unsetTimer(this, 19);
 	}
 	
 	/* 'default' enter sequence for state Init */
@@ -1130,6 +1485,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	private void enterSequence_main_region_UserSelction_default() {
 		enterSequence_main_region_UserSelction_Payment_default();
 		enterSequence_main_region_UserSelction_produceSelection_default();
+		enterSequence_main_region_UserSelction_sliderType_default();
 		enterSequence_main_region_UserSelction_time_default();
 	}
 	
@@ -1160,11 +1516,32 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		stateVector[1] = State.main_region_UserSelction_produceSelection_SelectionWait;
 	}
 	
+	/* 'default' enter sequence for state classicSliders */
+	private void enterSequence_main_region_UserSelction_sliderType_classicSliders_default() {
+		entryAction_main_region_UserSelction_sliderType_classicSliders();
+		nextStateIndex = 2;
+		stateVector[2] = State.main_region_UserSelction_sliderType_classicSliders;
+	}
+	
+	/* 'default' enter sequence for state soupSliders */
+	private void enterSequence_main_region_UserSelction_sliderType_soupSliders_default() {
+		entryAction_main_region_UserSelction_sliderType_soupSliders();
+		nextStateIndex = 2;
+		stateVector[2] = State.main_region_UserSelction_sliderType_soupSliders;
+	}
+	
+	/* 'default' enter sequence for state IceTeaSLiders */
+	private void enterSequence_main_region_UserSelction_sliderType_IceTeaSLiders_default() {
+		entryAction_main_region_UserSelction_sliderType_IceTeaSLiders();
+		nextStateIndex = 2;
+		stateVector[2] = State.main_region_UserSelction_sliderType_IceTeaSLiders;
+	}
+	
 	/* 'default' enter sequence for state timer */
 	private void enterSequence_main_region_UserSelction_time_timer_default() {
 		entryAction_main_region_UserSelction_time_timer();
-		nextStateIndex = 2;
-		stateVector[2] = State.main_region_UserSelction_time_timer;
+		nextStateIndex = 3;
+		stateVector[3] = State.main_region_UserSelction_time_timer;
 	}
 	
 	/* 'default' enter sequence for state HotDrinkPreparation */
@@ -1192,6 +1569,13 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		entryAction_main_region_HotDrinkPreparation_r1_pause();
 		nextStateIndex = 0;
 		stateVector[0] = State.main_region_HotDrinkPreparation_r1_pause;
+	}
+	
+	/* 'default' enter sequence for state spicesAdd */
+	private void enterSequence_main_region_HotDrinkPreparation_r1_spicesAdd_default() {
+		entryAction_main_region_HotDrinkPreparation_r1_spicesAdd();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_HotDrinkPreparation_r1_spicesAdd;
 	}
 	
 	/* 'default' enter sequence for state start */
@@ -1250,6 +1634,27 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		stateVector[1] = State.main_region_HotDrinkPreparation_r2_finish;
 	}
 	
+	/* 'default' enter sequence for state soup */
+	private void enterSequence_main_region_HotDrinkPreparation_r2_soup_default() {
+		entryAction_main_region_HotDrinkPreparation_r2_soup();
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_HotDrinkPreparation_r2_soup;
+	}
+	
+	/* 'default' enter sequence for state ice tea */
+	private void enterSequence_main_region_HotDrinkPreparation_r2_ice_tea_default() {
+		entryAction_main_region_HotDrinkPreparation_r2_ice_tea();
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_HotDrinkPreparation_r2_ice_tea;
+	}
+	
+	/* 'default' enter sequence for state cooling */
+	private void enterSequence_main_region_HotDrinkPreparation_r2_cooling_default() {
+		entryAction_main_region_HotDrinkPreparation_r2_cooling();
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_HotDrinkPreparation_r2_cooling;
+	}
+	
 	/* 'default' enter sequence for region main region */
 	private void enterSequence_main_region_default() {
 		react_main_region__entry_Default();
@@ -1263,6 +1668,11 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	/* 'default' enter sequence for region produceSelection */
 	private void enterSequence_main_region_UserSelction_produceSelection_default() {
 		react_main_region_UserSelction_produceSelection__entry_Default();
+	}
+	
+	/* 'default' enter sequence for region sliderType */
+	private void enterSequence_main_region_UserSelction_sliderType_default() {
+		react_main_region_UserSelction_sliderType__entry_Default();
 	}
 	
 	/* 'default' enter sequence for region time */
@@ -1292,6 +1702,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	private void exitSequence_main_region_UserSelction() {
 		exitSequence_main_region_UserSelction_Payment();
 		exitSequence_main_region_UserSelction_produceSelection();
+		exitSequence_main_region_UserSelction_sliderType();
 		exitSequence_main_region_UserSelction_time();
 	}
 	
@@ -1323,10 +1734,28 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		stateVector[1] = State.$NullState$;
 	}
 	
-	/* Default exit sequence for state timer */
-	private void exitSequence_main_region_UserSelction_time_timer() {
+	/* Default exit sequence for state classicSliders */
+	private void exitSequence_main_region_UserSelction_sliderType_classicSliders() {
 		nextStateIndex = 2;
 		stateVector[2] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state soupSliders */
+	private void exitSequence_main_region_UserSelction_sliderType_soupSliders() {
+		nextStateIndex = 2;
+		stateVector[2] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state IceTeaSLiders */
+	private void exitSequence_main_region_UserSelction_sliderType_IceTeaSLiders() {
+		nextStateIndex = 2;
+		stateVector[2] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state timer */
+	private void exitSequence_main_region_UserSelction_time_timer() {
+		nextStateIndex = 3;
+		stateVector[3] = State.$NullState$;
 		
 		exitAction_main_region_UserSelction_time_timer();
 	}
@@ -1357,6 +1786,12 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		stateVector[0] = State.$NullState$;
 		
 		exitAction_main_region_HotDrinkPreparation_r1_pause();
+	}
+	
+	/* Default exit sequence for state spicesAdd */
+	private void exitSequence_main_region_HotDrinkPreparation_r1_spicesAdd() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
 	}
 	
 	/* Default exit sequence for state start */
@@ -1421,6 +1856,30 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		exitAction_main_region_HotDrinkPreparation_r2_finish();
 	}
 	
+	/* Default exit sequence for state soup */
+	private void exitSequence_main_region_HotDrinkPreparation_r2_soup() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+		
+		exitAction_main_region_HotDrinkPreparation_r2_soup();
+	}
+	
+	/* Default exit sequence for state ice tea */
+	private void exitSequence_main_region_HotDrinkPreparation_r2_ice_tea() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+		
+		exitAction_main_region_HotDrinkPreparation_r2_ice_tea();
+	}
+	
+	/* Default exit sequence for state cooling */
+	private void exitSequence_main_region_HotDrinkPreparation_r2_cooling() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+		
+		exitAction_main_region_HotDrinkPreparation_r2_cooling();
+	}
+	
 	/* Default exit sequence for region main region */
 	private void exitSequence_main_region() {
 		switch (stateVector[0]) {
@@ -1444,6 +1903,9 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			break;
 		case main_region_HotDrinkPreparation_r1_pause:
 			exitSequence_main_region_HotDrinkPreparation_r1_pause();
+			break;
+		case main_region_HotDrinkPreparation_r1_spicesAdd:
+			exitSequence_main_region_HotDrinkPreparation_r1_spicesAdd();
 			break;
 		default:
 			break;
@@ -1477,11 +1939,34 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		case main_region_HotDrinkPreparation_r2_finish:
 			exitSequence_main_region_HotDrinkPreparation_r2_finish();
 			break;
+		case main_region_HotDrinkPreparation_r2_soup:
+			exitSequence_main_region_HotDrinkPreparation_r2_soup();
+			break;
+		case main_region_HotDrinkPreparation_r2_ice_tea:
+			exitSequence_main_region_HotDrinkPreparation_r2_ice_tea();
+			break;
+		case main_region_HotDrinkPreparation_r2_cooling:
+			exitSequence_main_region_HotDrinkPreparation_r2_cooling();
+			break;
 		default:
 			break;
 		}
 		
 		switch (stateVector[2]) {
+		case main_region_UserSelction_sliderType_classicSliders:
+			exitSequence_main_region_UserSelction_sliderType_classicSliders();
+			break;
+		case main_region_UserSelction_sliderType_soupSliders:
+			exitSequence_main_region_UserSelction_sliderType_soupSliders();
+			break;
+		case main_region_UserSelction_sliderType_IceTeaSLiders:
+			exitSequence_main_region_UserSelction_sliderType_IceTeaSLiders();
+			break;
+		default:
+			break;
+		}
+		
+		switch (stateVector[3]) {
 		case main_region_UserSelction_time_timer:
 			exitSequence_main_region_UserSelction_time_timer();
 			break;
@@ -1518,9 +2003,26 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		}
 	}
 	
+	/* Default exit sequence for region sliderType */
+	private void exitSequence_main_region_UserSelction_sliderType() {
+		switch (stateVector[2]) {
+		case main_region_UserSelction_sliderType_classicSliders:
+			exitSequence_main_region_UserSelction_sliderType_classicSliders();
+			break;
+		case main_region_UserSelction_sliderType_soupSliders:
+			exitSequence_main_region_UserSelction_sliderType_soupSliders();
+			break;
+		case main_region_UserSelction_sliderType_IceTeaSLiders:
+			exitSequence_main_region_UserSelction_sliderType_IceTeaSLiders();
+			break;
+		default:
+			break;
+		}
+	}
+	
 	/* Default exit sequence for region time */
 	private void exitSequence_main_region_UserSelction_time() {
-		switch (stateVector[2]) {
+		switch (stateVector[3]) {
 		case main_region_UserSelction_time_timer:
 			exitSequence_main_region_UserSelction_time_timer();
 			break;
@@ -1540,6 +2042,9 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			break;
 		case main_region_HotDrinkPreparation_r1_pause:
 			exitSequence_main_region_HotDrinkPreparation_r1_pause();
+			break;
+		case main_region_HotDrinkPreparation_r1_spicesAdd:
+			exitSequence_main_region_HotDrinkPreparation_r1_spicesAdd();
 			break;
 		default:
 			break;
@@ -1573,6 +2078,15 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		case main_region_HotDrinkPreparation_r2_finish:
 			exitSequence_main_region_HotDrinkPreparation_r2_finish();
 			break;
+		case main_region_HotDrinkPreparation_r2_soup:
+			exitSequence_main_region_HotDrinkPreparation_r2_soup();
+			break;
+		case main_region_HotDrinkPreparation_r2_ice_tea:
+			exitSequence_main_region_HotDrinkPreparation_r2_ice_tea();
+			break;
+		case main_region_HotDrinkPreparation_r2_cooling:
+			exitSequence_main_region_HotDrinkPreparation_r2_cooling();
+			break;
 		default:
 			break;
 		}
@@ -1591,6 +2105,11 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	/* Default react sequence for initial entry  */
 	private void react_main_region_UserSelction_produceSelection__entry_Default() {
 		enterSequence_main_region_UserSelction_produceSelection_SelectionWait_default();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_UserSelction_sliderType__entry_Default() {
+		enterSequence_main_region_UserSelction_sliderType_classicSliders_default();
 	}
 	
 	/* Default react sequence for initial entry  */
@@ -1726,6 +2245,63 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return did_transition;
 	}
 	
+	private boolean main_region_UserSelction_sliderType_classicSliders_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (sCInterface.soupTrigger) {
+				exitSequence_main_region_UserSelction_sliderType_classicSliders();
+				enterSequence_main_region_UserSelction_sliderType_soupSliders_default();
+			} else {
+				if (sCInterface.iceTeaTrigger) {
+					exitSequence_main_region_UserSelction_sliderType_classicSliders();
+					enterSequence_main_region_UserSelction_sliderType_IceTeaSLiders_default();
+				} else {
+					did_transition = false;
+				}
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_UserSelction_sliderType_soupSliders_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (sCInterface.iceTeaTrigger) {
+				exitSequence_main_region_UserSelction_sliderType_soupSliders();
+				enterSequence_main_region_UserSelction_sliderType_IceTeaSLiders_default();
+			} else {
+				if (sCInterface.classicDrinkTrigger) {
+					exitSequence_main_region_UserSelction_sliderType_soupSliders();
+					enterSequence_main_region_UserSelction_sliderType_classicSliders_default();
+				} else {
+					did_transition = false;
+				}
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_UserSelction_sliderType_IceTeaSLiders_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (sCInterface.soupTrigger) {
+				exitSequence_main_region_UserSelction_sliderType_IceTeaSLiders();
+				enterSequence_main_region_UserSelction_sliderType_soupSliders_default();
+			} else {
+				if (sCInterface.classicDrinkTrigger) {
+					exitSequence_main_region_UserSelction_sliderType_IceTeaSLiders();
+					enterSequence_main_region_UserSelction_sliderType_classicSliders_default();
+				} else {
+					did_transition = false;
+				}
+			}
+		}
+		return did_transition;
+	}
+	
 	private boolean main_region_UserSelction_time_timer_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
@@ -1796,12 +2372,26 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((timeEvents[6]) && (sCInterface.operationCallback.isReady()))) {
+			if (((timeEvents[6]) && ((sCInterface.operationCallback.isReady() && (sCInterface.getSelection()== null?"Soup" !=null : !sCInterface.getSelection().equals("Soup")))))) {
 				exitSequence_main_region_HotDrinkPreparation_r1_pause();
 				enterSequence_main_region_HotDrinkPreparation_r1_sugarAdd_default();
 			} else {
-				did_transition = false;
+				if (((timeEvents[7]) && ((sCInterface.operationCallback.isReady() && (sCInterface.getSelection()== null?"Soup" ==null :sCInterface.getSelection().equals("Soup")))))) {
+					exitSequence_main_region_HotDrinkPreparation_r1_pause();
+					enterSequence_main_region_HotDrinkPreparation_r1_spicesAdd_default();
+				} else {
+					did_transition = false;
+				}
 			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_HotDrinkPreparation_r1_spicesAdd_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			did_transition = false;
 		}
 		return did_transition;
 	}
@@ -1825,7 +2415,19 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 						enterSequence_main_region_HotDrinkPreparation_r2_tea_default();
 						main_region_HotDrinkPreparation_react(false);
 					} else {
-						did_transition = false;
+						if ((sCInterface.getSelection()== null?"Soup" ==null :sCInterface.getSelection().equals("Soup"))) {
+							exitSequence_main_region_HotDrinkPreparation_r2_start();
+							enterSequence_main_region_HotDrinkPreparation_r2_putCup_default();
+							main_region_HotDrinkPreparation_react(false);
+						} else {
+							if ((sCInterface.getSelection()== null?"IcedTea" ==null :sCInterface.getSelection().equals("IcedTea"))) {
+								exitSequence_main_region_HotDrinkPreparation_r2_start();
+								enterSequence_main_region_HotDrinkPreparation_r2_ice_tea_default();
+								main_region_HotDrinkPreparation_react(false);
+							} else {
+								did_transition = false;
+							}
+						}
 					}
 				}
 			}
@@ -1840,7 +2442,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[7]) {
+			if (timeEvents[8]) {
 				exitSequence_main_region_HotDrinkPreparation_r2_coffee();
 				enterSequence_main_region_HotDrinkPreparation_r2_putCup_default();
 				main_region_HotDrinkPreparation_react(false);
@@ -1858,7 +2460,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[8]) {
+			if (timeEvents[9]) {
 				exitSequence_main_region_HotDrinkPreparation_r2_expresso();
 				enterSequence_main_region_HotDrinkPreparation_r2_putCup_default();
 				main_region_HotDrinkPreparation_react(false);
@@ -1876,7 +2478,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[9]) {
+			if (timeEvents[10]) {
 				exitSequence_main_region_HotDrinkPreparation_r2_tea();
 				enterSequence_main_region_HotDrinkPreparation_r2_putCup_default();
 				main_region_HotDrinkPreparation_react(false);
@@ -1894,12 +2496,18 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((timeEvents[10]) && (sCInterface.operationCallback.isHot()))) {
+			if (((timeEvents[11]) && ((sCInterface.operationCallback.isHot() && (sCInterface.getSelection()== null?"Soup" !=null : !sCInterface.getSelection().equals("Soup")))))) {
 				exitSequence_main_region_HotDrinkPreparation_r2_putCup();
 				enterSequence_main_region_HotDrinkPreparation_r2_waterFlow_default();
 				main_region_HotDrinkPreparation_react(false);
 			} else {
-				did_transition = false;
+				if ((sCInterface.operationCallback.isHot() && (sCInterface.getSelection()== null?"Soup" ==null :sCInterface.getSelection().equals("Soup")))) {
+					exitSequence_main_region_HotDrinkPreparation_r2_putCup();
+					enterSequence_main_region_HotDrinkPreparation_r2_soup_default();
+					main_region_HotDrinkPreparation_react(false);
+				} else {
+					did_transition = false;
+				}
 			}
 		}
 		if (did_transition==false) {
@@ -1912,19 +2520,19 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((timeEvents[11]) && ((sCInterface.operationCallback.isComplete() && (sCInterface.getSelection()== null?"Tea" ==null :sCInterface.getSelection().equals("Tea")))))) {
+			if (((timeEvents[12]) && ((sCInterface.operationCallback.isComplete() && (sCInterface.getSelection()== null?"Tea" ==null :sCInterface.getSelection().equals("Tea")))))) {
 				exitSequence_main_region_HotDrinkPreparation_r2_waterFlow();
 				enterSequence_main_region_HotDrinkPreparation_r2_infusion_default();
 				main_region_HotDrinkPreparation_react(false);
 			} else {
-				if (((timeEvents[12]) && ((sCInterface.operationCallback.isComplete() && (sCInterface.getSelection()== null?"Coffee" ==null :sCInterface.getSelection().equals("Coffee")))))) {
+				if (((timeEvents[13]) && (((sCInterface.operationCallback.isComplete() && (sCInterface.getSelection()== null?"Tea" !=null : !sCInterface.getSelection().equals("Tea"))) && (sCInterface.getSelection()== null?"IcedTea" !=null : !sCInterface.getSelection().equals("IcedTea")))))) {
 					exitSequence_main_region_HotDrinkPreparation_r2_waterFlow();
 					enterSequence_main_region_HotDrinkPreparation_r2_finish_default();
 					main_region_HotDrinkPreparation_react(false);
 				} else {
-					if (((timeEvents[13]) && ((sCInterface.operationCallback.isComplete() && (sCInterface.getSelection()== null?"Expresso" ==null :sCInterface.getSelection().equals("Expresso")))))) {
+					if (((timeEvents[14]) && ((sCInterface.operationCallback.isComplete() && (sCInterface.getSelection()== null?"IcedTea" ==null :sCInterface.getSelection().equals("IcedTea")))))) {
 						exitSequence_main_region_HotDrinkPreparation_r2_waterFlow();
-						enterSequence_main_region_HotDrinkPreparation_r2_finish_default();
+						enterSequence_main_region_HotDrinkPreparation_r2_cooling_default();
 						main_region_HotDrinkPreparation_react(false);
 					} else {
 						did_transition = false;
@@ -1942,7 +2550,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[14]) {
+			if (timeEvents[15]) {
 				exitSequence_main_region_HotDrinkPreparation_r2_infusion();
 				enterSequence_main_region_HotDrinkPreparation_r2_finish_default();
 				main_region_HotDrinkPreparation_react(false);
@@ -1960,11 +2568,71 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[15]) {
+			if (timeEvents[16]) {
 				exitSequence_main_region_HotDrinkPreparation_r2_finish();
 				react_main_region_HotDrinkPreparation_r2__exit_Default();
 			} else {
 				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_HotDrinkPreparation_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_HotDrinkPreparation_r2_soup_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[17]) {
+				exitSequence_main_region_HotDrinkPreparation_r2_soup();
+				enterSequence_main_region_HotDrinkPreparation_r2_waterFlow_default();
+				main_region_HotDrinkPreparation_react(false);
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_HotDrinkPreparation_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_HotDrinkPreparation_r2_ice_tea_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[18]) {
+				exitSequence_main_region_HotDrinkPreparation_r2_ice_tea();
+				enterSequence_main_region_HotDrinkPreparation_r2_putCup_default();
+				main_region_HotDrinkPreparation_react(false);
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_HotDrinkPreparation_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_HotDrinkPreparation_r2_cooling_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (sCInterface.coolingDone) {
+				exitSequence_main_region_HotDrinkPreparation_r2_cooling();
+				enterSequence_main_region_HotDrinkPreparation_r2_finish_default();
+				main_region_HotDrinkPreparation_react(false);
+			} else {
+				if (timeEvents[19]) {
+					exitSequence_main_region_HotDrinkPreparation_r2_cooling();
+					enterSequence_main_region_HotDrinkPreparation_r2_cooling_default();
+					main_region_HotDrinkPreparation_react(false);
+				} else {
+					did_transition = false;
+				}
 			}
 		}
 		if (did_transition==false) {

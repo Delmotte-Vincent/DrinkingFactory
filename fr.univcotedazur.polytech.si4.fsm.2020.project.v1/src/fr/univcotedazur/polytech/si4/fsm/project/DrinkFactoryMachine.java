@@ -43,6 +43,11 @@ public class DrinkFactoryMachine extends JFrame {
     public int temperature;
     public PayType paymentType;
     public double reduction;
+    JLabel lblSugar;
+    JLabel lblSize;
+    JLabel lblTemperature;
+    Hashtable<Integer, JLabel> temperatureTable;
+    Hashtable<Integer, JLabel> coldTemperatureTable;
 
 	/**
 	 * @wbp.nonvisual location=311,475
@@ -134,6 +139,7 @@ public class DrinkFactoryMachine extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (isInStock("Coffee")) {
 					theFSM.setSelection("Coffee");
+					theFSM.raiseClassicDrinkTrigger();
 					price = 0.35;
 					updateUI();
 				}
@@ -153,6 +159,7 @@ public class DrinkFactoryMachine extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (isInStock("Expresso")) {
 					theFSM.setSelection("Expresso");
+					theFSM.raiseClassicDrinkTrigger();
 					price = 0.50;
 					updateUI();
 				}
@@ -172,6 +179,7 @@ public class DrinkFactoryMachine extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (isInStock("Tea")) {
 					theFSM.setSelection("Tea");
+					theFSM.raiseClassicDrinkTrigger();
 					price = 0.40;
 					updateUI();
 				}
@@ -191,6 +199,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				theFSM.setSelection("Soup");
+				theFSM.raiseSoupTrigger();
 				price = 1.0;
 				updateUI();
 			}
@@ -260,7 +269,7 @@ public class DrinkFactoryMachine extends JFrame {
         });
 
 
-        Hashtable<Integer, JLabel> temperatureTable = new Hashtable<Integer, JLabel>();
+        temperatureTable = new Hashtable<Integer, JLabel>();
 		temperatureTable.put(0, new JLabel("20°C"));
 		temperatureTable.put(1, new JLabel("35°C"));
 		temperatureTable.put(2, new JLabel("60°C"));
@@ -268,6 +277,16 @@ public class DrinkFactoryMachine extends JFrame {
 		for (JLabel l : temperatureTable.values()) {
 			l.setForeground(Color.WHITE);
 		}
+		
+		coldTemperatureTable = new Hashtable<Integer, JLabel>();
+		coldTemperatureTable.put(0, new JLabel("15°C"));
+		coldTemperatureTable.put(1, new JLabel("10°C"));
+		coldTemperatureTable.put(2, new JLabel("5°C"));
+		coldTemperatureTable.put(3, new JLabel("2°C"));
+		for (JLabel l : coldTemperatureTable.values()) {
+			l.setForeground(Color.WHITE);
+		}
+		
 		temperatureSlider.setLabelTable(temperatureTable);
 
 		contentPane.add(temperatureSlider);
@@ -282,6 +301,7 @@ public class DrinkFactoryMachine extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (isInStock("IcedTea")) {
 					theFSM.setSelection("IcedTea");
+					theFSM.raiseIceTeaTrigger();
 					price = 1.0;
 					updateUI();
 				}
@@ -292,21 +312,21 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 		});
 
-		JLabel lblSugar = new JLabel("Sugar");
+		lblSugar = new JLabel("Sugar");
 		lblSugar.setForeground(Color.WHITE);
 		lblSugar.setBackground(Color.DARK_GRAY);
 		lblSugar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSugar.setBounds(380, 34, 44, 15);
 		contentPane.add(lblSugar);
 
-		JLabel lblSize = new JLabel("Size");
+		lblSize = new JLabel("Size");
 		lblSize.setForeground(Color.WHITE);
 		lblSize.setBackground(Color.DARK_GRAY);
 		lblSize.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSize.setBounds(380, 113, 44, 15);
 		contentPane.add(lblSize);
 
-		JLabel lblTemperature = new JLabel("Temperature");
+		lblTemperature = new JLabel("Temperature");
 		lblTemperature.setForeground(Color.WHITE);
 		lblTemperature.setBackground(Color.DARK_GRAY);
 		lblTemperature.setHorizontalAlignment(SwingConstants.CENTER);
@@ -519,7 +539,7 @@ public class DrinkFactoryMachine extends JFrame {
         System.out.println("RESET");
         this.paymentType = PayType.DEFAULT;
         this.temperature = 0;
-				this.reduction = 0;
+		this.reduction = 0;
         this.payment = 0;
         this.price = 0;
         theFSM.setSelection(" ");
@@ -550,9 +570,30 @@ public class DrinkFactoryMachine extends JFrame {
 
 	public void doWaterFlow() {
         System.out.println("water flow");
-
-
 	}
+	
+	//-----Changement des sliders selon le type de boisson-------
+	public void setClassicSliders() {
+		System.out.println("Classic Sliders");
+		lblSugar.setText("Sugar");
+		sizeSlider.setMaximum(2);
+		temperatureSlider.setLabelTable(temperatureTable);
+	}
+	
+	public void setSoupSliders() {
+		System.out.println("Soup Sliders");
+		lblSugar.setText("Spices");
+		sizeSlider.setMaximum(2);
+		temperatureSlider.setLabelTable(temperatureTable);
+	}
+	
+	public void setIceTeaSliders() {
+		System.out.println("Ice Tea Sliders");
+		lblSugar.setText("Sugar");
+		sizeSlider.setMaximum(1);
+		temperatureSlider.setLabelTable(coldTemperatureTable);
+	}
+	//------------------------------------------------------------
 
 	public void doPutCup() {
         System.out.println("Put a cup");
@@ -570,6 +611,10 @@ public class DrinkFactoryMachine extends JFrame {
 	public void doAddSugar() {
 		System.out.println("Adding " + sugarSlider.getValue() + " doses of sugar");
 
+	}
+	
+	public void doAddSpices() {
+		System.out.println("Adding " + sugarSlider.getValue() + " doses of spices");
 	}
 
     public boolean isHot() {
@@ -678,5 +723,33 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 		}
 		return null;
+	}
+
+	public void doSoup() {
+		System.out.println("Soup preparation");
+		
+	}
+
+	public void doIceTea() {
+		System.out.println("Ice Tea preparation");
+	}
+	
+	public void doCooling() {
+		temperature -= 2;
+		System.out.println("-2°,  temperature : " + temperature +"°");
+		int tempGoal = 0;
+		switch(temperatureSlider.getValue()){
+			case 0:
+				tempGoal = 15;
+			case 1:
+				tempGoal = 10;
+			case 2:
+				tempGoal = 5;
+			case 3:
+				tempGoal = 2;
+		}
+		if (temperature <= tempGoal) {
+			theFSM.raiseCoolingDone();
+		}
 	}
 }

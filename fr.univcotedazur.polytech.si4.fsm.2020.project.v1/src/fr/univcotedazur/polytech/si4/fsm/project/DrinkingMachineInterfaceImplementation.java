@@ -74,6 +74,48 @@ public class DrinkingMachineInterfaceImplementation implements SCInterfaceListen
 		
 	}
 
+	@Override
+	public void onSetClassicSlidersRaised() {
+		theDF.setClassicSliders();
+		
+	}
+
+	@Override
+	public void onSetSoupSlidersRaised() {
+		theDF.setSoupSliders();
+		
+	}
+
+	@Override
+	public void onSetIceTeaSlidersRaised() {
+		theDF.setIceTeaSliders();
+		
+	}
+
+	@Override
+	public void onDoSoupRaised() {
+		theDF.doSoup();
+		
+	}
+
+	@Override
+	public void onDoIceTeaRaised() {
+		theDF.doIceTea();
+		
+	}
+
+	@Override
+	public void onDoAddSpicesRaised() {
+		theDF.doAddSpices();
+		
+	}
+
+	@Override
+	public void onDoCoolingRaised() {
+		theDF.doCooling();
+		
+	}
+
     /*
     @Override
     public void onReadyRaised() {
