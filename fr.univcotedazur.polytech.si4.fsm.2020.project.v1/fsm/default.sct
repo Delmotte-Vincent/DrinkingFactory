@@ -113,7 +113,7 @@
             <outgoingTransitions xmi:id="_rkl6wCsZEeuJMt-12PsuLA" specification="after 30s" target="_Xpuu0CsZEeuJMt-12PsuLA"/>
           </vertices>
           <vertices xsi:type="sgraph:Exit" xmi:id="_K7lCIB-dEeuFTeKj50r7ng" incomingTransitions="_rkraUisZEeuJMt-12PsuLA"/>
-          <vertices xsi:type="sgraph:State" xmi:id="_Xpuu0CsZEeuJMt-12PsuLA" specification="entry&#xD;&#xA;/ raise doNotify()" name="finish" incomingTransitions="_rkl6wCsZEeuJMt-12PsuLA _rknI6ysZEeuJMt-12PsuLA _gaLDUDEEEeulRv6SKSml1Q">
+          <vertices xsi:type="sgraph:State" xmi:id="_Xpuu0CsZEeuJMt-12PsuLA" specification="entry&#xD;&#xA;/ raise doNotify" name="finish" incomingTransitions="_rkl6wCsZEeuJMt-12PsuLA _rknI6ysZEeuJMt-12PsuLA _gaLDUDEEEeulRv6SKSml1Q">
             <outgoingTransitions xmi:id="_rkraUisZEeuJMt-12PsuLA" specification="after 10s" target="_K7lCIB-dEeuFTeKj50r7ng"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_5lg-UDDsEeulRv6SKSml1Q" specification="entry/raise doSoup" name="soup" incomingTransitions="_mzka4DDvEeulRv6SKSml1Q">
