@@ -823,78 +823,78 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	protected synchronized void singleCycle() {
 		for (nextStateIndex = 0; nextStateIndex < stateVector.length; nextStateIndex++) {
 			switch (stateVector[nextStateIndex]) {
-				case main_region_Init:
-					main_region_Init_react(true);
-					break;
-				case main_region_UserSelction_Payment_PayWait:
-					main_region_UserSelction_Payment_PayWait_react(true);
-					break;
-				case main_region_UserSelction_Payment_Coins:
-					main_region_UserSelction_Payment_Coins_react(true);
-					break;
-				case main_region_UserSelction_Payment_NFC:
-					main_region_UserSelction_Payment_NFC_react(true);
-					break;
-				case main_region_UserSelction_produceSelection_SelectionWait:
-					main_region_UserSelction_produceSelection_SelectionWait_react(true);
-					break;
-				case main_region_UserSelction_sliderType_classicSliders:
-					main_region_UserSelction_sliderType_classicSliders_react(true);
-					break;
-				case main_region_UserSelction_sliderType_soupSliders:
-					main_region_UserSelction_sliderType_soupSliders_react(true);
-					break;
-				case main_region_UserSelction_sliderType_IceTeaSLiders:
-					main_region_UserSelction_sliderType_IceTeaSLiders_react(true);
-					break;
-				case main_region_UserSelction_time_timer:
-					main_region_UserSelction_time_timer_react(true);
-					break;
-				case main_region_HotDrinkPreparation_r1_waterHeat:
-					main_region_HotDrinkPreparation_r1_waterHeat_react(true);
-					break;
-				case main_region_HotDrinkPreparation_r1_sugarAdd:
-					main_region_HotDrinkPreparation_r1_sugarAdd_react(true);
-					break;
-				case main_region_HotDrinkPreparation_r1_pause:
-					main_region_HotDrinkPreparation_r1_pause_react(true);
-					break;
-				case main_region_HotDrinkPreparation_r1_spicesAdd:
-					main_region_HotDrinkPreparation_r1_spicesAdd_react(true);
-					break;
-				case main_region_HotDrinkPreparation_r2_start:
-					main_region_HotDrinkPreparation_r2_start_react(true);
-					break;
-				case main_region_HotDrinkPreparation_r2_coffee:
-					main_region_HotDrinkPreparation_r2_coffee_react(true);
-					break;
-				case main_region_HotDrinkPreparation_r2_expresso:
-					main_region_HotDrinkPreparation_r2_expresso_react(true);
-					break;
-				case main_region_HotDrinkPreparation_r2_tea:
-					main_region_HotDrinkPreparation_r2_tea_react(true);
-					break;
-				case main_region_HotDrinkPreparation_r2_putCup:
-					main_region_HotDrinkPreparation_r2_putCup_react(true);
-					break;
-				case main_region_HotDrinkPreparation_r2_waterFlow:
-					main_region_HotDrinkPreparation_r2_waterFlow_react(true);
-					break;
-				case main_region_HotDrinkPreparation_r2_infusion:
-					main_region_HotDrinkPreparation_r2_infusion_react(true);
-					break;
-				case main_region_HotDrinkPreparation_r2_finish:
-					main_region_HotDrinkPreparation_r2_finish_react(true);
-					break;
-				case main_region_HotDrinkPreparation_r2_soup:
-					main_region_HotDrinkPreparation_r2_soup_react(true);
-					break;
-				case main_region_HotDrinkPreparation_r2_ice_tea:
-					main_region_HotDrinkPreparation_r2_ice_tea_react(true);
-					break;
-				case main_region_HotDrinkPreparation_r2_cooling:
-					main_region_HotDrinkPreparation_r2_cooling_react(true);
-					break;
+			case main_region_Init:
+				main_region_Init_react(true);
+				break;
+			case main_region_UserSelction_Payment_PayWait:
+				main_region_UserSelction_Payment_PayWait_react(true);
+				break;
+			case main_region_UserSelction_Payment_Coins:
+				main_region_UserSelction_Payment_Coins_react(true);
+				break;
+			case main_region_UserSelction_Payment_NFC:
+				main_region_UserSelction_Payment_NFC_react(true);
+				break;
+			case main_region_UserSelction_produceSelection_SelectionWait:
+				main_region_UserSelction_produceSelection_SelectionWait_react(true);
+				break;
+			case main_region_UserSelction_sliderType_classicSliders:
+				main_region_UserSelction_sliderType_classicSliders_react(true);
+				break;
+			case main_region_UserSelction_sliderType_soupSliders:
+				main_region_UserSelction_sliderType_soupSliders_react(true);
+				break;
+			case main_region_UserSelction_sliderType_IceTeaSLiders:
+				main_region_UserSelction_sliderType_IceTeaSLiders_react(true);
+				break;
+			case main_region_UserSelction_time_timer:
+				main_region_UserSelction_time_timer_react(true);
+				break;
+			case main_region_HotDrinkPreparation_r1_waterHeat:
+				main_region_HotDrinkPreparation_r1_waterHeat_react(true);
+				break;
+			case main_region_HotDrinkPreparation_r1_sugarAdd:
+				main_region_HotDrinkPreparation_r1_sugarAdd_react(true);
+				break;
+			case main_region_HotDrinkPreparation_r1_pause:
+				main_region_HotDrinkPreparation_r1_pause_react(true);
+				break;
+			case main_region_HotDrinkPreparation_r1_spicesAdd:
+				main_region_HotDrinkPreparation_r1_spicesAdd_react(true);
+				break;
+			case main_region_HotDrinkPreparation_r2_start:
+				main_region_HotDrinkPreparation_r2_start_react(true);
+				break;
+			case main_region_HotDrinkPreparation_r2_coffee:
+				main_region_HotDrinkPreparation_r2_coffee_react(true);
+				break;
+			case main_region_HotDrinkPreparation_r2_expresso:
+				main_region_HotDrinkPreparation_r2_expresso_react(true);
+				break;
+			case main_region_HotDrinkPreparation_r2_tea:
+				main_region_HotDrinkPreparation_r2_tea_react(true);
+				break;
+			case main_region_HotDrinkPreparation_r2_putCup:
+				main_region_HotDrinkPreparation_r2_putCup_react(true);
+				break;
+			case main_region_HotDrinkPreparation_r2_waterFlow:
+				main_region_HotDrinkPreparation_r2_waterFlow_react(true);
+				break;
+			case main_region_HotDrinkPreparation_r2_infusion:
+				main_region_HotDrinkPreparation_r2_infusion_react(true);
+				break;
+			case main_region_HotDrinkPreparation_r2_finish:
+				main_region_HotDrinkPreparation_r2_finish_react(true);
+				break;
+			case main_region_HotDrinkPreparation_r2_soup:
+				main_region_HotDrinkPreparation_r2_soup_react(true);
+				break;
+			case main_region_HotDrinkPreparation_r2_ice_tea:
+				main_region_HotDrinkPreparation_r2_ice_tea_react(true);
+				break;
+			case main_region_HotDrinkPreparation_r2_cooling:
+				main_region_HotDrinkPreparation_r2_cooling_react(true);
+				break;
 			default:
 				// $NullState$
 			}
