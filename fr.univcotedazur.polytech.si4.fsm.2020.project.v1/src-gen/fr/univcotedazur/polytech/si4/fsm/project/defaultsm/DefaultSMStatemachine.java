@@ -724,22 +724,30 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		main_region_UserSelction_sliderType_soupSliders,
 		main_region_UserSelction_sliderType_IceTeaSLiders,
 		main_region_UserSelction_time_timer,
-		main_region_HotDrinkPreparation,
-		main_region_HotDrinkPreparation_r1_waterHeat,
-		main_region_HotDrinkPreparation_r1_sugarAdd,
-		main_region_HotDrinkPreparation_r1_pause,
-		main_region_HotDrinkPreparation_r1_spicesAdd,
-		main_region_HotDrinkPreparation_r2_start,
-		main_region_HotDrinkPreparation_r2_coffee,
-		main_region_HotDrinkPreparation_r2_expresso,
-		main_region_HotDrinkPreparation_r2_tea,
-		main_region_HotDrinkPreparation_r2_putCup,
-		main_region_HotDrinkPreparation_r2_waterFlow,
-		main_region_HotDrinkPreparation_r2_infusion,
-		main_region_HotDrinkPreparation_r2_finish,
-		main_region_HotDrinkPreparation_r2_soup,
-		main_region_HotDrinkPreparation_r2_ice_tea,
-		main_region_HotDrinkPreparation_r2_cooling,
+		main_region_FirstSteps,
+		main_region_FirstSteps_r1_waterHeat,
+		main_region_FirstSteps_r2_Step1,
+		main_region_FirstSteps_r2_Step1_r1_start,
+		main_region_FirstSteps_r2_Step1_r1_coffee,
+		main_region_FirstSteps_r2_Step1_r1_expresso,
+		main_region_FirstSteps_r2_Step1_r1_tea,
+		main_region_FirstSteps_r2_Step1_r1_ice_tea,
+		main_region_FirstSteps_r2_Step2,
+		main_region_FirstSteps_r2_Step2_r1_putCup,
+		main_region_FirstSteps_r2_Step2_r2_Step2Options,
+		main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting,
+		main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep,
+		main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd,
+		main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup,
+		main_region_FirstSteps_r2_Step2_r2_transition,
+		main_region_LastSteps,
+		main_region_LastSteps_r1_waterFlow,
+		main_region_LastSteps_r2_Soup3rdStep,
+		main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd,
+		main_region_LastSteps_r2_transition,
+		main_region_finish,
+		main_region_infusion,
+		main_region_cooling,
 		$NullState$
 	};
 	
@@ -749,7 +757,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	private ITimer timer;
 	
-	private final boolean[] timeEvents = new boolean[20];
+	private final boolean[] timeEvents = new boolean[17];
 	
 	private BlockingQueue<Runnable> inEventQueue = new LinkedBlockingQueue<Runnable>();
 	private boolean isRunningCycle = false;
@@ -850,50 +858,56 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				case main_region_UserSelction_time_timer:
 					main_region_UserSelction_time_timer_react(true);
 					break;
-				case main_region_HotDrinkPreparation_r1_waterHeat:
-					main_region_HotDrinkPreparation_r1_waterHeat_react(true);
+				case main_region_FirstSteps_r1_waterHeat:
+					main_region_FirstSteps_r1_waterHeat_react(true);
 					break;
-				case main_region_HotDrinkPreparation_r1_sugarAdd:
-					main_region_HotDrinkPreparation_r1_sugarAdd_react(true);
+				case main_region_FirstSteps_r2_Step1_r1_start:
+					main_region_FirstSteps_r2_Step1_r1_start_react(true);
 					break;
-				case main_region_HotDrinkPreparation_r1_pause:
-					main_region_HotDrinkPreparation_r1_pause_react(true);
+				case main_region_FirstSteps_r2_Step1_r1_coffee:
+					main_region_FirstSteps_r2_Step1_r1_coffee_react(true);
 					break;
-				case main_region_HotDrinkPreparation_r1_spicesAdd:
-					main_region_HotDrinkPreparation_r1_spicesAdd_react(true);
+				case main_region_FirstSteps_r2_Step1_r1_expresso:
+					main_region_FirstSteps_r2_Step1_r1_expresso_react(true);
 					break;
-				case main_region_HotDrinkPreparation_r2_start:
-					main_region_HotDrinkPreparation_r2_start_react(true);
+				case main_region_FirstSteps_r2_Step1_r1_tea:
+					main_region_FirstSteps_r2_Step1_r1_tea_react(true);
 					break;
-				case main_region_HotDrinkPreparation_r2_coffee:
-					main_region_HotDrinkPreparation_r2_coffee_react(true);
+				case main_region_FirstSteps_r2_Step1_r1_ice_tea:
+					main_region_FirstSteps_r2_Step1_r1_ice_tea_react(true);
 					break;
-				case main_region_HotDrinkPreparation_r2_expresso:
-					main_region_HotDrinkPreparation_r2_expresso_react(true);
+				case main_region_FirstSteps_r2_Step2_r1_putCup:
+					main_region_FirstSteps_r2_Step2_r1_putCup_react(true);
 					break;
-				case main_region_HotDrinkPreparation_r2_tea:
-					main_region_HotDrinkPreparation_r2_tea_react(true);
+				case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting:
+					main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting_react(true);
 					break;
-				case main_region_HotDrinkPreparation_r2_putCup:
-					main_region_HotDrinkPreparation_r2_putCup_react(true);
+				case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd:
+					main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd_react(true);
 					break;
-				case main_region_HotDrinkPreparation_r2_waterFlow:
-					main_region_HotDrinkPreparation_r2_waterFlow_react(true);
+				case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup:
+					main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup_react(true);
 					break;
-				case main_region_HotDrinkPreparation_r2_infusion:
-					main_region_HotDrinkPreparation_r2_infusion_react(true);
+				case main_region_FirstSteps_r2_Step2_r2_transition:
+					main_region_FirstSteps_r2_Step2_r2_transition_react(true);
 					break;
-				case main_region_HotDrinkPreparation_r2_finish:
-					main_region_HotDrinkPreparation_r2_finish_react(true);
+				case main_region_LastSteps_r1_waterFlow:
+					main_region_LastSteps_r1_waterFlow_react(true);
 					break;
-				case main_region_HotDrinkPreparation_r2_soup:
-					main_region_HotDrinkPreparation_r2_soup_react(true);
+				case main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd:
+					main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd_react(true);
 					break;
-				case main_region_HotDrinkPreparation_r2_ice_tea:
-					main_region_HotDrinkPreparation_r2_ice_tea_react(true);
+				case main_region_LastSteps_r2_transition:
+					main_region_LastSteps_r2_transition_react(true);
 					break;
-				case main_region_HotDrinkPreparation_r2_cooling:
-					main_region_HotDrinkPreparation_r2_cooling_react(true);
+				case main_region_finish:
+					main_region_finish_react(true);
+					break;
+				case main_region_infusion:
+					main_region_infusion_react(true);
+					break;
+				case main_region_cooling:
+					main_region_cooling_react(true);
 					break;
 			default:
 				// $NullState$
@@ -980,39 +994,61 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			return stateVector[2] == State.main_region_UserSelction_sliderType_IceTeaSLiders;
 		case main_region_UserSelction_time_timer:
 			return stateVector[3] == State.main_region_UserSelction_time_timer;
-		case main_region_HotDrinkPreparation:
+		case main_region_FirstSteps:
 			return stateVector[0].ordinal() >= State.
-					main_region_HotDrinkPreparation.ordinal()&& stateVector[0].ordinal() <= State.main_region_HotDrinkPreparation_r2_cooling.ordinal();
-		case main_region_HotDrinkPreparation_r1_waterHeat:
-			return stateVector[0] == State.main_region_HotDrinkPreparation_r1_waterHeat;
-		case main_region_HotDrinkPreparation_r1_sugarAdd:
-			return stateVector[0] == State.main_region_HotDrinkPreparation_r1_sugarAdd;
-		case main_region_HotDrinkPreparation_r1_pause:
-			return stateVector[0] == State.main_region_HotDrinkPreparation_r1_pause;
-		case main_region_HotDrinkPreparation_r1_spicesAdd:
-			return stateVector[0] == State.main_region_HotDrinkPreparation_r1_spicesAdd;
-		case main_region_HotDrinkPreparation_r2_start:
-			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_start;
-		case main_region_HotDrinkPreparation_r2_coffee:
-			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_coffee;
-		case main_region_HotDrinkPreparation_r2_expresso:
-			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_expresso;
-		case main_region_HotDrinkPreparation_r2_tea:
-			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_tea;
-		case main_region_HotDrinkPreparation_r2_putCup:
-			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_putCup;
-		case main_region_HotDrinkPreparation_r2_waterFlow:
-			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_waterFlow;
-		case main_region_HotDrinkPreparation_r2_infusion:
-			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_infusion;
-		case main_region_HotDrinkPreparation_r2_finish:
-			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_finish;
-		case main_region_HotDrinkPreparation_r2_soup:
-			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_soup;
-		case main_region_HotDrinkPreparation_r2_ice_tea:
-			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_ice_tea;
-		case main_region_HotDrinkPreparation_r2_cooling:
-			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_cooling;
+					main_region_FirstSteps.ordinal()&& stateVector[0].ordinal() <= State.main_region_FirstSteps_r2_Step2_r2_transition.ordinal();
+		case main_region_FirstSteps_r1_waterHeat:
+			return stateVector[0] == State.main_region_FirstSteps_r1_waterHeat;
+		case main_region_FirstSteps_r2_Step1:
+			return stateVector[1].ordinal() >= State.
+					main_region_FirstSteps_r2_Step1.ordinal()&& stateVector[1].ordinal() <= State.main_region_FirstSteps_r2_Step1_r1_ice_tea.ordinal();
+		case main_region_FirstSteps_r2_Step1_r1_start:
+			return stateVector[1] == State.main_region_FirstSteps_r2_Step1_r1_start;
+		case main_region_FirstSteps_r2_Step1_r1_coffee:
+			return stateVector[1] == State.main_region_FirstSteps_r2_Step1_r1_coffee;
+		case main_region_FirstSteps_r2_Step1_r1_expresso:
+			return stateVector[1] == State.main_region_FirstSteps_r2_Step1_r1_expresso;
+		case main_region_FirstSteps_r2_Step1_r1_tea:
+			return stateVector[1] == State.main_region_FirstSteps_r2_Step1_r1_tea;
+		case main_region_FirstSteps_r2_Step1_r1_ice_tea:
+			return stateVector[1] == State.main_region_FirstSteps_r2_Step1_r1_ice_tea;
+		case main_region_FirstSteps_r2_Step2:
+			return stateVector[1].ordinal() >= State.
+					main_region_FirstSteps_r2_Step2.ordinal()&& stateVector[1].ordinal() <= State.main_region_FirstSteps_r2_Step2_r2_transition.ordinal();
+		case main_region_FirstSteps_r2_Step2_r1_putCup:
+			return stateVector[1] == State.main_region_FirstSteps_r2_Step2_r1_putCup;
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options:
+			return stateVector[2].ordinal() >= State.
+					main_region_FirstSteps_r2_Step2_r2_Step2Options.ordinal()&& stateVector[2].ordinal() <= State.main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup.ordinal();
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting:
+			return stateVector[2] == State.main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting;
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep:
+			return stateVector[2].ordinal() >= State.
+					main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep.ordinal()&& stateVector[2].ordinal() <= State.main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup.ordinal();
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd:
+			return stateVector[2] == State.main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd;
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup:
+			return stateVector[3] == State.main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup;
+		case main_region_FirstSteps_r2_Step2_r2_transition:
+			return stateVector[2] == State.main_region_FirstSteps_r2_Step2_r2_transition;
+		case main_region_LastSteps:
+			return stateVector[0].ordinal() >= State.
+					main_region_LastSteps.ordinal()&& stateVector[0].ordinal() <= State.main_region_LastSteps_r2_transition.ordinal();
+		case main_region_LastSteps_r1_waterFlow:
+			return stateVector[0] == State.main_region_LastSteps_r1_waterFlow;
+		case main_region_LastSteps_r2_Soup3rdStep:
+			return stateVector[1].ordinal() >= State.
+					main_region_LastSteps_r2_Soup3rdStep.ordinal()&& stateVector[1].ordinal() <= State.main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd.ordinal();
+		case main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd:
+			return stateVector[1] == State.main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd;
+		case main_region_LastSteps_r2_transition:
+			return stateVector[1] == State.main_region_LastSteps_r2_transition;
+		case main_region_finish:
+			return stateVector[0] == State.main_region_finish;
+		case main_region_infusion:
+			return stateVector[0] == State.main_region_infusion;
+		case main_region_cooling:
+			return stateVector[0] == State.main_region_cooling;
 		default:
 			return false;
 		}
@@ -1221,16 +1257,120 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.setReady(value);
 	}
 	
+	private boolean check_main_region_FirstSteps_r2_Step1_r1__choice_0_tr0_tr0() {
+		return (sCInterface.getSelection()== null?"Tea" ==null :sCInterface.getSelection().equals("Tea"));
+	}
+	
+	private boolean check_main_region_FirstSteps_r2_Step1_r1__choice_0_tr1_tr1() {
+		return (sCInterface.getSelection()== null?"IcedTea" ==null :sCInterface.getSelection().equals("IcedTea"));
+	}
+	
+	private boolean check_main_region_FirstSteps_r2_Step1_r1__choice_0_tr2_tr2() {
+		return (sCInterface.getSelection()== null?"Expresso" ==null :sCInterface.getSelection().equals("Expresso"));
+	}
+	
+	private boolean check_main_region_FirstSteps_r2_Step1_r1__choice_0_tr3_tr3() {
+		return (sCInterface.getSelection()== null?"Coffee" ==null :sCInterface.getSelection().equals("Coffee"));
+	}
+	
+	private boolean check_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__choice_0_tr0_tr0() {
+		return (sCInterface.getSelection()== null?"Soup" ==null :sCInterface.getSelection().equals("Soup"));
+	}
+	
+	private boolean check_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__choice_0_tr1_tr1() {
+		return (sCInterface.getSelection()== null?"Expresso" ==null :sCInterface.getSelection().equals("Expresso"));
+	}
+	
+	private boolean check_main_region_LastSteps_r2_Soup3rdStep_r1__choice_0_tr0_tr0() {
+		return (sCInterface.getSelection()== null?"Soup" ==null :sCInterface.getSelection().equals("Soup"));
+	}
+	
+	private boolean check_main_region__choice_0_tr0_tr0() {
+		return ((sCInterface.getSelection()== null?"Tea" ==null :sCInterface.getSelection().equals("Tea")) || (sCInterface.getSelection()== null?"IcedTea" ==null :sCInterface.getSelection().equals("IcedTea")));
+	}
+	
+	private boolean check_main_region__choice_1_tr1_tr1() {
+		return (sCInterface.getSelection()== null?"Tea" ==null :sCInterface.getSelection().equals("Tea"));
+	}
+	
 	private void effect_main_region_UserSelction_tr1() {
 		exitSequence_main_region_UserSelction();
-		enterSequence_main_region_HotDrinkPreparation_default();
+		enterSequence_main_region_FirstSteps_default();
 		react();
 	}
 	
-	private void effect_main_region_HotDrinkPreparation_tr0() {
-		exitSequence_main_region_HotDrinkPreparation();
-		enterSequence_main_region_Init_default();
-		react();
+	private void effect_main_region_FirstSteps_r2_Step1_tr0() {
+		exitSequence_main_region_FirstSteps_r2_Step1();
+		enterSequence_main_region_FirstSteps_r2_Step2_default();
+		main_region_FirstSteps_react(false);
+	}
+	
+	private void effect_main_region_FirstSteps_r2_Step2_r2_Step2Options_tr0() {
+		exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options();
+		enterSequence_main_region_FirstSteps_r2_Step2_r2_transition_default();
+		main_region_FirstSteps_r2_Step2_react(false);
+	}
+	
+	private void effect_main_region_LastSteps_r2_Soup3rdStep_tr0() {
+		exitSequence_main_region_LastSteps_r2_Soup3rdStep();
+		enterSequence_main_region_LastSteps_r2_transition_default();
+		main_region_LastSteps_react(false);
+	}
+	
+	private void effect_main_region_FirstSteps_r2_Step1_r1__choice_0_tr0() {
+		enterSequence_main_region_FirstSteps_r2_Step1_r1_tea_default();
+	}
+	
+	private void effect_main_region_FirstSteps_r2_Step1_r1__choice_0_tr1() {
+		enterSequence_main_region_FirstSteps_r2_Step1_r1_ice_tea_default();
+	}
+	
+	private void effect_main_region_FirstSteps_r2_Step1_r1__choice_0_tr2() {
+		enterSequence_main_region_FirstSteps_r2_Step1_r1_expresso_default();
+	}
+	
+	private void effect_main_region_FirstSteps_r2_Step1_r1__choice_0_tr3() {
+		enterSequence_main_region_FirstSteps_r2_Step1_r1_coffee_default();
+	}
+	
+	private void effect_main_region_FirstSteps_r2_Step1_r1__choice_0_tr4() {
+		react_main_region_FirstSteps_r2_Step1_r1__exit_Default();
+	}
+	
+	private void effect_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__choice_0_tr0() {
+		enterSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_default();
+	}
+	
+	private void effect_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__choice_0_tr1() {
+		enterSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting_default();
+	}
+	
+	private void effect_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__choice_0_tr2() {
+		react_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__exit_Default();
+	}
+	
+	private void effect_main_region_LastSteps_r2_Soup3rdStep_r1__choice_0_tr0() {
+		react_main_region_LastSteps_r2_Soup3rdStep_r1__exit_Default();
+	}
+	
+	private void effect_main_region_LastSteps_r2_Soup3rdStep_r1__choice_0_tr1() {
+		enterSequence_main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd_default();
+	}
+	
+	private void effect_main_region__choice_0_tr0() {
+		enterSequence_main_region_infusion_default();
+	}
+	
+	private void effect_main_region__choice_0_tr1() {
+		enterSequence_main_region_finish_default();
+	}
+	
+	private void effect_main_region__choice_1_tr1() {
+		enterSequence_main_region_finish_default();
+	}
+	
+	private void effect_main_region__choice_1_tr0() {
+		enterSequence_main_region_cooling_default();
 	}
 	
 	/* Entry action for state 'Init'. */
@@ -1284,7 +1424,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	}
 	
 	/* Entry action for state 'waterHeat'. */
-	private void entryAction_main_region_HotDrinkPreparation_r1_waterHeat() {
+	private void entryAction_main_region_FirstSteps_r1_waterHeat() {
 		timer.setTimer(this, 4, 7, true);
 		
 		timer.setTimer(this, 5, (1 * 1000), true);
@@ -1292,96 +1432,93 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.raiseDoWaterHeat();
 	}
 	
-	/* Entry action for state 'sugarAdd'. */
-	private void entryAction_main_region_HotDrinkPreparation_r1_sugarAdd() {
-		sCInterface.raiseDoAddSugar();
-	}
-	
-	/* Entry action for state 'pause'. */
-	private void entryAction_main_region_HotDrinkPreparation_r1_pause() {
-		timer.setTimer(this, 6, 7, true);
-		
-		timer.setTimer(this, 7, 7, true);
-	}
-	
-	/* Entry action for state 'spicesAdd'. */
-	private void entryAction_main_region_HotDrinkPreparation_r1_spicesAdd() {
-		sCInterface.raiseDoAddSpices();
-	}
-	
 	/* Entry action for state 'start'. */
-	private void entryAction_main_region_HotDrinkPreparation_r2_start() {
+	private void entryAction_main_region_FirstSteps_r2_Step1_r1_start() {
 		sCInterface.raiseDoDecrement();
 	}
 	
 	/* Entry action for state 'coffee'. */
-	private void entryAction_main_region_HotDrinkPreparation_r2_coffee() {
-		timer.setTimer(this, 8, (2 * 1000), false);
+	private void entryAction_main_region_FirstSteps_r2_Step1_r1_coffee() {
+		timer.setTimer(this, 6, (2 * 1000), false);
 		
 		sCInterface.raiseDoCoffee();
 	}
 	
 	/* Entry action for state 'expresso'. */
-	private void entryAction_main_region_HotDrinkPreparation_r2_expresso() {
-		timer.setTimer(this, 9, (2 * 1000), false);
+	private void entryAction_main_region_FirstSteps_r2_Step1_r1_expresso() {
+		timer.setTimer(this, 7, (2 * 1000), false);
 		
 		sCInterface.raiseDoExpresso();
 	}
 	
 	/* Entry action for state 'tea'. */
-	private void entryAction_main_region_HotDrinkPreparation_r2_tea() {
-		timer.setTimer(this, 10, (2 * 1000), false);
+	private void entryAction_main_region_FirstSteps_r2_Step1_r1_tea() {
+		timer.setTimer(this, 8, (2 * 1000), false);
 		
 		sCInterface.raiseDoTea();
 	}
 	
-	/* Entry action for state 'putCup'. */
-	private void entryAction_main_region_HotDrinkPreparation_r2_putCup() {
-		timer.setTimer(this, 11, 7, true);
-		
-		sCInterface.raiseDoPutCup();
-	}
-	
-	/* Entry action for state 'waterFlow'. */
-	private void entryAction_main_region_HotDrinkPreparation_r2_waterFlow() {
-		timer.setTimer(this, 12, 100, true);
-		
-		timer.setTimer(this, 13, 100, true);
-		
-		timer.setTimer(this, 14, 100, true);
-		
-		sCInterface.raiseDoWaterFlow();
-	}
-	
-	/* Entry action for state 'infusion'. */
-	private void entryAction_main_region_HotDrinkPreparation_r2_infusion() {
-		timer.setTimer(this, 15, (30 * 1000), false);
-	}
-	
-	/* Entry action for state 'finish'. */
-	private void entryAction_main_region_HotDrinkPreparation_r2_finish() {
-		timer.setTimer(this, 16, (10 * 1000), false);
-		
-		sCInterface.raiseDoNotify();
-	}
-	
-	/* Entry action for state 'soup'. */
-	private void entryAction_main_region_HotDrinkPreparation_r2_soup() {
-		timer.setTimer(this, 17, (2 * 1000), false);
-		
-		sCInterface.raiseDoSoup();
-	}
-	
 	/* Entry action for state 'ice tea'. */
-	private void entryAction_main_region_HotDrinkPreparation_r2_ice_tea() {
-		timer.setTimer(this, 18, (2 * 1000), false);
+	private void entryAction_main_region_FirstSteps_r2_Step1_r1_ice_tea() {
+		timer.setTimer(this, 9, (2 * 1000), false);
 		
 		sCInterface.raiseDoIceTea();
 	}
 	
+	/* Entry action for state 'putCup'. */
+	private void entryAction_main_region_FirstSteps_r2_Step2_r1_putCup() {
+		sCInterface.raiseDoPutCup();
+	}
+	
+	/* Entry action for state 'grainCompacting'. */
+	private void entryAction_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting() {
+		timer.setTimer(this, 10, (4 * 1000), false);
+	}
+	
+	/* Entry action for state 'spicesAdd'. */
+	private void entryAction_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd() {
+		timer.setTimer(this, 11, (2 * 1000), false);
+		
+		sCInterface.raiseDoAddSpices();
+	}
+	
+	/* Entry action for state 'soup'. */
+	private void entryAction_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup() {
+		timer.setTimer(this, 12, (3 * 1000), false);
+		
+		sCInterface.raiseDoSoup();
+	}
+	
+	/* Entry action for state 'transition'. */
+	private void entryAction_main_region_FirstSteps_r2_Step2_r2_transition() {
+		timer.setTimer(this, 13, (1 * 1000), false);
+	}
+	
+	/* Entry action for state 'waterFlow'. */
+	private void entryAction_main_region_LastSteps_r1_waterFlow() {
+		sCInterface.raiseDoWaterFlow();
+	}
+	
+	/* Entry action for state 'sugarAdd'. */
+	private void entryAction_main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd() {
+		timer.setTimer(this, 14, (2 * 1000), false);
+		
+		sCInterface.raiseDoAddSugar();
+	}
+	
+	/* Entry action for state 'finish'. */
+	private void entryAction_main_region_finish() {
+		sCInterface.raiseDoNotify();
+	}
+	
+	/* Entry action for state 'infusion'. */
+	private void entryAction_main_region_infusion() {
+		timer.setTimer(this, 15, (10 * 1000), false);
+	}
+	
 	/* Entry action for state 'cooling'. */
-	private void entryAction_main_region_HotDrinkPreparation_r2_cooling() {
-		timer.setTimer(this, 19, (1 * 1000), true);
+	private void entryAction_main_region_cooling() {
+		timer.setTimer(this, 16, (1 * 1000), true);
 		
 		sCInterface.raiseDoCooling();
 	}
@@ -1407,71 +1544,65 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	}
 	
 	/* Exit action for state 'waterHeat'. */
-	private void exitAction_main_region_HotDrinkPreparation_r1_waterHeat() {
+	private void exitAction_main_region_FirstSteps_r1_waterHeat() {
 		timer.unsetTimer(this, 4);
 		
 		timer.unsetTimer(this, 5);
 	}
 	
-	/* Exit action for state 'pause'. */
-	private void exitAction_main_region_HotDrinkPreparation_r1_pause() {
-		timer.unsetTimer(this, 6);
-		
-		timer.unsetTimer(this, 7);
-	}
-	
 	/* Exit action for state 'coffee'. */
-	private void exitAction_main_region_HotDrinkPreparation_r2_coffee() {
-		timer.unsetTimer(this, 8);
+	private void exitAction_main_region_FirstSteps_r2_Step1_r1_coffee() {
+		timer.unsetTimer(this, 6);
 	}
 	
 	/* Exit action for state 'expresso'. */
-	private void exitAction_main_region_HotDrinkPreparation_r2_expresso() {
-		timer.unsetTimer(this, 9);
+	private void exitAction_main_region_FirstSteps_r2_Step1_r1_expresso() {
+		timer.unsetTimer(this, 7);
 	}
 	
 	/* Exit action for state 'tea'. */
-	private void exitAction_main_region_HotDrinkPreparation_r2_tea() {
+	private void exitAction_main_region_FirstSteps_r2_Step1_r1_tea() {
+		timer.unsetTimer(this, 8);
+	}
+	
+	/* Exit action for state 'ice tea'. */
+	private void exitAction_main_region_FirstSteps_r2_Step1_r1_ice_tea() {
+		timer.unsetTimer(this, 9);
+	}
+	
+	/* Exit action for state 'grainCompacting'. */
+	private void exitAction_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting() {
 		timer.unsetTimer(this, 10);
 	}
 	
-	/* Exit action for state 'putCup'. */
-	private void exitAction_main_region_HotDrinkPreparation_r2_putCup() {
+	/* Exit action for state 'spicesAdd'. */
+	private void exitAction_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd() {
 		timer.unsetTimer(this, 11);
 	}
 	
-	/* Exit action for state 'waterFlow'. */
-	private void exitAction_main_region_HotDrinkPreparation_r2_waterFlow() {
+	/* Exit action for state 'soup'. */
+	private void exitAction_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup() {
 		timer.unsetTimer(this, 12);
-		
+	}
+	
+	/* Exit action for state 'transition'. */
+	private void exitAction_main_region_FirstSteps_r2_Step2_r2_transition() {
 		timer.unsetTimer(this, 13);
-		
+	}
+	
+	/* Exit action for state 'sugarAdd'. */
+	private void exitAction_main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd() {
 		timer.unsetTimer(this, 14);
 	}
 	
 	/* Exit action for state 'infusion'. */
-	private void exitAction_main_region_HotDrinkPreparation_r2_infusion() {
+	private void exitAction_main_region_infusion() {
 		timer.unsetTimer(this, 15);
 	}
 	
-	/* Exit action for state 'finish'. */
-	private void exitAction_main_region_HotDrinkPreparation_r2_finish() {
-		timer.unsetTimer(this, 16);
-	}
-	
-	/* Exit action for state 'soup'. */
-	private void exitAction_main_region_HotDrinkPreparation_r2_soup() {
-		timer.unsetTimer(this, 17);
-	}
-	
-	/* Exit action for state 'ice tea'. */
-	private void exitAction_main_region_HotDrinkPreparation_r2_ice_tea() {
-		timer.unsetTimer(this, 18);
-	}
-	
 	/* Exit action for state 'cooling'. */
-	private void exitAction_main_region_HotDrinkPreparation_r2_cooling() {
-		timer.unsetTimer(this, 19);
+	private void exitAction_main_region_cooling() {
+		timer.unsetTimer(this, 16);
 	}
 	
 	/* 'default' enter sequence for state Init */
@@ -1544,115 +1675,146 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		stateVector[3] = State.main_region_UserSelction_time_timer;
 	}
 	
-	/* 'default' enter sequence for state HotDrinkPreparation */
-	private void enterSequence_main_region_HotDrinkPreparation_default() {
-		enterSequence_main_region_HotDrinkPreparation_r1_default();
-		enterSequence_main_region_HotDrinkPreparation_r2_default();
+	/* 'default' enter sequence for state FirstSteps */
+	private void enterSequence_main_region_FirstSteps_default() {
+		enterSequence_main_region_FirstSteps_r1_default();
+		enterSequence_main_region_FirstSteps_r2_default();
 	}
 	
 	/* 'default' enter sequence for state waterHeat */
-	private void enterSequence_main_region_HotDrinkPreparation_r1_waterHeat_default() {
-		entryAction_main_region_HotDrinkPreparation_r1_waterHeat();
+	private void enterSequence_main_region_FirstSteps_r1_waterHeat_default() {
+		entryAction_main_region_FirstSteps_r1_waterHeat();
 		nextStateIndex = 0;
-		stateVector[0] = State.main_region_HotDrinkPreparation_r1_waterHeat;
-	}
-	
-	/* 'default' enter sequence for state sugarAdd */
-	private void enterSequence_main_region_HotDrinkPreparation_r1_sugarAdd_default() {
-		entryAction_main_region_HotDrinkPreparation_r1_sugarAdd();
-		nextStateIndex = 0;
-		stateVector[0] = State.main_region_HotDrinkPreparation_r1_sugarAdd;
-	}
-	
-	/* 'default' enter sequence for state pause */
-	private void enterSequence_main_region_HotDrinkPreparation_r1_pause_default() {
-		entryAction_main_region_HotDrinkPreparation_r1_pause();
-		nextStateIndex = 0;
-		stateVector[0] = State.main_region_HotDrinkPreparation_r1_pause;
-	}
-	
-	/* 'default' enter sequence for state spicesAdd */
-	private void enterSequence_main_region_HotDrinkPreparation_r1_spicesAdd_default() {
-		entryAction_main_region_HotDrinkPreparation_r1_spicesAdd();
-		nextStateIndex = 0;
-		stateVector[0] = State.main_region_HotDrinkPreparation_r1_spicesAdd;
+		stateVector[0] = State.main_region_FirstSteps_r1_waterHeat;
 	}
 	
 	/* 'default' enter sequence for state start */
-	private void enterSequence_main_region_HotDrinkPreparation_r2_start_default() {
-		entryAction_main_region_HotDrinkPreparation_r2_start();
+	private void enterSequence_main_region_FirstSteps_r2_Step1_r1_start_default() {
+		entryAction_main_region_FirstSteps_r2_Step1_r1_start();
 		nextStateIndex = 1;
-		stateVector[1] = State.main_region_HotDrinkPreparation_r2_start;
+		stateVector[1] = State.main_region_FirstSteps_r2_Step1_r1_start;
 	}
 	
 	/* 'default' enter sequence for state coffee */
-	private void enterSequence_main_region_HotDrinkPreparation_r2_coffee_default() {
-		entryAction_main_region_HotDrinkPreparation_r2_coffee();
+	private void enterSequence_main_region_FirstSteps_r2_Step1_r1_coffee_default() {
+		entryAction_main_region_FirstSteps_r2_Step1_r1_coffee();
 		nextStateIndex = 1;
-		stateVector[1] = State.main_region_HotDrinkPreparation_r2_coffee;
+		stateVector[1] = State.main_region_FirstSteps_r2_Step1_r1_coffee;
 	}
 	
 	/* 'default' enter sequence for state expresso */
-	private void enterSequence_main_region_HotDrinkPreparation_r2_expresso_default() {
-		entryAction_main_region_HotDrinkPreparation_r2_expresso();
+	private void enterSequence_main_region_FirstSteps_r2_Step1_r1_expresso_default() {
+		entryAction_main_region_FirstSteps_r2_Step1_r1_expresso();
 		nextStateIndex = 1;
-		stateVector[1] = State.main_region_HotDrinkPreparation_r2_expresso;
+		stateVector[1] = State.main_region_FirstSteps_r2_Step1_r1_expresso;
 	}
 	
 	/* 'default' enter sequence for state tea */
-	private void enterSequence_main_region_HotDrinkPreparation_r2_tea_default() {
-		entryAction_main_region_HotDrinkPreparation_r2_tea();
+	private void enterSequence_main_region_FirstSteps_r2_Step1_r1_tea_default() {
+		entryAction_main_region_FirstSteps_r2_Step1_r1_tea();
 		nextStateIndex = 1;
-		stateVector[1] = State.main_region_HotDrinkPreparation_r2_tea;
-	}
-	
-	/* 'default' enter sequence for state putCup */
-	private void enterSequence_main_region_HotDrinkPreparation_r2_putCup_default() {
-		entryAction_main_region_HotDrinkPreparation_r2_putCup();
-		nextStateIndex = 1;
-		stateVector[1] = State.main_region_HotDrinkPreparation_r2_putCup;
-	}
-	
-	/* 'default' enter sequence for state waterFlow */
-	private void enterSequence_main_region_HotDrinkPreparation_r2_waterFlow_default() {
-		entryAction_main_region_HotDrinkPreparation_r2_waterFlow();
-		nextStateIndex = 1;
-		stateVector[1] = State.main_region_HotDrinkPreparation_r2_waterFlow;
-	}
-	
-	/* 'default' enter sequence for state infusion */
-	private void enterSequence_main_region_HotDrinkPreparation_r2_infusion_default() {
-		entryAction_main_region_HotDrinkPreparation_r2_infusion();
-		nextStateIndex = 1;
-		stateVector[1] = State.main_region_HotDrinkPreparation_r2_infusion;
-	}
-	
-	/* 'default' enter sequence for state finish */
-	private void enterSequence_main_region_HotDrinkPreparation_r2_finish_default() {
-		entryAction_main_region_HotDrinkPreparation_r2_finish();
-		nextStateIndex = 1;
-		stateVector[1] = State.main_region_HotDrinkPreparation_r2_finish;
-	}
-	
-	/* 'default' enter sequence for state soup */
-	private void enterSequence_main_region_HotDrinkPreparation_r2_soup_default() {
-		entryAction_main_region_HotDrinkPreparation_r2_soup();
-		nextStateIndex = 1;
-		stateVector[1] = State.main_region_HotDrinkPreparation_r2_soup;
+		stateVector[1] = State.main_region_FirstSteps_r2_Step1_r1_tea;
 	}
 	
 	/* 'default' enter sequence for state ice tea */
-	private void enterSequence_main_region_HotDrinkPreparation_r2_ice_tea_default() {
-		entryAction_main_region_HotDrinkPreparation_r2_ice_tea();
+	private void enterSequence_main_region_FirstSteps_r2_Step1_r1_ice_tea_default() {
+		entryAction_main_region_FirstSteps_r2_Step1_r1_ice_tea();
 		nextStateIndex = 1;
-		stateVector[1] = State.main_region_HotDrinkPreparation_r2_ice_tea;
+		stateVector[1] = State.main_region_FirstSteps_r2_Step1_r1_ice_tea;
+	}
+	
+	/* 'default' enter sequence for state Step2 */
+	private void enterSequence_main_region_FirstSteps_r2_Step2_default() {
+		enterSequence_main_region_FirstSteps_r2_Step2_r1_default();
+		enterSequence_main_region_FirstSteps_r2_Step2_r2_default();
+	}
+	
+	/* 'default' enter sequence for state putCup */
+	private void enterSequence_main_region_FirstSteps_r2_Step2_r1_putCup_default() {
+		entryAction_main_region_FirstSteps_r2_Step2_r1_putCup();
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_FirstSteps_r2_Step2_r1_putCup;
+	}
+	
+	/* 'default' enter sequence for state grainCompacting */
+	private void enterSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting_default() {
+		entryAction_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting();
+		nextStateIndex = 2;
+		stateVector[2] = State.main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting;
+	}
+	
+	/* 'default' enter sequence for state Soup2ndStep */
+	private void enterSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_default() {
+		enterSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_default();
+		enterSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_default();
+	}
+	
+	/* 'default' enter sequence for state spicesAdd */
+	private void enterSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd_default() {
+		entryAction_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd();
+		nextStateIndex = 2;
+		stateVector[2] = State.main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd;
+	}
+	
+	/* 'default' enter sequence for state soup */
+	private void enterSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup_default() {
+		entryAction_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup();
+		nextStateIndex = 3;
+		stateVector[3] = State.main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup;
+	}
+	
+	/* 'default' enter sequence for state transition */
+	private void enterSequence_main_region_FirstSteps_r2_Step2_r2_transition_default() {
+		entryAction_main_region_FirstSteps_r2_Step2_r2_transition();
+		nextStateIndex = 2;
+		stateVector[2] = State.main_region_FirstSteps_r2_Step2_r2_transition;
+	}
+	
+	/* 'default' enter sequence for state LastSteps */
+	private void enterSequence_main_region_LastSteps_default() {
+		enterSequence_main_region_LastSteps_r1_default();
+		enterSequence_main_region_LastSteps_r2_default();
+	}
+	
+	/* 'default' enter sequence for state waterFlow */
+	private void enterSequence_main_region_LastSteps_r1_waterFlow_default() {
+		entryAction_main_region_LastSteps_r1_waterFlow();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_LastSteps_r1_waterFlow;
+	}
+	
+	/* 'default' enter sequence for state sugarAdd */
+	private void enterSequence_main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd_default() {
+		entryAction_main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd();
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd;
+	}
+	
+	/* 'default' enter sequence for state transition */
+	private void enterSequence_main_region_LastSteps_r2_transition_default() {
+		nextStateIndex = 1;
+		stateVector[1] = State.main_region_LastSteps_r2_transition;
+	}
+	
+	/* 'default' enter sequence for state finish */
+	private void enterSequence_main_region_finish_default() {
+		entryAction_main_region_finish();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_finish;
+	}
+	
+	/* 'default' enter sequence for state infusion */
+	private void enterSequence_main_region_infusion_default() {
+		entryAction_main_region_infusion();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_infusion;
 	}
 	
 	/* 'default' enter sequence for state cooling */
-	private void enterSequence_main_region_HotDrinkPreparation_r2_cooling_default() {
-		entryAction_main_region_HotDrinkPreparation_r2_cooling();
-		nextStateIndex = 1;
-		stateVector[1] = State.main_region_HotDrinkPreparation_r2_cooling;
+	private void enterSequence_main_region_cooling_default() {
+		entryAction_main_region_cooling();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_cooling;
 	}
 	
 	/* 'default' enter sequence for region main region */
@@ -1681,13 +1843,43 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	}
 	
 	/* 'default' enter sequence for region r1 */
-	private void enterSequence_main_region_HotDrinkPreparation_r1_default() {
-		react_main_region_HotDrinkPreparation_r1__entry_Default();
+	private void enterSequence_main_region_FirstSteps_r1_default() {
+		react_main_region_FirstSteps_r1__entry_Default();
 	}
 	
 	/* 'default' enter sequence for region r2 */
-	private void enterSequence_main_region_HotDrinkPreparation_r2_default() {
-		react_main_region_HotDrinkPreparation_r2__entry_Default();
+	private void enterSequence_main_region_FirstSteps_r2_default() {
+		react_main_region_FirstSteps_r2__entry_Default();
+	}
+	
+	/* 'default' enter sequence for region r1 */
+	private void enterSequence_main_region_FirstSteps_r2_Step2_r1_default() {
+		react_main_region_FirstSteps_r2_Step2_r1__entry_Default();
+	}
+	
+	/* 'default' enter sequence for region r2 */
+	private void enterSequence_main_region_FirstSteps_r2_Step2_r2_default() {
+		react_main_region_FirstSteps_r2_Step2_r2__entry_Default();
+	}
+	
+	/* 'default' enter sequence for region r1 */
+	private void enterSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_default() {
+		react_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1__entry_Default();
+	}
+	
+	/* 'default' enter sequence for region r2 */
+	private void enterSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_default() {
+		react_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2__entry_Default();
+	}
+	
+	/* 'default' enter sequence for region r1 */
+	private void enterSequence_main_region_LastSteps_r1_default() {
+		react_main_region_LastSteps_r1__entry_Default();
+	}
+	
+	/* 'default' enter sequence for region r2 */
+	private void enterSequence_main_region_LastSteps_r2_default() {
+		react_main_region_LastSteps_r2__entry_Default();
 	}
 	
 	/* Default exit sequence for state Init */
@@ -1760,124 +1952,169 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		exitAction_main_region_UserSelction_time_timer();
 	}
 	
-	/* Default exit sequence for state HotDrinkPreparation */
-	private void exitSequence_main_region_HotDrinkPreparation() {
-		exitSequence_main_region_HotDrinkPreparation_r1();
-		exitSequence_main_region_HotDrinkPreparation_r2();
+	/* Default exit sequence for state FirstSteps */
+	private void exitSequence_main_region_FirstSteps() {
+		exitSequence_main_region_FirstSteps_r1();
+		exitSequence_main_region_FirstSteps_r2();
 	}
 	
 	/* Default exit sequence for state waterHeat */
-	private void exitSequence_main_region_HotDrinkPreparation_r1_waterHeat() {
+	private void exitSequence_main_region_FirstSteps_r1_waterHeat() {
 		nextStateIndex = 0;
 		stateVector[0] = State.$NullState$;
 		
-		exitAction_main_region_HotDrinkPreparation_r1_waterHeat();
+		exitAction_main_region_FirstSteps_r1_waterHeat();
 	}
 	
-	/* Default exit sequence for state sugarAdd */
-	private void exitSequence_main_region_HotDrinkPreparation_r1_sugarAdd() {
-		nextStateIndex = 0;
-		stateVector[0] = State.$NullState$;
-	}
-	
-	/* Default exit sequence for state pause */
-	private void exitSequence_main_region_HotDrinkPreparation_r1_pause() {
-		nextStateIndex = 0;
-		stateVector[0] = State.$NullState$;
-		
-		exitAction_main_region_HotDrinkPreparation_r1_pause();
-	}
-	
-	/* Default exit sequence for state spicesAdd */
-	private void exitSequence_main_region_HotDrinkPreparation_r1_spicesAdd() {
-		nextStateIndex = 0;
-		stateVector[0] = State.$NullState$;
+	/* Default exit sequence for state Step1 */
+	private void exitSequence_main_region_FirstSteps_r2_Step1() {
+		exitSequence_main_region_FirstSteps_r2_Step1_r1();
 	}
 	
 	/* Default exit sequence for state start */
-	private void exitSequence_main_region_HotDrinkPreparation_r2_start() {
+	private void exitSequence_main_region_FirstSteps_r2_Step1_r1_start() {
 		nextStateIndex = 1;
 		stateVector[1] = State.$NullState$;
 	}
 	
 	/* Default exit sequence for state coffee */
-	private void exitSequence_main_region_HotDrinkPreparation_r2_coffee() {
+	private void exitSequence_main_region_FirstSteps_r2_Step1_r1_coffee() {
 		nextStateIndex = 1;
 		stateVector[1] = State.$NullState$;
 		
-		exitAction_main_region_HotDrinkPreparation_r2_coffee();
+		exitAction_main_region_FirstSteps_r2_Step1_r1_coffee();
 	}
 	
 	/* Default exit sequence for state expresso */
-	private void exitSequence_main_region_HotDrinkPreparation_r2_expresso() {
+	private void exitSequence_main_region_FirstSteps_r2_Step1_r1_expresso() {
 		nextStateIndex = 1;
 		stateVector[1] = State.$NullState$;
 		
-		exitAction_main_region_HotDrinkPreparation_r2_expresso();
+		exitAction_main_region_FirstSteps_r2_Step1_r1_expresso();
 	}
 	
 	/* Default exit sequence for state tea */
-	private void exitSequence_main_region_HotDrinkPreparation_r2_tea() {
+	private void exitSequence_main_region_FirstSteps_r2_Step1_r1_tea() {
 		nextStateIndex = 1;
 		stateVector[1] = State.$NullState$;
 		
-		exitAction_main_region_HotDrinkPreparation_r2_tea();
-	}
-	
-	/* Default exit sequence for state putCup */
-	private void exitSequence_main_region_HotDrinkPreparation_r2_putCup() {
-		nextStateIndex = 1;
-		stateVector[1] = State.$NullState$;
-		
-		exitAction_main_region_HotDrinkPreparation_r2_putCup();
-	}
-	
-	/* Default exit sequence for state waterFlow */
-	private void exitSequence_main_region_HotDrinkPreparation_r2_waterFlow() {
-		nextStateIndex = 1;
-		stateVector[1] = State.$NullState$;
-		
-		exitAction_main_region_HotDrinkPreparation_r2_waterFlow();
-	}
-	
-	/* Default exit sequence for state infusion */
-	private void exitSequence_main_region_HotDrinkPreparation_r2_infusion() {
-		nextStateIndex = 1;
-		stateVector[1] = State.$NullState$;
-		
-		exitAction_main_region_HotDrinkPreparation_r2_infusion();
-	}
-	
-	/* Default exit sequence for state finish */
-	private void exitSequence_main_region_HotDrinkPreparation_r2_finish() {
-		nextStateIndex = 1;
-		stateVector[1] = State.$NullState$;
-		
-		exitAction_main_region_HotDrinkPreparation_r2_finish();
-	}
-	
-	/* Default exit sequence for state soup */
-	private void exitSequence_main_region_HotDrinkPreparation_r2_soup() {
-		nextStateIndex = 1;
-		stateVector[1] = State.$NullState$;
-		
-		exitAction_main_region_HotDrinkPreparation_r2_soup();
+		exitAction_main_region_FirstSteps_r2_Step1_r1_tea();
 	}
 	
 	/* Default exit sequence for state ice tea */
-	private void exitSequence_main_region_HotDrinkPreparation_r2_ice_tea() {
+	private void exitSequence_main_region_FirstSteps_r2_Step1_r1_ice_tea() {
 		nextStateIndex = 1;
 		stateVector[1] = State.$NullState$;
 		
-		exitAction_main_region_HotDrinkPreparation_r2_ice_tea();
+		exitAction_main_region_FirstSteps_r2_Step1_r1_ice_tea();
+	}
+	
+	/* Default exit sequence for state Step2 */
+	private void exitSequence_main_region_FirstSteps_r2_Step2() {
+		exitSequence_main_region_FirstSteps_r2_Step2_r1();
+		exitSequence_main_region_FirstSteps_r2_Step2_r2();
+	}
+	
+	/* Default exit sequence for state putCup */
+	private void exitSequence_main_region_FirstSteps_r2_Step2_r1_putCup() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Step2Options */
+	private void exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options() {
+		exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1();
+	}
+	
+	/* Default exit sequence for state grainCompacting */
+	private void exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting() {
+		nextStateIndex = 2;
+		stateVector[2] = State.$NullState$;
+		
+		exitAction_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting();
+	}
+	
+	/* Default exit sequence for state Soup2ndStep */
+	private void exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep() {
+		exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1();
+		exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2();
+	}
+	
+	/* Default exit sequence for state spicesAdd */
+	private void exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd() {
+		nextStateIndex = 2;
+		stateVector[2] = State.$NullState$;
+		
+		exitAction_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd();
+	}
+	
+	/* Default exit sequence for state soup */
+	private void exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup() {
+		nextStateIndex = 3;
+		stateVector[3] = State.$NullState$;
+		
+		exitAction_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup();
+	}
+	
+	/* Default exit sequence for state transition */
+	private void exitSequence_main_region_FirstSteps_r2_Step2_r2_transition() {
+		nextStateIndex = 2;
+		stateVector[2] = State.$NullState$;
+		
+		exitAction_main_region_FirstSteps_r2_Step2_r2_transition();
+	}
+	
+	/* Default exit sequence for state LastSteps */
+	private void exitSequence_main_region_LastSteps() {
+		exitSequence_main_region_LastSteps_r1();
+		exitSequence_main_region_LastSteps_r2();
+	}
+	
+	/* Default exit sequence for state waterFlow */
+	private void exitSequence_main_region_LastSteps_r1_waterFlow() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Soup3rdStep */
+	private void exitSequence_main_region_LastSteps_r2_Soup3rdStep() {
+		exitSequence_main_region_LastSteps_r2_Soup3rdStep_r1();
+	}
+	
+	/* Default exit sequence for state sugarAdd */
+	private void exitSequence_main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+		
+		exitAction_main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd();
+	}
+	
+	/* Default exit sequence for state transition */
+	private void exitSequence_main_region_LastSteps_r2_transition() {
+		nextStateIndex = 1;
+		stateVector[1] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state finish */
+	private void exitSequence_main_region_finish() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state infusion */
+	private void exitSequence_main_region_infusion() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_infusion();
 	}
 	
 	/* Default exit sequence for state cooling */
-	private void exitSequence_main_region_HotDrinkPreparation_r2_cooling() {
-		nextStateIndex = 1;
-		stateVector[1] = State.$NullState$;
+	private void exitSequence_main_region_cooling() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
 		
-		exitAction_main_region_HotDrinkPreparation_r2_cooling();
+		exitAction_main_region_cooling();
 	}
 	
 	/* Default exit sequence for region main region */
@@ -1895,17 +2132,20 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		case main_region_UserSelction_Payment_NFC:
 			exitSequence_main_region_UserSelction_Payment_NFC();
 			break;
-		case main_region_HotDrinkPreparation_r1_waterHeat:
-			exitSequence_main_region_HotDrinkPreparation_r1_waterHeat();
+		case main_region_FirstSteps_r1_waterHeat:
+			exitSequence_main_region_FirstSteps_r1_waterHeat();
 			break;
-		case main_region_HotDrinkPreparation_r1_sugarAdd:
-			exitSequence_main_region_HotDrinkPreparation_r1_sugarAdd();
+		case main_region_LastSteps_r1_waterFlow:
+			exitSequence_main_region_LastSteps_r1_waterFlow();
 			break;
-		case main_region_HotDrinkPreparation_r1_pause:
-			exitSequence_main_region_HotDrinkPreparation_r1_pause();
+		case main_region_finish:
+			exitSequence_main_region_finish();
 			break;
-		case main_region_HotDrinkPreparation_r1_spicesAdd:
-			exitSequence_main_region_HotDrinkPreparation_r1_spicesAdd();
+		case main_region_infusion:
+			exitSequence_main_region_infusion();
+			break;
+		case main_region_cooling:
+			exitSequence_main_region_cooling();
 			break;
 		default:
 			break;
@@ -1915,38 +2155,29 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		case main_region_UserSelction_produceSelection_SelectionWait:
 			exitSequence_main_region_UserSelction_produceSelection_SelectionWait();
 			break;
-		case main_region_HotDrinkPreparation_r2_start:
-			exitSequence_main_region_HotDrinkPreparation_r2_start();
+		case main_region_FirstSteps_r2_Step1_r1_start:
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_start();
 			break;
-		case main_region_HotDrinkPreparation_r2_coffee:
-			exitSequence_main_region_HotDrinkPreparation_r2_coffee();
+		case main_region_FirstSteps_r2_Step1_r1_coffee:
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_coffee();
 			break;
-		case main_region_HotDrinkPreparation_r2_expresso:
-			exitSequence_main_region_HotDrinkPreparation_r2_expresso();
+		case main_region_FirstSteps_r2_Step1_r1_expresso:
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_expresso();
 			break;
-		case main_region_HotDrinkPreparation_r2_tea:
-			exitSequence_main_region_HotDrinkPreparation_r2_tea();
+		case main_region_FirstSteps_r2_Step1_r1_tea:
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_tea();
 			break;
-		case main_region_HotDrinkPreparation_r2_putCup:
-			exitSequence_main_region_HotDrinkPreparation_r2_putCup();
+		case main_region_FirstSteps_r2_Step1_r1_ice_tea:
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_ice_tea();
 			break;
-		case main_region_HotDrinkPreparation_r2_waterFlow:
-			exitSequence_main_region_HotDrinkPreparation_r2_waterFlow();
+		case main_region_FirstSteps_r2_Step2_r1_putCup:
+			exitSequence_main_region_FirstSteps_r2_Step2_r1_putCup();
 			break;
-		case main_region_HotDrinkPreparation_r2_infusion:
-			exitSequence_main_region_HotDrinkPreparation_r2_infusion();
+		case main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd:
+			exitSequence_main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd();
 			break;
-		case main_region_HotDrinkPreparation_r2_finish:
-			exitSequence_main_region_HotDrinkPreparation_r2_finish();
-			break;
-		case main_region_HotDrinkPreparation_r2_soup:
-			exitSequence_main_region_HotDrinkPreparation_r2_soup();
-			break;
-		case main_region_HotDrinkPreparation_r2_ice_tea:
-			exitSequence_main_region_HotDrinkPreparation_r2_ice_tea();
-			break;
-		case main_region_HotDrinkPreparation_r2_cooling:
-			exitSequence_main_region_HotDrinkPreparation_r2_cooling();
+		case main_region_LastSteps_r2_transition:
+			exitSequence_main_region_LastSteps_r2_transition();
 			break;
 		default:
 			break;
@@ -1962,6 +2193,15 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		case main_region_UserSelction_sliderType_IceTeaSLiders:
 			exitSequence_main_region_UserSelction_sliderType_IceTeaSLiders();
 			break;
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting();
+			break;
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd();
+			break;
+		case main_region_FirstSteps_r2_Step2_r2_transition:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_transition();
+			break;
 		default:
 			break;
 		}
@@ -1969,6 +2209,9 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		switch (stateVector[3]) {
 		case main_region_UserSelction_time_timer:
 			exitSequence_main_region_UserSelction_time_timer();
+			break;
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup();
 			break;
 		default:
 			break;
@@ -2032,19 +2275,10 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	}
 	
 	/* Default exit sequence for region r1 */
-	private void exitSequence_main_region_HotDrinkPreparation_r1() {
+	private void exitSequence_main_region_FirstSteps_r1() {
 		switch (stateVector[0]) {
-		case main_region_HotDrinkPreparation_r1_waterHeat:
-			exitSequence_main_region_HotDrinkPreparation_r1_waterHeat();
-			break;
-		case main_region_HotDrinkPreparation_r1_sugarAdd:
-			exitSequence_main_region_HotDrinkPreparation_r1_sugarAdd();
-			break;
-		case main_region_HotDrinkPreparation_r1_pause:
-			exitSequence_main_region_HotDrinkPreparation_r1_pause();
-			break;
-		case main_region_HotDrinkPreparation_r1_spicesAdd:
-			exitSequence_main_region_HotDrinkPreparation_r1_spicesAdd();
+		case main_region_FirstSteps_r1_waterHeat:
+			exitSequence_main_region_FirstSteps_r1_waterHeat();
 			break;
 		default:
 			break;
@@ -2052,43 +2286,250 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	}
 	
 	/* Default exit sequence for region r2 */
-	private void exitSequence_main_region_HotDrinkPreparation_r2() {
+	private void exitSequence_main_region_FirstSteps_r2() {
 		switch (stateVector[1]) {
-		case main_region_HotDrinkPreparation_r2_start:
-			exitSequence_main_region_HotDrinkPreparation_r2_start();
+		case main_region_FirstSteps_r2_Step1_r1_start:
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_start();
 			break;
-		case main_region_HotDrinkPreparation_r2_coffee:
-			exitSequence_main_region_HotDrinkPreparation_r2_coffee();
+		case main_region_FirstSteps_r2_Step1_r1_coffee:
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_coffee();
 			break;
-		case main_region_HotDrinkPreparation_r2_expresso:
-			exitSequence_main_region_HotDrinkPreparation_r2_expresso();
+		case main_region_FirstSteps_r2_Step1_r1_expresso:
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_expresso();
 			break;
-		case main_region_HotDrinkPreparation_r2_tea:
-			exitSequence_main_region_HotDrinkPreparation_r2_tea();
+		case main_region_FirstSteps_r2_Step1_r1_tea:
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_tea();
 			break;
-		case main_region_HotDrinkPreparation_r2_putCup:
-			exitSequence_main_region_HotDrinkPreparation_r2_putCup();
+		case main_region_FirstSteps_r2_Step1_r1_ice_tea:
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_ice_tea();
 			break;
-		case main_region_HotDrinkPreparation_r2_waterFlow:
-			exitSequence_main_region_HotDrinkPreparation_r2_waterFlow();
-			break;
-		case main_region_HotDrinkPreparation_r2_infusion:
-			exitSequence_main_region_HotDrinkPreparation_r2_infusion();
-			break;
-		case main_region_HotDrinkPreparation_r2_finish:
-			exitSequence_main_region_HotDrinkPreparation_r2_finish();
-			break;
-		case main_region_HotDrinkPreparation_r2_soup:
-			exitSequence_main_region_HotDrinkPreparation_r2_soup();
-			break;
-		case main_region_HotDrinkPreparation_r2_ice_tea:
-			exitSequence_main_region_HotDrinkPreparation_r2_ice_tea();
-			break;
-		case main_region_HotDrinkPreparation_r2_cooling:
-			exitSequence_main_region_HotDrinkPreparation_r2_cooling();
+		case main_region_FirstSteps_r2_Step2_r1_putCup:
+			exitSequence_main_region_FirstSteps_r2_Step2_r1_putCup();
 			break;
 		default:
 			break;
+		}
+		
+		switch (stateVector[2]) {
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting();
+			break;
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd();
+			break;
+		case main_region_FirstSteps_r2_Step2_r2_transition:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_transition();
+			break;
+		default:
+			break;
+		}
+		
+		switch (stateVector[3]) {
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r1 */
+	private void exitSequence_main_region_FirstSteps_r2_Step1_r1() {
+		switch (stateVector[1]) {
+		case main_region_FirstSteps_r2_Step1_r1_start:
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_start();
+			break;
+		case main_region_FirstSteps_r2_Step1_r1_coffee:
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_coffee();
+			break;
+		case main_region_FirstSteps_r2_Step1_r1_expresso:
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_expresso();
+			break;
+		case main_region_FirstSteps_r2_Step1_r1_tea:
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_tea();
+			break;
+		case main_region_FirstSteps_r2_Step1_r1_ice_tea:
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_ice_tea();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r1 */
+	private void exitSequence_main_region_FirstSteps_r2_Step2_r1() {
+		switch (stateVector[1]) {
+		case main_region_FirstSteps_r2_Step2_r1_putCup:
+			exitSequence_main_region_FirstSteps_r2_Step2_r1_putCup();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r2 */
+	private void exitSequence_main_region_FirstSteps_r2_Step2_r2() {
+		switch (stateVector[2]) {
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting();
+			break;
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd();
+			break;
+		case main_region_FirstSteps_r2_Step2_r2_transition:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_transition();
+			break;
+		default:
+			break;
+		}
+		
+		switch (stateVector[3]) {
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r1 */
+	private void exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1() {
+		switch (stateVector[2]) {
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting();
+			break;
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd();
+			break;
+		default:
+			break;
+		}
+		
+		switch (stateVector[3]) {
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r1 */
+	private void exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1() {
+		switch (stateVector[2]) {
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r2 */
+	private void exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2() {
+		switch (stateVector[3]) {
+		case main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup:
+			exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r1 */
+	private void exitSequence_main_region_LastSteps_r1() {
+		switch (stateVector[0]) {
+		case main_region_LastSteps_r1_waterFlow:
+			exitSequence_main_region_LastSteps_r1_waterFlow();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r2 */
+	private void exitSequence_main_region_LastSteps_r2() {
+		switch (stateVector[1]) {
+		case main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd:
+			exitSequence_main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd();
+			break;
+		case main_region_LastSteps_r2_transition:
+			exitSequence_main_region_LastSteps_r2_transition();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region r1 */
+	private void exitSequence_main_region_LastSteps_r2_Soup3rdStep_r1() {
+		switch (stateVector[1]) {
+		case main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd:
+			exitSequence_main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region_FirstSteps_r2_Step1_r1__choice_0() {
+		if (check_main_region_FirstSteps_r2_Step1_r1__choice_0_tr0_tr0()) {
+			effect_main_region_FirstSteps_r2_Step1_r1__choice_0_tr0();
+		} else {
+			if (check_main_region_FirstSteps_r2_Step1_r1__choice_0_tr1_tr1()) {
+				effect_main_region_FirstSteps_r2_Step1_r1__choice_0_tr1();
+			} else {
+				if (check_main_region_FirstSteps_r2_Step1_r1__choice_0_tr2_tr2()) {
+					effect_main_region_FirstSteps_r2_Step1_r1__choice_0_tr2();
+				} else {
+					if (check_main_region_FirstSteps_r2_Step1_r1__choice_0_tr3_tr3()) {
+						effect_main_region_FirstSteps_r2_Step1_r1__choice_0_tr3();
+					} else {
+						effect_main_region_FirstSteps_r2_Step1_r1__choice_0_tr4();
+					}
+				}
+			}
+		}
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__choice_0() {
+		if (check_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__choice_0_tr0_tr0()) {
+			effect_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__choice_0_tr0();
+		} else {
+			if (check_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__choice_0_tr1_tr1()) {
+				effect_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__choice_0_tr1();
+			} else {
+				effect_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__choice_0_tr2();
+			}
+		}
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region_LastSteps_r2_Soup3rdStep_r1__choice_0() {
+		if (check_main_region_LastSteps_r2_Soup3rdStep_r1__choice_0_tr0_tr0()) {
+			effect_main_region_LastSteps_r2_Soup3rdStep_r1__choice_0_tr0();
+		} else {
+			effect_main_region_LastSteps_r2_Soup3rdStep_r1__choice_0_tr1();
+		}
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__choice_0() {
+		if (check_main_region__choice_0_tr0_tr0()) {
+			effect_main_region__choice_0_tr0();
+		} else {
+			effect_main_region__choice_0_tr1();
+		}
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__choice_1() {
+		if (check_main_region__choice_1_tr1_tr1()) {
+			effect_main_region__choice_1_tr1();
+		} else {
+			effect_main_region__choice_1_tr0();
 		}
 	}
 	
@@ -2118,13 +2559,43 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	}
 	
 	/* Default react sequence for initial entry  */
-	private void react_main_region_HotDrinkPreparation_r1__entry_Default() {
-		enterSequence_main_region_HotDrinkPreparation_r1_waterHeat_default();
+	private void react_main_region_FirstSteps_r1__entry_Default() {
+		enterSequence_main_region_FirstSteps_r1_waterHeat_default();
 	}
 	
 	/* Default react sequence for initial entry  */
-	private void react_main_region_HotDrinkPreparation_r2__entry_Default() {
-		enterSequence_main_region_HotDrinkPreparation_r2_start_default();
+	private void react_main_region_FirstSteps_r2__entry_Default() {
+		enterSequence_main_region_FirstSteps_r2_Step1_r1_start_default();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_FirstSteps_r2_Step2_r1__entry_Default() {
+		enterSequence_main_region_FirstSteps_r2_Step2_r1_putCup_default();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1__entry_Default() {
+		enterSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd_default();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2__entry_Default() {
+		enterSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup_default();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_FirstSteps_r2_Step2_r2__entry_Default() {
+		react_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__choice_0();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_LastSteps_r1__entry_Default() {
+		enterSequence_main_region_LastSteps_r1_waterFlow_default();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_LastSteps_r2__entry_Default() {
+		react_main_region_LastSteps_r2_Soup3rdStep_r1__choice_0();
 	}
 	
 	/* The reactions of exit default. */
@@ -2133,8 +2604,39 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	}
 	
 	/* The reactions of exit default. */
-	private void react_main_region_HotDrinkPreparation_r2__exit_Default() {
-		effect_main_region_HotDrinkPreparation_tr0();
+	private void react_main_region_FirstSteps_r2_Step1_r1__exit_Default() {
+		effect_main_region_FirstSteps_r2_Step1_tr0();
+	}
+	
+	/* The reactions of exit default. */
+	private void react_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__exit_Default() {
+		effect_main_region_FirstSteps_r2_Step2_r2_Step2Options_tr0();
+	}
+	
+	/* The reactions of exit default. */
+	private void react_main_region_LastSteps_r2_Soup3rdStep_r1__exit_Default() {
+		effect_main_region_LastSteps_r2_Soup3rdStep_tr0();
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__sync0() {
+		react_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__exit_Default();
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region_FirstSteps_r2__sync0() {
+		exitSequence_main_region_FirstSteps();
+		react_main_region__sync0();
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__sync0() {
+		enterSequence_main_region_LastSteps_default();
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__sync1() {
+		react_main_region__choice_0();
 	}
 	
 	private boolean react() {
@@ -2328,7 +2830,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return did_transition;
 	}
 	
-	private boolean main_region_HotDrinkPreparation_react(boolean try_transition) {
+	private boolean main_region_FirstSteps_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
@@ -2340,17 +2842,17 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return did_transition;
 	}
 	
-	private boolean main_region_HotDrinkPreparation_r1_waterHeat_react(boolean try_transition) {
+	private boolean main_region_FirstSteps_r1_waterHeat_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
 			if (((timeEvents[4]) && (sCInterface.operationCallback.isHot()))) {
-				exitSequence_main_region_HotDrinkPreparation_r1_waterHeat();
-				enterSequence_main_region_HotDrinkPreparation_r1_pause_default();
+				exitSequence_main_region_FirstSteps();
+				react_main_region__sync0();
 			} else {
 				if (timeEvents[5]) {
-					exitSequence_main_region_HotDrinkPreparation_r1_waterHeat();
-					enterSequence_main_region_HotDrinkPreparation_r1_waterHeat_default();
+					exitSequence_main_region_FirstSteps_r1_waterHeat();
+					enterSequence_main_region_FirstSteps_r1_waterHeat_default();
 				} else {
 					did_transition = false;
 				}
@@ -2359,284 +2861,337 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return did_transition;
 	}
 	
-	private boolean main_region_HotDrinkPreparation_r1_sugarAdd_react(boolean try_transition) {
+	private boolean main_region_FirstSteps_r2_Step1_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
 			did_transition = false;
 		}
-		return did_transition;
-	}
-	
-	private boolean main_region_HotDrinkPreparation_r1_pause_react(boolean try_transition) {
-		boolean did_transition = try_transition;
-		
-		if (try_transition) {
-			if (((timeEvents[6]) && ((sCInterface.operationCallback.isReady() && (sCInterface.getSelection()== null?"Soup" !=null : !sCInterface.getSelection().equals("Soup")))))) {
-				exitSequence_main_region_HotDrinkPreparation_r1_pause();
-				enterSequence_main_region_HotDrinkPreparation_r1_sugarAdd_default();
-			} else {
-				if (((timeEvents[7]) && ((sCInterface.operationCallback.isReady() && (sCInterface.getSelection()== null?"Soup" ==null :sCInterface.getSelection().equals("Soup")))))) {
-					exitSequence_main_region_HotDrinkPreparation_r1_pause();
-					enterSequence_main_region_HotDrinkPreparation_r1_spicesAdd_default();
-				} else {
-					did_transition = false;
-				}
-			}
+		if (did_transition==false) {
+			did_transition = main_region_FirstSteps_react(try_transition);
 		}
 		return did_transition;
 	}
 	
-	private boolean main_region_HotDrinkPreparation_r1_spicesAdd_react(boolean try_transition) {
+	private boolean main_region_FirstSteps_r2_Step1_r1_start_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			did_transition = false;
+			exitSequence_main_region_FirstSteps_r2_Step1_r1_start();
+			react_main_region_FirstSteps_r2_Step1_r1__choice_0();
+		}
+		if (did_transition==false) {
+			did_transition = main_region_FirstSteps_r2_Step1_react(try_transition);
 		}
 		return did_transition;
 	}
 	
-	private boolean main_region_HotDrinkPreparation_r2_start_react(boolean try_transition) {
+	private boolean main_region_FirstSteps_r2_Step1_r1_coffee_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if ((sCInterface.getSelection()== null?"Coffee" ==null :sCInterface.getSelection().equals("Coffee"))) {
-				exitSequence_main_region_HotDrinkPreparation_r2_start();
-				enterSequence_main_region_HotDrinkPreparation_r2_coffee_default();
-				main_region_HotDrinkPreparation_react(false);
+			if (timeEvents[6]) {
+				exitSequence_main_region_FirstSteps_r2_Step1_r1_coffee();
+				react_main_region_FirstSteps_r2_Step1_r1__exit_Default();
 			} else {
-				if ((sCInterface.getSelection()== null?"Expresso" ==null :sCInterface.getSelection().equals("Expresso"))) {
-					exitSequence_main_region_HotDrinkPreparation_r2_start();
-					enterSequence_main_region_HotDrinkPreparation_r2_expresso_default();
-					main_region_HotDrinkPreparation_react(false);
-				} else {
-					if ((sCInterface.getSelection()== null?"Tea" ==null :sCInterface.getSelection().equals("Tea"))) {
-						exitSequence_main_region_HotDrinkPreparation_r2_start();
-						enterSequence_main_region_HotDrinkPreparation_r2_tea_default();
-						main_region_HotDrinkPreparation_react(false);
-					} else {
-						if ((sCInterface.getSelection()== null?"Soup" ==null :sCInterface.getSelection().equals("Soup"))) {
-							exitSequence_main_region_HotDrinkPreparation_r2_start();
-							enterSequence_main_region_HotDrinkPreparation_r2_putCup_default();
-							main_region_HotDrinkPreparation_react(false);
-						} else {
-							if ((sCInterface.getSelection()== null?"IcedTea" ==null :sCInterface.getSelection().equals("IcedTea"))) {
-								exitSequence_main_region_HotDrinkPreparation_r2_start();
-								enterSequence_main_region_HotDrinkPreparation_r2_ice_tea_default();
-								main_region_HotDrinkPreparation_react(false);
-							} else {
-								did_transition = false;
-							}
-						}
-					}
-				}
+				did_transition = false;
 			}
 		}
 		if (did_transition==false) {
-			did_transition = main_region_HotDrinkPreparation_react(try_transition);
+			did_transition = main_region_FirstSteps_r2_Step1_react(try_transition);
 		}
 		return did_transition;
 	}
 	
-	private boolean main_region_HotDrinkPreparation_r2_coffee_react(boolean try_transition) {
+	private boolean main_region_FirstSteps_r2_Step1_r1_expresso_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[7]) {
+				exitSequence_main_region_FirstSteps_r2_Step1_r1_expresso();
+				react_main_region_FirstSteps_r2_Step1_r1__exit_Default();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_FirstSteps_r2_Step1_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_FirstSteps_r2_Step1_r1_tea_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
 			if (timeEvents[8]) {
-				exitSequence_main_region_HotDrinkPreparation_r2_coffee();
-				enterSequence_main_region_HotDrinkPreparation_r2_putCup_default();
-				main_region_HotDrinkPreparation_react(false);
+				exitSequence_main_region_FirstSteps_r2_Step1_r1_tea();
+				react_main_region_FirstSteps_r2_Step1_r1__exit_Default();
 			} else {
 				did_transition = false;
 			}
 		}
 		if (did_transition==false) {
-			did_transition = main_region_HotDrinkPreparation_react(try_transition);
+			did_transition = main_region_FirstSteps_r2_Step1_react(try_transition);
 		}
 		return did_transition;
 	}
 	
-	private boolean main_region_HotDrinkPreparation_r2_expresso_react(boolean try_transition) {
+	private boolean main_region_FirstSteps_r2_Step1_r1_ice_tea_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
 			if (timeEvents[9]) {
-				exitSequence_main_region_HotDrinkPreparation_r2_expresso();
-				enterSequence_main_region_HotDrinkPreparation_r2_putCup_default();
-				main_region_HotDrinkPreparation_react(false);
+				exitSequence_main_region_FirstSteps_r2_Step1_r1_ice_tea();
+				react_main_region_FirstSteps_r2_Step1_r1__exit_Default();
 			} else {
 				did_transition = false;
 			}
 		}
 		if (did_transition==false) {
-			did_transition = main_region_HotDrinkPreparation_react(try_transition);
+			did_transition = main_region_FirstSteps_r2_Step1_react(try_transition);
 		}
 		return did_transition;
 	}
 	
-	private boolean main_region_HotDrinkPreparation_r2_tea_react(boolean try_transition) {
+	private boolean main_region_FirstSteps_r2_Step2_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			did_transition = false;
+		}
+		if (did_transition==false) {
+			did_transition = main_region_FirstSteps_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_FirstSteps_r2_Step2_r1_putCup_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if ((isStateActive(State.main_region_FirstSteps_r2_Step2_r2_transition) && timeEvents[13])) {
+				exitSequence_main_region_FirstSteps_r2_Step2();
+				react_main_region_FirstSteps_r2__sync0();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_FirstSteps_r2_Step2_r2_Step2Options_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			did_transition = false;
+		}
+		if (did_transition==false) {
+			did_transition = main_region_FirstSteps_r2_Step2_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
 			if (timeEvents[10]) {
-				exitSequence_main_region_HotDrinkPreparation_r2_tea();
-				enterSequence_main_region_HotDrinkPreparation_r2_putCup_default();
-				main_region_HotDrinkPreparation_react(false);
+				exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_grainCompacting();
+				react_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__exit_Default();
 			} else {
 				did_transition = false;
 			}
 		}
 		if (did_transition==false) {
-			did_transition = main_region_HotDrinkPreparation_react(try_transition);
+			did_transition = main_region_FirstSteps_r2_Step2_r2_Step2Options_react(try_transition);
 		}
 		return did_transition;
 	}
 	
-	private boolean main_region_HotDrinkPreparation_r2_putCup_react(boolean try_transition) {
+	private boolean main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((timeEvents[11]) && ((sCInterface.operationCallback.isHot() && (sCInterface.getSelection()== null?"Soup" !=null : !sCInterface.getSelection().equals("Soup")))))) {
-				exitSequence_main_region_HotDrinkPreparation_r2_putCup();
-				enterSequence_main_region_HotDrinkPreparation_r2_waterFlow_default();
-				main_region_HotDrinkPreparation_react(false);
-			} else {
-				if ((sCInterface.operationCallback.isHot() && (sCInterface.getSelection()== null?"Soup" ==null :sCInterface.getSelection().equals("Soup")))) {
-					exitSequence_main_region_HotDrinkPreparation_r2_putCup();
-					enterSequence_main_region_HotDrinkPreparation_r2_soup_default();
-					main_region_HotDrinkPreparation_react(false);
-				} else {
-					did_transition = false;
-				}
-			}
+			did_transition = false;
 		}
 		if (did_transition==false) {
-			did_transition = main_region_HotDrinkPreparation_react(try_transition);
+			did_transition = main_region_FirstSteps_r2_Step2_r2_Step2Options_react(try_transition);
 		}
 		return did_transition;
 	}
 	
-	private boolean main_region_HotDrinkPreparation_r2_waterFlow_react(boolean try_transition) {
+	private boolean main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((timeEvents[12]) && ((sCInterface.operationCallback.isComplete() && (sCInterface.getSelection()== null?"Tea" ==null :sCInterface.getSelection().equals("Tea")))))) {
-				exitSequence_main_region_HotDrinkPreparation_r2_waterFlow();
-				enterSequence_main_region_HotDrinkPreparation_r2_infusion_default();
-				main_region_HotDrinkPreparation_react(false);
+			if (((timeEvents[11] && isStateActive(State.main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup)) && timeEvents[12])) {
+				exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep();
+				react_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__sync0();
 			} else {
-				if (((timeEvents[13]) && (((sCInterface.operationCallback.isComplete() && (sCInterface.getSelection()== null?"Tea" !=null : !sCInterface.getSelection().equals("Tea"))) && (sCInterface.getSelection()== null?"IcedTea" !=null : !sCInterface.getSelection().equals("IcedTea")))))) {
-					exitSequence_main_region_HotDrinkPreparation_r2_waterFlow();
-					enterSequence_main_region_HotDrinkPreparation_r2_finish_default();
-					main_region_HotDrinkPreparation_react(false);
-				} else {
-					if (((timeEvents[14]) && ((sCInterface.operationCallback.isComplete() && (sCInterface.getSelection()== null?"IcedTea" ==null :sCInterface.getSelection().equals("IcedTea")))))) {
-						exitSequence_main_region_HotDrinkPreparation_r2_waterFlow();
-						enterSequence_main_region_HotDrinkPreparation_r2_cooling_default();
-						main_region_HotDrinkPreparation_react(false);
-					} else {
-						did_transition = false;
-					}
-				}
+				did_transition = false;
 			}
-		}
-		if (did_transition==false) {
-			did_transition = main_region_HotDrinkPreparation_react(try_transition);
 		}
 		return did_transition;
 	}
 	
-	private boolean main_region_HotDrinkPreparation_r2_infusion_react(boolean try_transition) {
+	private boolean main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r2_soup_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (((timeEvents[12] && isStateActive(State.main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_r1_spicesAdd)) && timeEvents[11])) {
+				exitSequence_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep();
+				react_main_region_FirstSteps_r2_Step2_r2_Step2Options_r1__sync0();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_FirstSteps_r2_Step2_r2_Step2Options_r1_Soup2ndStep_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_FirstSteps_r2_Step2_r2_transition_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if ((timeEvents[13] && isStateActive(State.main_region_FirstSteps_r2_Step2_r1_putCup))) {
+				exitSequence_main_region_FirstSteps_r2_Step2();
+				react_main_region_FirstSteps_r2__sync0();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_FirstSteps_r2_Step2_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_LastSteps_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			did_transition = false;
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_LastSteps_r1_waterFlow_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if ((isStateActive(State.main_region_LastSteps_r2_transition) && true)) {
+				exitSequence_main_region_LastSteps();
+				react_main_region__sync1();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_LastSteps_r2_Soup3rdStep_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			did_transition = false;
+		}
+		if (did_transition==false) {
+			did_transition = main_region_LastSteps_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[14]) {
+				exitSequence_main_region_LastSteps_r2_Soup3rdStep_r1_sugarAdd();
+				react_main_region_LastSteps_r2_Soup3rdStep_r1__exit_Default();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_LastSteps_r2_Soup3rdStep_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_LastSteps_r2_transition_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if ((true && isStateActive(State.main_region_LastSteps_r1_waterFlow))) {
+				exitSequence_main_region_LastSteps();
+				react_main_region__sync1();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = main_region_LastSteps_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_finish_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			exitSequence_main_region_finish();
+			enterSequence_main_region_Init_default();
+			react();
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_infusion_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
 			if (timeEvents[15]) {
-				exitSequence_main_region_HotDrinkPreparation_r2_infusion();
-				enterSequence_main_region_HotDrinkPreparation_r2_finish_default();
-				main_region_HotDrinkPreparation_react(false);
+				exitSequence_main_region_infusion();
+				react_main_region__choice_1();
 			} else {
 				did_transition = false;
 			}
 		}
 		if (did_transition==false) {
-			did_transition = main_region_HotDrinkPreparation_react(try_transition);
+			did_transition = react();
 		}
 		return did_transition;
 	}
 	
-	private boolean main_region_HotDrinkPreparation_r2_finish_react(boolean try_transition) {
-		boolean did_transition = try_transition;
-		
-		if (try_transition) {
-			if (timeEvents[16]) {
-				exitSequence_main_region_HotDrinkPreparation_r2_finish();
-				react_main_region_HotDrinkPreparation_r2__exit_Default();
-			} else {
-				did_transition = false;
-			}
-		}
-		if (did_transition==false) {
-			did_transition = main_region_HotDrinkPreparation_react(try_transition);
-		}
-		return did_transition;
-	}
-	
-	private boolean main_region_HotDrinkPreparation_r2_soup_react(boolean try_transition) {
-		boolean did_transition = try_transition;
-		
-		if (try_transition) {
-			if (timeEvents[17]) {
-				exitSequence_main_region_HotDrinkPreparation_r2_soup();
-				enterSequence_main_region_HotDrinkPreparation_r2_waterFlow_default();
-				main_region_HotDrinkPreparation_react(false);
-			} else {
-				did_transition = false;
-			}
-		}
-		if (did_transition==false) {
-			did_transition = main_region_HotDrinkPreparation_react(try_transition);
-		}
-		return did_transition;
-	}
-	
-	private boolean main_region_HotDrinkPreparation_r2_ice_tea_react(boolean try_transition) {
-		boolean did_transition = try_transition;
-		
-		if (try_transition) {
-			if (timeEvents[18]) {
-				exitSequence_main_region_HotDrinkPreparation_r2_ice_tea();
-				enterSequence_main_region_HotDrinkPreparation_r2_putCup_default();
-				main_region_HotDrinkPreparation_react(false);
-			} else {
-				did_transition = false;
-			}
-		}
-		if (did_transition==false) {
-			did_transition = main_region_HotDrinkPreparation_react(try_transition);
-		}
-		return did_transition;
-	}
-	
-	private boolean main_region_HotDrinkPreparation_r2_cooling_react(boolean try_transition) {
+	private boolean main_region_cooling_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
 			if (sCInterface.coolingDone) {
-				exitSequence_main_region_HotDrinkPreparation_r2_cooling();
-				enterSequence_main_region_HotDrinkPreparation_r2_finish_default();
-				main_region_HotDrinkPreparation_react(false);
+				exitSequence_main_region_cooling();
+				enterSequence_main_region_finish_default();
+				react();
 			} else {
-				if (timeEvents[19]) {
-					exitSequence_main_region_HotDrinkPreparation_r2_cooling();
-					enterSequence_main_region_HotDrinkPreparation_r2_cooling_default();
-					main_region_HotDrinkPreparation_react(false);
+				if (timeEvents[16]) {
+					exitSequence_main_region_cooling();
+					enterSequence_main_region_cooling_default();
+					react();
 				} else {
 					did_transition = false;
 				}
 			}
 		}
 		if (did_transition==false) {
-			did_transition = main_region_HotDrinkPreparation_react(try_transition);
+			did_transition = react();
 		}
 		return did_transition;
 	}

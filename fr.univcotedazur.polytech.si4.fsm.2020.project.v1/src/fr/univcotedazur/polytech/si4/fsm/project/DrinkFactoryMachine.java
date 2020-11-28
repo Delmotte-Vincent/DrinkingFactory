@@ -43,6 +43,7 @@ public class DrinkFactoryMachine extends JFrame {
     public int temperature;
     public PayType paymentType;
     public double reduction;
+    public int progress;
     JLabel lblSugar;
     JLabel lblSize;
     JLabel lblTemperature;
@@ -207,7 +208,8 @@ public class DrinkFactoryMachine extends JFrame {
 
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);
-		progressBar.setValue(0);
+		progress = 0;
+		progressBar.setValue(progress);
 		progressBar.setForeground(Color.LIGHT_GRAY);
 		progressBar.setBackground(Color.DARK_GRAY);
 		progressBar.setBounds(12, 254, 622, 26);
