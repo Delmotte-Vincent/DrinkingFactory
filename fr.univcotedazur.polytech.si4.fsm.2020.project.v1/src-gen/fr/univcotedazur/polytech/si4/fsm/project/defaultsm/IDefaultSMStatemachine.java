@@ -76,6 +76,8 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoCooling();
 		
+		public boolean isRaisedDoPay();
+		
 		public String getSelection();
 		
 		public void setSelection(String value);
@@ -122,6 +124,7 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onSetSoupSlidersRaised();
 		public void onSetIceTeaSlidersRaised();
 		public void onDoCoolingRaised();
+		public void onDoPayRaised();
 		}
 	
 	public interface SCInterfaceOperationCallback {

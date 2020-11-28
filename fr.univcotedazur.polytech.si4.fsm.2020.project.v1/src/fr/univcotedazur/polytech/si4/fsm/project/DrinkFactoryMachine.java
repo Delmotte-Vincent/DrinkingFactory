@@ -35,6 +35,7 @@ public class DrinkFactoryMachine extends JFrame {
 	private DefaultSMStatemachine theFSM;
 	private TimerService timer;
 	private JLabel messagesToUser;
+	private CarteBancaire userCard;
 	public JSlider sugarSlider;
     public JSlider sizeSlider;
     public JSlider temperatureSlider;
@@ -48,6 +49,7 @@ public class DrinkFactoryMachine extends JFrame {
     JLabel lblTemperature;
     Hashtable<Integer, JLabel> temperatureTable;
     Hashtable<Integer, JLabel> coldTemperatureTable;
+
 
 	/**
 	 * @wbp.nonvisual location=311,475
@@ -420,9 +422,11 @@ public class DrinkFactoryMachine extends JFrame {
 						carteBancaires.add(new CarteBancaire(input));
 					}
 
-					payment = price;
+					payment = 1000;
 					theFSM.raiseNfcTrigger();
 				}
+
+				userCard = getCardByInput(input);
 			}
 		});
 
@@ -677,8 +681,16 @@ public class DrinkFactoryMachine extends JFrame {
 
 	}
 
+    /**
+     * Decrémente les stocks du produit choisis
+     * ajoute la commande à la carte
+     *
+     */
 	public void doDecrement() {
 		decrementStock();
+		if (paymentType.equals(PayType.NFC)) {
+            userCard.addCommande(price);
+        }
 	}
 
     public boolean isPaid() {
@@ -752,4 +764,16 @@ public class DrinkFactoryMachine extends JFrame {
 			theFSM.raiseCoolingDone();
 		}
 	}
+
+	public CarteBancaire getCardByInput(String id) {
+	    for (CarteBancaire cb : carteBancaires) {
+	        if (cb.getId().equals(id))
+	            return cb;
+        }
+	    return null;
+    }
+
+    public void doPay() {
+
+    }
 }

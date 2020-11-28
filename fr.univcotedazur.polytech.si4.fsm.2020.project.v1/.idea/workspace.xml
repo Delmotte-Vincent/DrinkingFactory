@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2c98b09c-9880-45fc-aa61-40175178b5b6" name="Default Changelist" comment="" />
+    <list default="true" id="2c98b09c-9880-45fc-aa61-40175178b5b6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsm/default.sct" beforeDir="false" afterPath="$PROJECT_DIR$/fsm/default.sct" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src-gen/fr/univcotedazur/polytech/si4/fsm/project/defaultsm/DefaultSMStatemachine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src-gen/fr/univcotedazur/polytech/si4/fsm/project/defaultsm/DefaultSMStatemachine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src-gen/fr/univcotedazur/polytech/si4/fsm/project/defaultsm/IDefaultSMStatemachine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src-gen/fr/univcotedazur/polytech/si4/fsm/project/defaultsm/IDefaultSMStatemachine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/univcotedazur/polytech/si4/fsm/project/DrinkFactoryMachine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/univcotedazur/polytech/si4/fsm/project/DrinkFactoryMachine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/univcotedazur/polytech/si4/fsm/project/DrinkingMachineInterfaceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/univcotedazur/polytech/si4/fsm/project/DrinkingMachineInterfaceImplementation.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,10 +24,13 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectId" id="1juUSdtABaMQ3bwXYwN1k8DLzN7" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Polytech/SI4/CL/CookieFactory/cookiefactory-20-21-team-l" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -70,5 +80,16 @@
       <updated>1604653470230</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

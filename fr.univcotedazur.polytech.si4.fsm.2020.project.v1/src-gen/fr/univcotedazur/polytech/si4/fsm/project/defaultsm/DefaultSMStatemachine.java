@@ -598,6 +598,24 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean doPay;
+		
+		
+		public boolean isRaisedDoPay() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doPay;
+			}
+		}
+		
+		protected void raiseDoPay() {
+			synchronized(DefaultSMStatemachine.this) {
+				doPay = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoPayRaised();
+				}
+			}
+		}
+		
 		private String selection;
 		
 		public synchronized String getSelection() {
@@ -704,6 +722,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		setSoupSliders = false;
 		setIceTeaSliders = false;
 		doCooling = false;
+		doPay = false;
 		}
 		
 	}
@@ -1179,6 +1198,10 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	public synchronized boolean isRaisedDoCooling() {
 		return sCInterface.isRaisedDoCooling();
+	}
+	
+	public synchronized boolean isRaisedDoPay() {
+		return sCInterface.isRaisedDoPay();
 	}
 	
 	public synchronized String getSelection() {
