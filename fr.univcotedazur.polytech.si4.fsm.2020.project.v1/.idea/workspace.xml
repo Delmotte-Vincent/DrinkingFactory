@@ -4,10 +4,9 @@
     <list default="true" id="2c98b09c-9880-45fc-aa61-40175178b5b6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fsm/default.sct" beforeDir="false" afterPath="$PROJECT_DIR$/fsm/default.sct" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsm/default.sgen" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src-gen/fr/univcotedazur/polytech/si4/fsm/project/defaultsm/DefaultSMStatemachine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src-gen/fr/univcotedazur/polytech/si4/fsm/project/defaultsm/DefaultSMStatemachine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src-gen/fr/univcotedazur/polytech/si4/fsm/project/defaultsm/IDefaultSMStatemachine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src-gen/fr/univcotedazur/polytech/si4/fsm/project/defaultsm/IDefaultSMStatemachine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/univcotedazur/polytech/si4/fsm/project/DrinkFactoryMachine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/univcotedazur/polytech/si4/fsm/project/DrinkFactoryMachine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/univcotedazur/polytech/si4/fsm/project/DrinkingMachineInterfaceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/univcotedazur/polytech/si4/fsm/project/DrinkingMachineInterfaceImplementation.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -86,7 +85,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

@@ -759,6 +759,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		main_region_HotDrinkPreparation_r2_soup,
 		main_region_HotDrinkPreparation_r2_ice_tea,
 		main_region_HotDrinkPreparation_r2_cooling,
+		main_region_Pay,
 		$NullState$
 	};
 	
@@ -768,7 +769,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	private ITimer timer;
 	
-	private final boolean[] timeEvents = new boolean[20];
+	private final boolean[] timeEvents = new boolean[21];
 	
 	private BlockingQueue<Runnable> inEventQueue = new LinkedBlockingQueue<Runnable>();
 	private boolean isRunningCycle = false;
@@ -914,6 +915,9 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			case main_region_HotDrinkPreparation_r2_cooling:
 				main_region_HotDrinkPreparation_r2_cooling_react(true);
 				break;
+			case main_region_Pay:
+				main_region_Pay_react(true);
+				break;
 			default:
 				// $NullState$
 			}
@@ -1032,6 +1036,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_ice_tea;
 		case main_region_HotDrinkPreparation_r2_cooling:
 			return stateVector[1] == State.main_region_HotDrinkPreparation_r2_cooling;
+		case main_region_Pay:
+			return stateVector[0] == State.main_region_Pay;
 		default:
 			return false;
 		}
@@ -1246,7 +1252,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	private void effect_main_region_UserSelction_tr1() {
 		exitSequence_main_region_UserSelction();
-		enterSequence_main_region_HotDrinkPreparation_default();
+		enterSequence_main_region_Pay_default();
 		react();
 	}
 	
@@ -1409,6 +1415,13 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.raiseDoCooling();
 	}
 	
+	/* Entry action for state 'Pay'. */
+	private void entryAction_main_region_Pay() {
+		timer.setTimer(this, 20, (1 * 1000), false);
+		
+		sCInterface.raiseDoPay();
+	}
+	
 	/* Exit action for state 'Init'. */
 	private void exitAction_main_region_Init() {
 		timer.unsetTimer(this, 0);
@@ -1495,6 +1508,11 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	/* Exit action for state 'cooling'. */
 	private void exitAction_main_region_HotDrinkPreparation_r2_cooling() {
 		timer.unsetTimer(this, 19);
+	}
+	
+	/* Exit action for state 'Pay'. */
+	private void exitAction_main_region_Pay() {
+		timer.unsetTimer(this, 20);
 	}
 	
 	/* 'default' enter sequence for state Init */
@@ -1676,6 +1694,13 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		entryAction_main_region_HotDrinkPreparation_r2_cooling();
 		nextStateIndex = 1;
 		stateVector[1] = State.main_region_HotDrinkPreparation_r2_cooling;
+	}
+	
+	/* 'default' enter sequence for state Pay */
+	private void enterSequence_main_region_Pay_default() {
+		entryAction_main_region_Pay();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Pay;
 	}
 	
 	/* 'default' enter sequence for region main region */
@@ -1903,6 +1928,14 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		exitAction_main_region_HotDrinkPreparation_r2_cooling();
 	}
 	
+	/* Default exit sequence for state Pay */
+	private void exitSequence_main_region_Pay() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_Pay();
+	}
+	
 	/* Default exit sequence for region main region */
 	private void exitSequence_main_region() {
 		switch (stateVector[0]) {
@@ -1929,6 +1962,9 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			break;
 		case main_region_HotDrinkPreparation_r1_spicesAdd:
 			exitSequence_main_region_HotDrinkPreparation_r1_spicesAdd();
+			break;
+		case main_region_Pay:
+			exitSequence_main_region_Pay();
 			break;
 		default:
 			break;
@@ -2660,6 +2696,24 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		}
 		if (did_transition==false) {
 			did_transition = main_region_HotDrinkPreparation_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Pay_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (timeEvents[20]) {
+				exitSequence_main_region_Pay();
+				enterSequence_main_region_HotDrinkPreparation_default();
+				react();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = react();
 		}
 		return did_transition;
 	}

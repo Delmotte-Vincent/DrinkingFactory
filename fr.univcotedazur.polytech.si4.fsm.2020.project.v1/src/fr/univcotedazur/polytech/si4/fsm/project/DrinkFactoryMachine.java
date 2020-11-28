@@ -44,6 +44,7 @@ public class DrinkFactoryMachine extends JFrame {
     public int temperature;
     public PayType paymentType;
     public double reduction;
+	public boolean paymentNFC;
     JLabel lblSugar;
     JLabel lblSize;
     JLabel lblTemperature;
@@ -422,7 +423,7 @@ public class DrinkFactoryMachine extends JFrame {
 						carteBancaires.add(new CarteBancaire(input));
 					}
 
-					payment = 1000;
+					paymentNFC = true;
 					theFSM.raiseNfcTrigger();
 				}
 
@@ -546,6 +547,7 @@ public class DrinkFactoryMachine extends JFrame {
 		this.reduction = 0;
         this.payment = 0;
         this.price = 0;
+        this.paymentNFC = false;
         theFSM.setSelection(" ");
         messagesToUser.setText("<html>Welcome");
         sugarSlider.setValue(0);
@@ -688,22 +690,22 @@ public class DrinkFactoryMachine extends JFrame {
      */
 	public void doDecrement() {
 		decrementStock();
-		if (paymentType.equals(PayType.NFC)) {
-            userCard.addCommande(price);
-        }
 	}
 
     public boolean isPaid() {
-	    return (payment >= price);
+		if (paymentType.equals(PayType.COIN)) {
+			return (payment >= price);
+		}
+		else {
+			return paymentNFC;
+		}
+
     }
 
     public boolean isComplete() {
 	    return true;
     }
 
-    public boolean isInfused() {
-	    return true;
-    }
 
     public boolean isDispo() {
 		if (!theFSM.getSelection().equals(" ")) {
@@ -726,15 +728,6 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 		}
 		return false;
-	}
-
-	private CarteBancaire getCB(String idCB) {
-		for (CarteBancaire cb : carteBancaires) {
-			if (cb.getId().equals(idCB)) {
-				return cb;
-			}
-		}
-		return null;
 	}
 
 	public void doSoup() {
@@ -774,6 +767,12 @@ public class DrinkFactoryMachine extends JFrame {
     }
 
     public void doPay() {
-
+        System.out.println("OUI");
+        if (paymentType.equals(PayType.NFC)) {
+            userCard.addCommande(price);
+            reduction += userCard.getReduction();
+            price -= reduction;
+            System.out.println("You paid " + price +"€");
+        }
     }
 }
