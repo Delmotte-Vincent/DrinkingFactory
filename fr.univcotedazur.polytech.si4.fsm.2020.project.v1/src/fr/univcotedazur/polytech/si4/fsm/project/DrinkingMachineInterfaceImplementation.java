@@ -116,6 +116,11 @@ public class DrinkingMachineInterfaceImplementation implements SCInterfaceListen
 		
 	}
 
+	@Override
+	public void onDoPayRaised() {
+    	theDF.doPay();
+	}
+
     /*
     @Override
     public void onReadyRaised() {
