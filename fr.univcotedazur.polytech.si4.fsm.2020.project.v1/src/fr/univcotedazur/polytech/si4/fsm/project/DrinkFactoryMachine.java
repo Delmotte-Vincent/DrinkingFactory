@@ -34,6 +34,10 @@ public class DrinkFactoryMachine extends JFrame {
 	private TimerService timer;
 	private JLabel messagesToUser;
 	private CarteBancaire userCard;
+	private boolean optionSugar;
+	private boolean optionCrouton;
+	private boolean optionMilk;
+	private boolean optionIceCream;
 	public JSlider sugarSlider;
     public JSlider sizeSlider;
     public JSlider temperatureSlider;
@@ -539,9 +543,12 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	public void doReset() {
-
         System.out.println("RESET");
         this.paymentType = PayType.DEFAULT;
+        this.optionSugar = false;
+        this.optionCrouton = false;
+        this.optionMilk = false;
+        this.optionIceCream = false;
         this.temperature = 0;
 		this.reduction = 0;
         this.payment = 0;
@@ -614,7 +621,12 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	public void doAddSugar() {
-		System.out.println("Adding " + sugarSlider.getValue() + " doses of sugar");
+		if (!optionSugar) {
+			System.out.println("Adding " + sugarSlider.getValue() + " doses of sugar");
+		}
+		else {
+			System.out.println("Adding " + sugarSlider.getValue() + " doses of erable sugar");
+		}
 
 	}
 	
@@ -771,11 +783,27 @@ public class DrinkFactoryMachine extends JFrame {
 	public void validateStep() {
 		progress += 50;
 		progressBar.setValue(progress);
-		
 	}
 
 	public void doInfusion() {
 		System.out.println("Infusion...");
-		
+	}
+
+	public void doCrouton() {
+		if (optionCrouton) {
+			System.out.println("Add some crouton to your soup");
+		}
+	}
+	
+	public void addMilk() {
+		if (optionMilk) {
+			System.out.println("Add some Milk");
+		}
+	}
+
+	public void addIceCream() {
+		if (optionIceCream)  {
+			System.out.println("Add ice cream");
+		}
 	}
 }

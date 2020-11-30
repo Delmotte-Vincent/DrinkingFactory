@@ -134,6 +134,24 @@ public class DrinkingMachineInterfaceImplementation implements SCInterfaceListen
 		
 	}
 
+	@Override
+	public void onDoCroutonRaised() {
+		theDF.doCrouton();
+		
+	}
+
+	@Override
+	public void onAddMilkRaised() {
+		theDF.addMilk();
+		
+	}
+
+	@Override
+	public void onAddIceCreamRaised() {
+		theDF.addIceCream();
+		
+	}
+
     /*
     @Override
     public void onReadyRaised() {
