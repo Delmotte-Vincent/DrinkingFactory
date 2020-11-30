@@ -800,6 +800,24 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		validateStep = false;
 		doInfusion = false;
 		}
+
+		@Override
+		public boolean isRaisedDoCrouton() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean isRaisedAddMilk() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean isRaisedAddIceCream() {
+			// TODO Auto-generated method stub
+			return false;
+		}
 		
 	}
 	
