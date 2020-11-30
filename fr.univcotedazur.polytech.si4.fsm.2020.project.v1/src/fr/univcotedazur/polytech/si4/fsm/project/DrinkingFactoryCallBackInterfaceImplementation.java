@@ -100,4 +100,14 @@ public class DrinkingFactoryCallBackInterfaceImplementation implements SCInterfa
     public boolean isDispo() {
         return theGUI.isDispo();
     }
+
+	@Override
+	public boolean isFilled() {
+		return true;
+	}
+
+	@Override
+	public boolean isCooled() {
+		return true;
+	}
 }

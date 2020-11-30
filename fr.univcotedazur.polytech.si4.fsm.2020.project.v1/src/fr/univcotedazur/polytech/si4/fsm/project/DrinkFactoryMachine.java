@@ -84,7 +84,7 @@ public class DrinkFactoryMachine extends JFrame {
 
         stock = new Hashtable<>();
         stock.put("Coffee", 1);
-        stock.put("Expresso", 0);
+        stock.put("Expresso", 20);
         stock.put("Tea", 8);
         stock.put("Soup", 1);
         stock.put("IcedTea", 5);
@@ -424,6 +424,7 @@ public class DrinkFactoryMachine extends JFrame {
 					}
 
 					payment = price;
+					userCard = getCardByInput(input);
 					theFSM.raiseNfcTrigger();
 				}
 			}
@@ -556,21 +557,6 @@ public class DrinkFactoryMachine extends JFrame {
 	public void doWaterHeat() {
         temperature += 2;
 		System.out.println("+2°,  temperature : " + temperature +"°");
-		int goal = 0;
-		switch(temperatureSlider.getValue()){
-			case 0:
-				goal = 20;
-			case 1:
-				goal = 35;
-			case 2:
-				goal = 60;
-			case 3:
-				goal = 85;
-			default : goal = 0;
-		}
-		if (goal <= temperature) {
-			theFSM.raiseHeatingDone();
-		}
 	}
 
 
@@ -646,7 +632,8 @@ public class DrinkFactoryMachine extends JFrame {
 				return temperature >= 60;
 			case 3:
 				return temperature >= 85;
-			default : return false;
+			default : 
+				return false;
 		}
     }
 
@@ -784,6 +771,11 @@ public class DrinkFactoryMachine extends JFrame {
 	public void validateStep() {
 		progress += 50;
 		progressBar.setValue(progress);
+		
+	}
+
+	public void doInfusion() {
+		System.out.println("Infusion...");
 		
 	}
 }

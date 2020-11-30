@@ -84,6 +84,8 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedValidateStep();
 		
+		public boolean isRaisedDoInfusion();
+		
 		public String getSelection();
 		
 		public void setSelection(String value);
@@ -132,6 +134,7 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoCoolingRaised();
 		public void onDoPayRaised();
 		public void onValidateStepRaised();
+		public void onDoInfusionRaised();
 		}
 	
 	public interface SCInterfaceOperationCallback {
@@ -153,6 +156,10 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public boolean isComplete();
 		
 		public boolean isDispo();
+		
+		public boolean isFilled();
+		
+		public boolean isCooled();
 		
 	}
 	

@@ -128,6 +128,12 @@ public class DrinkingMachineInterfaceImplementation implements SCInterfaceListen
 		
 	}
 
+	@Override
+	public void onDoInfusionRaised() {
+		theDF.doInfusion();
+		
+	}
+
     /*
     @Override
     public void onReadyRaised() {
