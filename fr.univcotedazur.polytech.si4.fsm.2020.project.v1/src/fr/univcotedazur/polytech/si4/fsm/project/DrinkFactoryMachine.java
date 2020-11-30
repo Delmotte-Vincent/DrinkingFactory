@@ -11,9 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.IdentityHashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -35,6 +33,7 @@ public class DrinkFactoryMachine extends JFrame {
 	private DefaultSMStatemachine theFSM;
 	private TimerService timer;
 	private JLabel messagesToUser;
+	private CarteBancaire userCard;
 	public JSlider sugarSlider;
     public JSlider sizeSlider;
     public JSlider temperatureSlider;
@@ -42,6 +41,7 @@ public class DrinkFactoryMachine extends JFrame {
     public double price;
     public int temperature;
     public PayType paymentType;
+    public boolean paymentNFC;
     public double reduction;
     public int progress;
     JLabel lblSugar;
@@ -49,6 +49,7 @@ public class DrinkFactoryMachine extends JFrame {
     JLabel lblTemperature;
     Hashtable<Integer, JLabel> temperatureTable;
     Hashtable<Integer, JLabel> coldTemperatureTable;
+    JProgressBar progressBar;
 
 	/**
 	 * @wbp.nonvisual location=311,475
@@ -206,7 +207,7 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 		});
 
-		JProgressBar progressBar = new JProgressBar();
+		progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);
 		progress = 0;
 		progressBar.setValue(progress);
@@ -555,6 +556,21 @@ public class DrinkFactoryMachine extends JFrame {
 	public void doWaterHeat() {
         temperature += 2;
 		System.out.println("+2°,  temperature : " + temperature +"°");
+		int goal = 0;
+		switch(temperatureSlider.getValue()){
+			case 0:
+				goal = 20;
+			case 1:
+				goal = 35;
+			case 2:
+				goal = 60;
+			case 3:
+				goal = 85;
+			default : goal = 0;
+		}
+		if (goal <= temperature) {
+			theFSM.raiseHeatingDone();
+		}
 	}
 
 
@@ -572,6 +588,7 @@ public class DrinkFactoryMachine extends JFrame {
 
 	public void doWaterFlow() {
         System.out.println("water flow");
+        theFSM.raiseWaterFilled();
 	}
 	
 	//-----Changement des sliders selon le type de boisson-------
@@ -718,15 +735,6 @@ public class DrinkFactoryMachine extends JFrame {
 		return false;
 	}
 
-	private CarteBancaire getCB(String idCB) {
-		for (CarteBancaire cb : carteBancaires) {
-			if (cb.getId().equals(idCB)) {
-				return cb;
-			}
-		}
-		return null;
-	}
-
 	public void doSoup() {
 		System.out.println("Soup preparation");
 		
@@ -753,5 +761,29 @@ public class DrinkFactoryMachine extends JFrame {
 		if (temperature <= tempGoal) {
 			theFSM.raiseCoolingDone();
 		}
+	}
+	
+	public CarteBancaire getCardByInput(String id) {
+	    for (CarteBancaire cb : carteBancaires) {
+	        if (cb.getId().equals(id))
+	            return cb;
+        }
+	    return null;
+    }
+
+    public void doPay() {
+        System.out.println("OUI");
+        if (paymentType.equals(PayType.NFC)) {
+            userCard.addCommande(price);
+            reduction += userCard.getReduction();
+            price -= reduction;
+            System.out.println("You paid " + price +"€");
+        }
+    }
+
+	public void validateStep() {
+		progress += 50;
+		progressBar.setValue(progress);
+		
 	}
 }
