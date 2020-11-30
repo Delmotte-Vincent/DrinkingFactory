@@ -38,6 +38,7 @@ public class DrinkFactoryMachine extends JFrame {
 	private boolean optionCrouton;
 	private boolean optionMilk;
 	private boolean optionIceCream;
+	private boolean persoCup;
 	public JSlider sugarSlider;
 	public JSlider sizeSlider;
 	public JSlider temperatureSlider;
@@ -447,7 +448,7 @@ public class DrinkFactoryMachine extends JFrame {
 		separator.setBounds(12, 292, 622, 15);
 		contentPane.add(separator);
 
-		JButton addOwnCupButton = new JButton("Add your cup");
+		JButton addOwnCupButton = new JButton("Take back cup");
 		addOwnCupButton.setForeground(Color.WHITE);
 		addOwnCupButton.setBackground(Color.DARK_GRAY);
 		addOwnCupButton.setBounds(45, 336, 128, 25);
@@ -455,21 +456,15 @@ public class DrinkFactoryMachine extends JFrame {
 		addOwnCupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				reduction = 0.10;
+				persoCup = false;
+				reduction = 0;
 				updateUI();
-				double delta = (price-reduction) - payment;
-				if (payment >= (price-reduction)) {
-					theFSM.raiseAddCupB();
-					System.out.println("add a cup and refund " + Math.abs(delta));
-				}
-				else {
-					System.out.println("You need to insert " + delta + "€");
-				}
-
+				System.out.println("You take off your personnal cup");
+				theFSM.raiseAddCupB();
 			}
 		});
 
-		JButton addCupButton = new JButton("Add cup");
+		JButton addCupButton = new JButton("Add your cup");
 		addCupButton.setForeground(Color.WHITE);
 		addCupButton.setBackground(Color.DARK_GRAY);
 		addCupButton.setBounds(45, 376, 96, 25);
@@ -477,15 +472,10 @@ public class DrinkFactoryMachine extends JFrame {
 		addCupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				double delta = (price-reduction) - payment;
-				if (payment >= (price-reduction)) {
-					theFSM.raiseAddCupB();
-					System.out.println("add a cup and refund " + Math.abs(delta));
-				}
-				else {
-					System.out.println("You need to insert " + delta + "€");
-				}
-
+				persoCup = true;
+				reduction = 0.10;
+				updateUI();
+				System.out.println("You add your personnal cup");
 				theFSM.raiseAddCupB();
 			}
 		});
@@ -553,6 +543,7 @@ public class DrinkFactoryMachine extends JFrame {
 		this.reduction = 0;
 		this.payment = 0;
 		this.price = 0;
+		this.persoCup = false;
 		theFSM.setSelection(" ");
 		messagesToUser.setText("<html>Welcome");
 		sugarSlider.setValue(0);
@@ -615,7 +606,9 @@ public class DrinkFactoryMachine extends JFrame {
 	//------------------------------------------------------------
 
 	public void doPutCup() {
-		System.out.println("Put a cup");
+		if (!persoCup) {
+			System.out.println("Put a cup");
+		}
 		progressBarIncrement();
 	}
 
@@ -662,7 +655,7 @@ public class DrinkFactoryMachine extends JFrame {
 				goal = 50;
 				break;
 		}
-		System.out.println("Temperature goal : "+goal);
+		
 		if (temperature >= goal) {
 			progressBarIncrement();
 			return true;
