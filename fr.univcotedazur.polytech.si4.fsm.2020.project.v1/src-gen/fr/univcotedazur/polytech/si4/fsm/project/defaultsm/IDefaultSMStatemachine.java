@@ -92,6 +92,8 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedAddIceCream();
 		
+		public boolean isRaisedDoGrainCompacting();
+		
 		public String getSelection();
 		
 		public void setSelection(String value);
@@ -144,6 +146,7 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoCroutonRaised();
 		public void onAddMilkRaised();
 		public void onAddIceCreamRaised();
+		public void onDoGrainCompactingRaised();
 		}
 	
 	public interface SCInterfaceOperationCallback {

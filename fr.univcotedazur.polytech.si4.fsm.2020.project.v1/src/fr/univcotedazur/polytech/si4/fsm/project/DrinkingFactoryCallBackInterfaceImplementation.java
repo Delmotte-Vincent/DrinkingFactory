@@ -108,6 +108,6 @@ public class DrinkingFactoryCallBackInterfaceImplementation implements SCInterfa
 
 	@Override
 	public boolean isCooled() {
-		return true;
+		return theGUI.isCooled();
 	}
 }

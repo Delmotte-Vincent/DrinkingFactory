@@ -287,10 +287,10 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 
 		coldTemperatureTable = new Hashtable<Integer, JLabel>();
-		coldTemperatureTable.put(0, new JLabel("15°C"));
-		coldTemperatureTable.put(1, new JLabel("10°C"));
-		coldTemperatureTable.put(2, new JLabel("5°C"));
-		coldTemperatureTable.put(3, new JLabel("2°C"));
+		coldTemperatureTable.put(0, new JLabel("0°C"));
+		coldTemperatureTable.put(1, new JLabel("5°C"));
+		coldTemperatureTable.put(2, new JLabel("10°C"));
+		coldTemperatureTable.put(3, new JLabel("15°C"));
 		for (JLabel l : coldTemperatureTable.values()) {
 			l.setForeground(Color.WHITE);
 		}
@@ -550,6 +550,7 @@ public class DrinkFactoryMachine extends JFrame {
 		sizeSlider.setValue(0);
 		temperatureSlider.setValue(0);
 		progress = 0;
+		progressBar.setValue(progress);
 
 	}
 
@@ -758,25 +759,6 @@ public class DrinkFactoryMachine extends JFrame {
 		progressBarIncrement();
 	}
 
-	public void doCooling() {
-		temperature -= 2;
-		System.out.println("-2°,  temperature : " + temperature +"°");
-		int tempGoal = 0;
-		switch(temperatureSlider.getValue()){
-			case 0:
-				tempGoal = 15;
-			case 1:
-				tempGoal = 10;
-			case 2:
-				tempGoal = 5;
-			case 3:
-				tempGoal = 2;
-		}
-		if (temperature <= tempGoal) {
-			theFSM.raiseCoolingDone();
-		}
-	}
-
 	public CarteBancaire getCardByInput(String id) {
 		for (CarteBancaire cb : carteBancaires) {
 			if (cb.getId().equals(id))
@@ -805,15 +787,20 @@ public class DrinkFactoryMachine extends JFrame {
 		switch(theFSM.getSelection()) {
 			case "Coffee":
 				steps = 5;
+				break;
 			case "Soup":
 				steps = 5;
+				break;
 			case "IcedTea":
 				steps = 9;
+				break;
 			default:
 				steps = 6;
+				break;
 		}
-		int increment = (int) 100/(steps-1);
+		float increment = 100/steps;
 		progress += increment;
+		System.out.println("Progress raised by "+increment+" !");
 		progressBar.setValue(progress);
 	}
 
@@ -838,5 +825,42 @@ public class DrinkFactoryMachine extends JFrame {
 		if (optionIceCream)  {
 			System.out.println("Add ice cream");
 		}
+	}
+	
+	public void doCooling() {
+		temperature -= 2;
+		System.out.println("-2°,  temperature : " + temperature +"°");
+	}
+
+	public boolean isCooled() {
+		int goal = 0;
+		switch(temperatureSlider.getValue()){
+			case 0:
+				goal = 0;
+				break;
+			case 1:
+				goal = 5;
+				break;
+			case 2:
+				goal = 10;
+				break;
+			case 3:
+				goal = 15;
+				break;
+			default :
+				goal = 0;
+				break;
+		}
+		
+		if (temperature <= goal) {
+			progressBarIncrement();
+			return true;
+		}
+		return false;
+	}
+
+	public void doGrainCompacting() {
+		System.out.println("Compacting grains...");
+		progressBarIncrement();
 	}
 }
