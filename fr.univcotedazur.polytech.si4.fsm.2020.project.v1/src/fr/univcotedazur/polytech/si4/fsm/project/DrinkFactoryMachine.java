@@ -148,6 +148,8 @@ public class DrinkFactoryMachine extends JFrame {
 					theFSM.setSelection("Coffee");
 					theFSM.raiseClassicDrinkTrigger();
 					price = 0.35;
+					updatePrice();
+
 					updateUI();
 				}
 				else {
@@ -168,6 +170,7 @@ public class DrinkFactoryMachine extends JFrame {
 					theFSM.setSelection("Expresso");
 					theFSM.raiseClassicDrinkTrigger();
 					price = 0.50;
+					updatePrice();
 					updateUI();
 				}
 				else {
@@ -188,6 +191,7 @@ public class DrinkFactoryMachine extends JFrame {
 					theFSM.setSelection("Tea");
 					theFSM.raiseClassicDrinkTrigger();
 					price = 0.40;
+					updatePrice();
 					updateUI();
 				}
 				else {
@@ -208,7 +212,60 @@ public class DrinkFactoryMachine extends JFrame {
 				theFSM.setSelection("Soup");
 				theFSM.raiseSoupTrigger();
 				price = 1.0;
+				updatePrice();
 				updateUI();
+			}
+		});
+
+		JButton optionSugarButton = new JButton("Erable");
+		optionSugarButton.setForeground(Color.WHITE);
+		optionSugarButton.setBackground(Color.DARK_GRAY);
+		optionSugarButton.setBounds(12, 215, 75, 25);
+		contentPane.add(optionSugarButton);
+		optionSugarButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Option : Sucre d'erable");
+				optionSugar = true;
+			}
+		});
+
+		JButton optionCroutonButton = new JButton("Crouton");
+		optionCroutonButton.setForeground(Color.WHITE);
+		optionCroutonButton.setBackground(Color.DARK_GRAY);
+		optionCroutonButton.setBounds(89, 215, 80, 25);
+		contentPane.add(optionCroutonButton);
+		optionCroutonButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Option : Crouton");
+				optionCrouton = true;
+			}
+		});
+
+		JButton optionIceCreamButton = new JButton("Glace");
+		optionIceCreamButton.setForeground(Color.WHITE);
+		optionIceCreamButton.setBackground(Color.DARK_GRAY);
+		optionIceCreamButton.setBounds(169, 215, 75, 25);
+		contentPane.add(optionIceCreamButton);
+		optionIceCreamButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Option : Crême glacée");
+				optionIceCream = true;
+			}
+		});
+
+		JButton optionMilkButton = new JButton("Milk");
+		optionMilkButton.setForeground(Color.WHITE);
+		optionMilkButton.setBackground(Color.DARK_GRAY);
+		optionMilkButton.setBounds(245, 215, 75, 25);
+		contentPane.add(optionMilkButton);
+		optionMilkButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Option : Crême glacée");
+				optionMilk = true;
 			}
 		});
 
@@ -230,7 +287,7 @@ public class DrinkFactoryMachine extends JFrame {
 		sugarSlider.setMinorTickSpacing(1);
 		sugarSlider.setMajorTickSpacing(1);
 		sugarSlider.setMaximum(4);
-		sugarSlider.setBounds(301, 51, 200, 36);
+		sugarSlider.setBounds(330, 51, 200, 36);
 		contentPane.add(sugarSlider);
 		sugarSlider.addChangeListener(new ChangeListener() {
 			@Override
@@ -249,7 +306,7 @@ public class DrinkFactoryMachine extends JFrame {
 		sizeSlider.setMinorTickSpacing(1);
 		sizeSlider.setMaximum(2);
 		sizeSlider.setMajorTickSpacing(1);
-		sizeSlider.setBounds(301, 125, 200, 36);
+		sizeSlider.setBounds(330, 125, 200, 36);
 		contentPane.add(sizeSlider);
 		sizeSlider.addChangeListener(new ChangeListener() {
 			@Override
@@ -268,7 +325,7 @@ public class DrinkFactoryMachine extends JFrame {
 		temperatureSlider.setPaintTicks(true);
 		temperatureSlider.setMajorTickSpacing(1);
 		temperatureSlider.setMaximum(3);
-		temperatureSlider.setBounds(301, 188, 200, 54);
+		temperatureSlider.setBounds(330, 188, 200, 54);
 		temperatureSlider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -311,6 +368,7 @@ public class DrinkFactoryMachine extends JFrame {
 					theFSM.setSelection("IcedTea");
 					theFSM.raiseIceTeaTrigger();
 					price = 1.0;
+					updatePrice();
 					updateUI();
 				}
 				else {
@@ -428,7 +486,6 @@ public class DrinkFactoryMachine extends JFrame {
 						carteBancaires.add(new CarteBancaire(input));
 					}
 
-					payment = price;
 					userCard = getCardByInput(input);
 					theFSM.raiseNfcTrigger();
 				}
@@ -655,7 +712,7 @@ public class DrinkFactoryMachine extends JFrame {
 				goal = 50;
 				break;
 		}
-		
+
 		if (temperature >= goal) {
 			progressBarIncrement();
 			return true;
@@ -714,6 +771,9 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	public boolean isPaid() {
+			if (paymentType.equals(PayType.NFC)) {
+				return true;
+			}
 		return (payment >= price);
 	}
 
@@ -786,12 +846,15 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	public void doPay() {
-		System.out.println("OUI");
 		if (paymentType.equals(PayType.NFC)) {
 			userCard.addCommande(price);
 			reduction += userCard.getReduction();
 			price -= reduction;
 			System.out.println("You paid " + price +"€");
+		}
+
+		if (paymentType.equals(PayType.COIN) && price < payment) {
+			System.out.println("You're refund of :" + (payment - price) + "€");
 		}
 	}
 
@@ -837,6 +900,29 @@ public class DrinkFactoryMachine extends JFrame {
 	public void addIceCream() {
 		if (optionIceCream)  {
 			System.out.println("Add ice cream");
+		}
+	}
+
+	/**
+	 * Permet d'ajouter le prix des options à la selection
+	 */
+	public void updatePrice() {
+		if (optionSugar) {
+			if (theFSM.getSelection().equals("Tea") || theFSM.getSelection().equals("Coffee") || theFSM.getSelection().equals("Expresso") || theFSM.getSelection().equals("Iced Tea")) {
+				price += 0.10;
+			}
+		}
+		if (optionIceCream) {
+			if (theFSM.getSelection().equals("Coffee") || theFSM.getSelection().equals("Expresso")) {
+				price += 0.60;
+			}
+		}
+		if (optionCrouton && theFSM.getSelection().equals("Soup")) {
+			price += 0.30;
+		}
+		if (optionMilk) {
+			if (theFSM.getSelection().equals("Tea") || theFSM.getSelection().equals("Coffee") || theFSM.getSelection().equals("Expresso"))
+			price += 0.10;
 		}
 	}
 }
