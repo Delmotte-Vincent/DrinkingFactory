@@ -824,6 +824,30 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			// TODO Auto-generated method stub
 			return false;
 		}
+
+		@Override
+		public void raiseLockTrigger() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void raiseUnlockTrigger() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public boolean isRaisedLockDoor() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean isRaisedUnlockDoor() {
+			// TODO Auto-generated method stub
+			return false;
+		}
 		
 	}
 	

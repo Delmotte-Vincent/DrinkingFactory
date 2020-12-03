@@ -912,15 +912,15 @@ public class DrinkFactoryMachine extends JFrame {
 				steps = 5;
 				break;
 			case "IcedTea":
-				steps = 9;
+				steps = 7;
 				break;
 			default:
 				steps = 6;
 				break;
 		}
 		float increment = 100/steps;
-		progress += increment;
-		System.out.println("Progress raised by "+increment+" !");
+		progress += increment+1;
+		//System.out.println("Progress raised by "+increment+" !");
 		progressBar.setValue(progress);
 	}
 
@@ -1022,5 +1022,23 @@ public class DrinkFactoryMachine extends JFrame {
 		stock.put("Croutons", 5);
 		stock.put("Glace vanille", 5);
 		stock.put("Sirop d'erable", 5);
+	}
+
+
+
+
+
+	public void lockDoor() {
+		System.out.println("/!\\ Door Locked /!\\");
+		
+	}
+
+
+
+
+
+	public void unlockDoor() {
+		System.out.println("/!\\ Door Unlocked /!\\");
+		
 	}
 }
