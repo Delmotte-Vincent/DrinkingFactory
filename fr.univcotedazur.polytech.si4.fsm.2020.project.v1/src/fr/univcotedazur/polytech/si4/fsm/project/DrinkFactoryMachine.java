@@ -603,6 +603,7 @@ public class DrinkFactoryMachine extends JFrame {
 
 	public void doRefund() {
 		System.out.println("you're refund of " + this.payment +"€");
+		messagesToUser.setText("<html>Remboursement pour inactivité.");
 	}
 
 	public void doReset() {
