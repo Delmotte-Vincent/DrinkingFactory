@@ -158,18 +158,6 @@ public class DrinkingMachineInterfaceImplementation implements SCInterfaceListen
 		
 	}
 
-	@Override
-	public void onLockDoorRaised() {
-		theDF.lockDoor();
-		
-	}
-
-	@Override
-	public void onUnlockDoorRaised() {
-		theDF.unlockDoor();
-		
-	}
-
     /*
     @Override
     public void onReadyRaised() {

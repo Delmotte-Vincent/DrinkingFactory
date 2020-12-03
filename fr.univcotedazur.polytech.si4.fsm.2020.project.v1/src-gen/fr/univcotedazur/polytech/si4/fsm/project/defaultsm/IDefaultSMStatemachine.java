@@ -42,10 +42,6 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public void raiseHeatingDone();
 		
-		public void raiseLockTrigger();
-		
-		public void raiseUnlockTrigger();
-		
 		public boolean isRaisedDoRefund();
 		
 		public boolean isRaisedDoReset();
@@ -97,10 +93,6 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public boolean isRaisedAddIceCream();
 		
 		public boolean isRaisedDoGrainCompacting();
-		
-		public boolean isRaisedLockDoor();
-		
-		public boolean isRaisedUnlockDoor();
 		
 		public String getSelection();
 		
@@ -155,8 +147,6 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onAddMilkRaised();
 		public void onAddIceCreamRaised();
 		public void onDoGrainCompactingRaised();
-		public void onLockDoorRaised();
-		public void onUnlockDoorRaised();
 		}
 	
 	public interface SCInterfaceOperationCallback {
