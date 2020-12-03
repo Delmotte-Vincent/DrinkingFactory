@@ -46,7 +46,6 @@ public class DrinkFactoryMachine extends JFrame {
 	public double price;
 	public int temperature;
 	public PayType paymentType;
-	public boolean paymentNFC;
 	public double reduction;
 	public int progress;
 	JLabel lblSugar;
@@ -87,16 +86,7 @@ public class DrinkFactoryMachine extends JFrame {
 	public DrinkFactoryMachine() {
 		carteBancaires = new ArrayList<CarteBancaire>();
 
-		stock = new Hashtable<>();
-		stock.put("Coffee", 1);
-		stock.put("Expresso", 20);
-		stock.put("Tea", 8);
-		stock.put("Soup", 1);
-		stock.put("IcedTea", 5);
-		stock.put("Nuage de lait", 5);
-		stock.put("Croutons", 5);
-		stock.put("Glace vanille", 5);
-		stock.put("Sirop d'erable", 5);
+		initialisationStock();
 
 		theFSM = new DefaultSMStatemachine();
 		timer = new TimerService();
@@ -201,6 +191,28 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 		});
 
+		JButton icedTeaButton = new JButton("Iced Tea");
+		icedTeaButton.setForeground(Color.WHITE);
+		icedTeaButton.setBackground(Color.DARK_GRAY);
+		icedTeaButton.setBounds(12, 182, 96, 25);
+		contentPane.add(icedTeaButton);
+		icedTeaButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (isInStock("IcedTea")) {
+					theFSM.setSelection("IcedTea");
+					theFSM.raiseIceTeaTrigger();
+					price = 1.0;
+					updatePrice();
+					updateUI();
+				}
+				else {
+					ruptureDeStockMessage();
+				}
+
+			}
+		});
+
 		JButton soupButton = new JButton("Soup");
 		soupButton.setForeground(Color.WHITE);
 		soupButton.setBackground(Color.DARK_GRAY);
@@ -225,8 +237,15 @@ public class DrinkFactoryMachine extends JFrame {
 		optionSugarButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Option : Sucre d'erable");
-				optionSugar = true;
+				if (optionSugar) {
+					System.out.println(" (-) Sucre d'Erable");
+					optionSugar = false;
+				}
+				else {
+					System.out.println(" (+) Sucre d'Erable");
+					optionSugar = true;
+				}
+				updateUI();
 			}
 		});
 
@@ -238,8 +257,15 @@ public class DrinkFactoryMachine extends JFrame {
 		optionCroutonButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Option : Crouton");
-				optionCrouton = true;
+				if (optionCrouton) {
+					System.out.println(" (-) Crouton");
+					optionCrouton = false;
+				}
+				else {
+					System.out.println(" (+) Crouton");
+					optionCrouton = true;
+				}
+				updateUI();
 			}
 		});
 
@@ -251,8 +277,15 @@ public class DrinkFactoryMachine extends JFrame {
 		optionIceCreamButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Option : Crême glacée");
-				optionIceCream = true;
+				if (optionIceCream) {
+					System.out.println(" (-) Creme glacée");
+					optionIceCream = false;
+				}
+				else {
+					System.out.println(" (+) Creme glacée");
+					optionIceCream = true;
+				}
+				updateUI();
 			}
 		});
 
@@ -264,8 +297,15 @@ public class DrinkFactoryMachine extends JFrame {
 		optionMilkButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Option : Crême glacée");
-				optionMilk = true;
+				if (optionMilk) {
+					System.out.println(" (-) Lait");
+					optionMilk = false;
+				}
+				else {
+					System.out.println(" (+) Lait");
+					optionMilk = true;
+				}
+				updateUI();
 			}
 		});
 
@@ -344,39 +384,15 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 
 		coldTemperatureTable = new Hashtable<Integer, JLabel>();
-		coldTemperatureTable.put(0, new JLabel("15°C"));
-		coldTemperatureTable.put(1, new JLabel("10°C"));
-		coldTemperatureTable.put(2, new JLabel("5°C"));
-		coldTemperatureTable.put(3, new JLabel("2°C"));
+		coldTemperatureTable.put(0, new JLabel("0°C"));
+		coldTemperatureTable.put(1, new JLabel("5°C"));
+		coldTemperatureTable.put(2, new JLabel("10°C"));
+		coldTemperatureTable.put(3, new JLabel("15°C"));
 		for (JLabel l : coldTemperatureTable.values()) {
 			l.setForeground(Color.WHITE);
 		}
-
 		temperatureSlider.setLabelTable(temperatureTable);
-
 		contentPane.add(temperatureSlider);
-
-		JButton icedTeaButton = new JButton("Iced Tea");
-		icedTeaButton.setForeground(Color.WHITE);
-		icedTeaButton.setBackground(Color.DARK_GRAY);
-		icedTeaButton.setBounds(12, 182, 96, 25);
-		contentPane.add(icedTeaButton);
-		icedTeaButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (isInStock("IcedTea")) {
-					theFSM.setSelection("IcedTea");
-					theFSM.raiseIceTeaTrigger();
-					price = 1.0;
-					updatePrice();
-					updateUI();
-				}
-				else {
-					ruptureDeStockMessage();
-				}
-
-			}
-		});
 
 		lblSugar = new JLabel("Sugar");
 		lblSugar.setForeground(Color.WHITE);
@@ -607,6 +623,7 @@ public class DrinkFactoryMachine extends JFrame {
 		sizeSlider.setValue(0);
 		temperatureSlider.setValue(0);
 		progress = 0;
+		progressBar.setValue(progress);
 
 	}
 
@@ -734,11 +751,52 @@ public class DrinkFactoryMachine extends JFrame {
 	 * Méthode qui s'occupe de l'affichage utilisateur
 	 */
 	private void updateUI() {
-		messagesToUser.setText(
-				"<html>Bienvenue<br>Selection : " + theFSM.getSelection()
-						+ "<br>Coût : " + String.format("%.2f", this.price-this.reduction) + "€"
-						+ "<br>Paiement : " + this.payment + "€"
-		);
+		updatePrice();
+		String messageOptionCrouton;
+		String messageOptionLait;
+		String messageOptionIceCream;
+		String messageOptionErable;
+
+		if (optionCrouton) {
+			messageOptionCrouton = "(+)";
+		}
+		else {
+			messageOptionCrouton = "(-)";
+		}
+
+		if (optionSugar) {
+			messageOptionErable = "(+)";
+		}
+		else {
+			messageOptionErable = "(-)";
+		}
+
+		if (optionIceCream) {
+			messageOptionIceCream = "(+)";
+		}
+		else {
+			messageOptionIceCream = "(-)";
+		}
+
+		if (optionMilk) {
+			messageOptionLait = "(+)";
+		}
+		else {
+			messageOptionLait = "(-)";
+		}
+
+
+		String message = "<html>Bienvenue<br>Selection : " + theFSM.getSelection()
+				+ "<br>Coût : " + String.format("%.2f", this.price-this.reduction) + "€"
+				+ "<br>Paiement : " + this.payment + "€"
+				+ "<br>"
+				+ "<br>OPTIONS :"
+				+ "<br>Sucre d'Erable : " + messageOptionErable
+				+ "<br>Crouton : " + messageOptionCrouton
+				+ "<br>Lait : " + messageOptionLait
+				+ "<br>Crème glacée : " + messageOptionIceCream;
+
+		messagesToUser.setText(message);
 	}
 
 	/**
@@ -818,25 +876,6 @@ public class DrinkFactoryMachine extends JFrame {
 		progressBarIncrement();
 	}
 
-	public void doCooling() {
-		temperature -= 2;
-		System.out.println("-2°,  temperature : " + temperature +"°");
-		int tempGoal = 0;
-		switch(temperatureSlider.getValue()){
-			case 0:
-				tempGoal = 15;
-			case 1:
-				tempGoal = 10;
-			case 2:
-				tempGoal = 5;
-			case 3:
-				tempGoal = 2;
-		}
-		if (temperature <= tempGoal) {
-			theFSM.raiseCoolingDone();
-		}
-	}
-
 	public CarteBancaire getCardByInput(String id) {
 		for (CarteBancaire cb : carteBancaires) {
 			if (cb.getId().equals(id))
@@ -868,15 +907,20 @@ public class DrinkFactoryMachine extends JFrame {
 		switch(theFSM.getSelection()) {
 			case "Coffee":
 				steps = 5;
+				break;
 			case "Soup":
 				steps = 5;
+				break;
 			case "IcedTea":
 				steps = 9;
+				break;
 			default:
 				steps = 6;
+				break;
 		}
-		int increment = (int) 100/(steps-1);
+		float increment = 100/steps;
 		progress += increment;
+		System.out.println("Progress raised by "+increment+" !");
 		progressBar.setValue(progress);
 	}
 
@@ -903,6 +947,7 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 	}
 
+
 	/**
 	 * Permet d'ajouter le prix des options à la selection
 	 */
@@ -922,7 +967,60 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 		if (optionMilk) {
 			if (theFSM.getSelection().equals("Tea") || theFSM.getSelection().equals("Coffee") || theFSM.getSelection().equals("Expresso"))
-			price += 0.10;
+				price += 0.10;
 		}
+	}
+	
+	public void doCooling() {
+		temperature -= 2;
+		System.out.println("-2°,  temperature : " + temperature +"°");
+	}
+
+	public boolean isCooled() {
+		int goal = 0;
+		switch(temperatureSlider.getValue()){
+			case 0:
+				goal = 0;
+				break;
+			case 1:
+				goal = 5;
+				break;
+			case 2:
+				goal = 10;
+				break;
+			case 3:
+				goal = 15;
+				break;
+			default :
+				goal = 0;
+				break;
+		}
+		
+		if (temperature <= goal) {
+			progressBarIncrement();
+			return true;
+		}
+		return false;
+	}
+
+	public void doGrainCompacting() {
+		System.out.println("Compacting grains...");
+		progressBarIncrement();
+	}
+
+	/**
+	 * Initialisation des stocks
+	 */
+	public void initialisationStock() {
+		stock = new Hashtable<>();
+		stock.put("Coffee", 0);
+		stock.put("Expresso", 20);
+		stock.put("Tea", 8);
+		stock.put("Soup", 1);
+		stock.put("IcedTea", 5);
+		stock.put("Nuage de lait", 5);
+		stock.put("Croutons", 5);
+		stock.put("Glace vanille", 5);
+		stock.put("Sirop d'erable", 5);
 	}
 }

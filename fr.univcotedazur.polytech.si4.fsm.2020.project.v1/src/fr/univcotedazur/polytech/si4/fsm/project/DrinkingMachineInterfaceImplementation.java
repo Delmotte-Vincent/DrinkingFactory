@@ -152,6 +152,12 @@ public class DrinkingMachineInterfaceImplementation implements SCInterfaceListen
 		
 	}
 
+	@Override
+	public void onDoGrainCompactingRaised() {
+		theDF.doGrainCompacting();
+		
+	}
+
     /*
     @Override
     public void onReadyRaised() {

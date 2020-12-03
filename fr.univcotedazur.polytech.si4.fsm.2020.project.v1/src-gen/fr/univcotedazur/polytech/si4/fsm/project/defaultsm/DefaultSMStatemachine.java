@@ -818,6 +818,12 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			// TODO Auto-generated method stub
 			return false;
 		}
+
+		@Override
+		public boolean isRaisedDoGrainCompacting() {
+			// TODO Auto-generated method stub
+			return false;
+		}
 		
 	}
 	
