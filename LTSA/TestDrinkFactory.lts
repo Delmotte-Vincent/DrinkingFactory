@@ -1,0 +1,18 @@
+User1 = (selectCoffee -> selectOptionMilk -> payCoffee -> doCoffee -> addMilk -> takeCoffee -> User1).
+User2 = (selectTea -> selectOptionSuggar -> payTea -> doTea -> addSuggar -> infusion -> takeTea -> User2).
+
+
+Mutex = (payCoffee -> doCoffee -> takeCoffee -> Mutex
+		|payExpresso -> doExpresso -> takeExpresso -> Mutex
+		|payTea -> doTea -> takeTea -> Mutex
+		|paySoup -> doSoup -> takeSoup -> Mutex
+		|payIceTea -> doIceTea -> takeIceTea -> Mutex).
+
+assert Prop = [] (selectCoffee -> (<> payCoffee))
+assert Prop1 = [] (selectOptionMilk -> (<> addMilk))
+assert Prop2 = [] (selectOptionSuggar -> (<> addSuggar))
+assert Prop3 = [] (selectOptionCrouton -> (<> addCrouton))
+assert Prop4 = [] (selectOptionIceCream -> (<> addIceCream))
+assert Prop5 = [] (selectTea -> (<> payTea))
+assert Prop6 = [] (selectTea -> (<> takeTea))
+assert Prop7 = [] (doTea -> (<> infusion))
