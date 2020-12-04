@@ -25,6 +25,9 @@ public class Drink {
 	
 	public float price() {
 		float price = 0;
+		if	(type == null) {
+			return 0;
+		}
 		switch (type) {
 			case COFFEE:
 				price += 0.35;

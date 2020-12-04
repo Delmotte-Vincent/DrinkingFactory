@@ -55,6 +55,7 @@ public class DrinkFactoryMachine extends JFrame {
 	Hashtable<Integer, JLabel> coldTemperatureTable;
 	JProgressBar progressBar;
 	Drink drink = new Drink();
+	JLabel labelForPictures;
 
 	/**
 	 * @wbp.nonvisual location=311,475
@@ -530,6 +531,16 @@ public class DrinkFactoryMachine extends JFrame {
 		JSeparator separator = new JSeparator();
 		separator.setBounds(12, 292, 622, 15);
 		contentPane.add(separator);
+		
+		BufferedImage myPicture = null;
+		try {
+			myPicture = ImageIO.read(new File("./picts/vide2.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		labelForPictures = new JLabel(new ImageIcon(myPicture));
+		labelForPictures.setBounds(175, 319, 286, 260);
+		contentPane.add(labelForPictures);
 
 		JButton addOwnCupButton = new JButton("Take back cup");
 		addOwnCupButton.setForeground(Color.WHITE);
@@ -544,6 +555,15 @@ public class DrinkFactoryMachine extends JFrame {
 				updateUI();
 				System.out.println("You take off your personnal cup");
 				theFSM.raiseAddCupB();
+				//------------------------------------
+				BufferedImage myPicture = null;
+				try {
+					myPicture = ImageIO.read(new File("./picts/vide2.jpg"));
+				} catch (IOException ee) {
+					ee.printStackTrace();
+				}
+				labelForPictures.setIcon(new ImageIcon(myPicture));
+				//------------------------------------
 			}
 		});
 
@@ -560,18 +580,17 @@ public class DrinkFactoryMachine extends JFrame {
 				updateUI();
 				System.out.println("You add your personnal cup");
 				theFSM.raiseAddCupB();
+				//------------------------------------
+				BufferedImage myPicture = null;
+				try {
+					myPicture = ImageIO.read(new File("./picts/ownCup.jpg"));
+				} catch (IOException ee) {
+					ee.printStackTrace();
+				}
+				labelForPictures.setIcon(new ImageIcon(myPicture));
+				//------------------------------------
 			}
 		});
-
-		BufferedImage myPicture = null;
-		try {
-			myPicture = ImageIO.read(new File("./picts/vide2.jpg"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		JLabel labelForPictures = new JLabel(new ImageIcon(myPicture));
-		labelForPictures.setBounds(175, 319, 286, 260);
-		contentPane.add(labelForPictures);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.DARK_GRAY);
@@ -591,21 +610,6 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				theFSM.raiseCancelB();
-			}
-		});
-
-
-		// listeners
-		addCupButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				BufferedImage myPicture = null;
-				try {
-					myPicture = ImageIO.read(new File("./picts/ownCup.jpg"));
-				} catch (IOException ee) {
-					ee.printStackTrace();
-				}
-				labelForPictures.setIcon(new ImageIcon(myPicture));
 			}
 		});
 
@@ -642,6 +646,16 @@ public class DrinkFactoryMachine extends JFrame {
 		drink.glaceOption = false;
 		drink.milkOption = false;
 		System.out.println("INIT DRINK CREATED");
+		
+		//------------------------------------
+		BufferedImage myPicture = null;
+		try {
+			myPicture = ImageIO.read(new File("./picts/vide2.jpg"));
+		} catch (IOException ee) {
+			ee.printStackTrace();
+		}
+		labelForPictures.setIcon(new ImageIcon(myPicture));
+		//------------------------------------
 	}
 
 	public void doWaterHeat() {
@@ -699,6 +713,15 @@ public class DrinkFactoryMachine extends JFrame {
 	public void doPutCup() {
 		if (!persoCup) {
 			System.out.println("Put a cup");
+			//------------------------------------
+			BufferedImage myPicture = null;
+			try {
+				myPicture = ImageIO.read(new File("./picts/gobeletPolluant.jpg"));
+			} catch (IOException ee) {
+				ee.printStackTrace();
+			}
+			labelForPictures.setIcon(new ImageIcon(myPicture));
+			//------------------------------------
 		}
 		progressBarIncrement();
 	}

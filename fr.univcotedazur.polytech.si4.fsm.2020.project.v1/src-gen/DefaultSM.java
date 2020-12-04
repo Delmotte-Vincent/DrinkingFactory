@@ -1583,12 +1583,6 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 		react();
 	}
 	
-	private void effect_main_region_FirstSteps_tr0() {
-		exitSequence_main_region_FirstSteps();
-		enterSequence_main_region_LastSteps_default();
-		react();
-	}
-	
 	private void effect_main_region_LastSteps_tr1() {
 		exitSequence_main_region_LastSteps();
 		enterSequence_main_region_finalStep_default();
@@ -1765,6 +1759,8 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 	private void entryAction_main_region_FirstSteps_r1_waterHeat() {
 		timerService.setTimer(this, 4, (1 * 1000), true);
 		
+		timerService.setTimer(this, 5, (1 * 1000), true);
+		
 		raiseDoWaterHeat();
 	}
 	
@@ -1775,21 +1771,21 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 	
 	/* Entry action for state 'grainCompacting'. */
 	private void entryAction_main_region_FirstSteps_r2_Step2_r2_grainCompacting() {
-		timerService.setTimer(this, 5, (4 * 1000), false);
+		timerService.setTimer(this, 6, (4 * 1000), false);
 		
 		raiseDoGrainCompacting();
 	}
 	
 	/* Entry action for state 'spicesAdd'. */
 	private void entryAction_main_region_FirstSteps_r2_Step2_r2_Soup2ndStep_r1_spicesAdd() {
-		timerService.setTimer(this, 6, (1 * 1000), false);
+		timerService.setTimer(this, 7, (1 * 1000), false);
 		
 		raiseDoAddSpices();
 	}
 	
 	/* Entry action for state 'soup'. */
 	private void entryAction_main_region_FirstSteps_r2_Step2_r2_Soup2ndStep_r2_soup() {
-		timerService.setTimer(this, 7, (3 * 1000), false);
+		timerService.setTimer(this, 8, (3 * 1000), false);
 		
 		raiseDoSoup();
 	}
@@ -1801,35 +1797,30 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 	
 	/* Entry action for state 'coffee'. */
 	private void entryAction_main_region_FirstSteps_r2_coffee() {
-		timerService.setTimer(this, 8, (2 * 1000), false);
+		timerService.setTimer(this, 9, (2 * 1000), false);
 		
 		raiseDoCoffee();
 	}
 	
 	/* Entry action for state 'expresso'. */
 	private void entryAction_main_region_FirstSteps_r2_expresso() {
-		timerService.setTimer(this, 9, (2 * 1000), false);
+		timerService.setTimer(this, 10, (2 * 1000), false);
 		
 		raiseDoExpresso();
 	}
 	
 	/* Entry action for state 'tea'. */
 	private void entryAction_main_region_FirstSteps_r2_tea() {
-		timerService.setTimer(this, 10, (2 * 1000), false);
+		timerService.setTimer(this, 11, (2 * 1000), false);
 		
 		raiseDoTea();
 	}
 	
 	/* Entry action for state 'ice tea'. */
 	private void entryAction_main_region_FirstSteps_r2_ice_tea() {
-		timerService.setTimer(this, 11, (2 * 1000), false);
+		timerService.setTimer(this, 12, (2 * 1000), false);
 		
 		raiseDoIceTea();
-	}
-	
-	/* Entry action for state 'transition'. */
-	private void entryAction_main_region_FirstSteps_r2_transition() {
-		timerService.setTimer(this, 12, (1 * 1000), true);
 	}
 	
 	/* Entry action for state 'waterFlow'. */
@@ -1907,45 +1898,42 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 	/* Exit action for state 'waterHeat'. */
 	private void exitAction_main_region_FirstSteps_r1_waterHeat() {
 		timerService.unsetTimer(this, 4);
+		
+		timerService.unsetTimer(this, 5);
 	}
 	
 	/* Exit action for state 'grainCompacting'. */
 	private void exitAction_main_region_FirstSteps_r2_Step2_r2_grainCompacting() {
-		timerService.unsetTimer(this, 5);
+		timerService.unsetTimer(this, 6);
 	}
 	
 	/* Exit action for state 'spicesAdd'. */
 	private void exitAction_main_region_FirstSteps_r2_Step2_r2_Soup2ndStep_r1_spicesAdd() {
-		timerService.unsetTimer(this, 6);
+		timerService.unsetTimer(this, 7);
 	}
 	
 	/* Exit action for state 'soup'. */
 	private void exitAction_main_region_FirstSteps_r2_Step2_r2_Soup2ndStep_r2_soup() {
-		timerService.unsetTimer(this, 7);
+		timerService.unsetTimer(this, 8);
 	}
 	
 	/* Exit action for state 'coffee'. */
 	private void exitAction_main_region_FirstSteps_r2_coffee() {
-		timerService.unsetTimer(this, 8);
+		timerService.unsetTimer(this, 9);
 	}
 	
 	/* Exit action for state 'expresso'. */
 	private void exitAction_main_region_FirstSteps_r2_expresso() {
-		timerService.unsetTimer(this, 9);
+		timerService.unsetTimer(this, 10);
 	}
 	
 	/* Exit action for state 'tea'. */
 	private void exitAction_main_region_FirstSteps_r2_tea() {
-		timerService.unsetTimer(this, 10);
+		timerService.unsetTimer(this, 11);
 	}
 	
 	/* Exit action for state 'ice tea'. */
 	private void exitAction_main_region_FirstSteps_r2_ice_tea() {
-		timerService.unsetTimer(this, 11);
-	}
-	
-	/* Exit action for state 'transition'. */
-	private void exitAction_main_region_FirstSteps_r2_transition() {
 		timerService.unsetTimer(this, 12);
 	}
 	
@@ -2196,7 +2184,6 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 	
 	/* 'default' enter sequence for state transition */
 	private void enterSequence_main_region_FirstSteps_r2_transition_default() {
-		entryAction_main_region_FirstSteps_r2_transition();
 		nextStateIndex = 1;
 		stateVector[1] = State.MAIN_REGION_FIRSTSTEPS_R2_TRANSITION;
 	}
@@ -2560,8 +2547,6 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 	private void exitSequence_main_region_FirstSteps_r2_transition() {
 		nextStateIndex = 1;
 		stateVector[1] = State.$NULLSTATE$;
-		
-		exitAction_main_region_FirstSteps_r2_transition();
 	}
 	
 	/* Default exit sequence for state LastSteps */
@@ -3185,11 +3170,6 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 	}
 	
 	/* The reactions of exit default. */
-	private void react_main_region_FirstSteps_r2__exit_Default() {
-		effect_main_region_FirstSteps_tr0();
-	}
-	
-	/* The reactions of exit default. */
 	private void react_main_region_LastSteps_r2__exit_Default() {
 		effect_main_region_LastSteps_tr1();
 	}
@@ -3202,6 +3182,11 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 	/* The reactions of state null. */
 	private void react_main_region_FirstSteps_r2__sync0() {
 		enterSequence_main_region_FirstSteps_r2_transition_default();
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__sync0() {
+		enterSequence_main_region_LastSteps_default();
 	}
 	
 	private boolean react() {
@@ -3532,7 +3517,12 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 				exitSequence_main_region_FirstSteps_r1_waterHeat();
 				enterSequence_main_region_FirstSteps_r1_waterHeat_default();
 			} else {
-				did_transition = false;
+				if (((((timeEvents[5]) && (operationCallback.isHot())) && isStateActive(State.MAIN_REGION_FIRSTSTEPS_R2_TRANSITION)) && true)) {
+					exitSequence_main_region_FirstSteps();
+					react_main_region__sync0();
+				} else {
+					did_transition = false;
+				}
 			}
 		}
 		return did_transition;
@@ -3585,7 +3575,7 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[5]) {
+			if (timeEvents[6]) {
 				exitSequence_main_region_FirstSteps_r2_Step2_r2_grainCompacting();
 				enterSequence_main_region_FirstSteps_r2_Step2_r2_transition_default();
 				main_region_FirstSteps_r2_Step2_react(false);
@@ -3615,7 +3605,7 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((timeEvents[6] && isStateActive(State.MAIN_REGION_FIRSTSTEPS_R2_STEP2_R2_SOUP2NDSTEP_R2_SOUP)) && timeEvents[7])) {
+			if (((timeEvents[7] && isStateActive(State.MAIN_REGION_FIRSTSTEPS_R2_STEP2_R2_SOUP2NDSTEP_R2_SOUP)) && timeEvents[8])) {
 				exitSequence_main_region_FirstSteps_r2_Step2_r2_Soup2ndStep();
 				react_main_region_FirstSteps_r2_Step2_r2__sync0();
 			} else {
@@ -3629,7 +3619,7 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((timeEvents[7] && isStateActive(State.MAIN_REGION_FIRSTSTEPS_R2_STEP2_R2_SOUP2NDSTEP_R1_SPICESADD)) && timeEvents[6])) {
+			if (((timeEvents[8] && isStateActive(State.MAIN_REGION_FIRSTSTEPS_R2_STEP2_R2_SOUP2NDSTEP_R1_SPICESADD)) && timeEvents[7])) {
 				exitSequence_main_region_FirstSteps_r2_Step2_r2_Soup2ndStep();
 				react_main_region_FirstSteps_r2_Step2_r2__sync0();
 			} else {
@@ -3659,7 +3649,7 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[8]) {
+			if (timeEvents[9]) {
 				exitSequence_main_region_FirstSteps_r2_coffee();
 				enterSequence_main_region_FirstSteps_r2_Step2_default();
 				main_region_FirstSteps_react(false);
@@ -3677,7 +3667,7 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[9]) {
+			if (timeEvents[10]) {
 				exitSequence_main_region_FirstSteps_r2_expresso();
 				enterSequence_main_region_FirstSteps_r2_Step2_default();
 				main_region_FirstSteps_react(false);
@@ -3695,7 +3685,7 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[10]) {
+			if (timeEvents[11]) {
 				exitSequence_main_region_FirstSteps_r2_tea();
 				enterSequence_main_region_FirstSteps_r2_Step2_default();
 				main_region_FirstSteps_react(false);
@@ -3713,7 +3703,7 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (timeEvents[11]) {
+			if (timeEvents[12]) {
 				exitSequence_main_region_FirstSteps_r2_ice_tea();
 				enterSequence_main_region_FirstSteps_r2_Step2_default();
 				main_region_FirstSteps_react(false);
@@ -3731,9 +3721,9 @@ public class DefaultSM implements IStatemachine, ITimed, Runnable {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((timeEvents[12]) && (operationCallback.isHot()))) {
-				exitSequence_main_region_FirstSteps_r2_transition();
-				react_main_region_FirstSteps_r2__exit_Default();
+			if (((true && isStateActive(State.MAIN_REGION_FIRSTSTEPS_R1_WATERHEAT)) && ((timeEvents[5]) && (operationCallback.isHot())))) {
+				exitSequence_main_region_FirstSteps();
+				react_main_region__sync0();
 			} else {
 				did_transition = false;
 			}
