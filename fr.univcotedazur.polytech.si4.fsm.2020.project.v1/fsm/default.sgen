@@ -11,8 +11,8 @@ GeneratorModel for yakindu::java {
 		feature GeneralFeatures {
             RuntimeService = true 
             TimerService = true
-            synchronized = true 
-            runnable = false
+            synchronized = true
+            runnable = true
 
         }
         
