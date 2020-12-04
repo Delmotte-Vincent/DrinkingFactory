@@ -56,6 +56,7 @@ public class DrinkFactoryMachine extends JFrame {
 	JProgressBar progressBar;
 	Drink drink = new Drink();
 	JLabel labelForPictures;
+	boolean modifiable = true;
 
 	/**
 	 * @wbp.nonvisual location=311,475
@@ -136,15 +137,17 @@ public class DrinkFactoryMachine extends JFrame {
 		coffeeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (isInStock("Coffee")) {
-					theFSM.setSelection("Coffee");
-					theFSM.raiseClassicDrinkTrigger();
-					drink.type = DrinkType.COFFEE;
-
-					updateUI();
-				}
-				else {
-					ruptureDeStockMessage();
+				if (modifiable) {
+					if (isInStock("Coffee")) {
+						theFSM.setSelection("Coffee");
+						theFSM.raiseClassicDrinkTrigger();
+						drink.type = DrinkType.COFFEE;
+	
+						updateUI();
+					}
+					else {
+						ruptureDeStockMessage();
+					}
 				}
 			}
 		});
@@ -157,14 +160,16 @@ public class DrinkFactoryMachine extends JFrame {
 		expressoButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (isInStock("Expresso")) {
-					theFSM.setSelection("Expresso");
-					theFSM.raiseClassicDrinkTrigger();
-					drink.type = DrinkType.EXPRESSO;
-					updateUI();
-				}
-				else {
-					ruptureDeStockMessage();
+				if (modifiable) {
+					if (isInStock("Expresso")) {
+						theFSM.setSelection("Expresso");
+						theFSM.raiseClassicDrinkTrigger();
+						drink.type = DrinkType.EXPRESSO;
+						updateUI();
+					}
+					else {
+						ruptureDeStockMessage();
+					}
 				}
 			}
 		});
@@ -177,16 +182,17 @@ public class DrinkFactoryMachine extends JFrame {
 		teaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (isInStock("Tea")) {
-					theFSM.setSelection("Tea");
-					theFSM.raiseClassicDrinkTrigger();
-					drink.type = DrinkType.TEA;
-					updateUI();
+				if (modifiable) {
+					if (isInStock("Tea")) {
+						theFSM.setSelection("Tea");
+						theFSM.raiseClassicDrinkTrigger();
+						drink.type = DrinkType.TEA;
+						updateUI();
+					}
+					else {
+						ruptureDeStockMessage();
+					}
 				}
-				else {
-					ruptureDeStockMessage();
-				}
-
 			}
 		});
 
@@ -198,16 +204,17 @@ public class DrinkFactoryMachine extends JFrame {
 		icedTeaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (isInStock("IcedTea")) {
-					theFSM.setSelection("IcedTea");
-					theFSM.raiseIceTeaTrigger();
-					drink.type = DrinkType.ICEDTEA;
-					updateUI();
+				if (modifiable) {
+					if (isInStock("IcedTea")) {
+						theFSM.setSelection("IcedTea");
+						theFSM.raiseIceTeaTrigger();
+						drink.type = DrinkType.ICEDTEA;
+						updateUI();
+					}
+					else {
+						ruptureDeStockMessage();
+					}
 				}
-				else {
-					ruptureDeStockMessage();
-				}
-
 			}
 		});
 
@@ -219,10 +226,12 @@ public class DrinkFactoryMachine extends JFrame {
 		soupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.setSelection("Soup");
-				theFSM.raiseSoupTrigger();
-				drink.type = DrinkType.SOUP;
-				updateUI();
+				if (modifiable) {
+					theFSM.setSelection("Soup");
+					theFSM.raiseSoupTrigger();
+					drink.type = DrinkType.SOUP;
+					updateUI();
+				}
 			}
 		});
 
@@ -234,17 +243,19 @@ public class DrinkFactoryMachine extends JFrame {
 		optionSugarButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (optionSugar) {
-					System.out.println(" (-) Sucre d'Erable");
-					optionSugar = false;
-					drink.erableOption = false;
+				if (modifiable) {
+					if (optionSugar) {
+						System.out.println(" (-) Sucre d'Erable");
+						optionSugar = false;
+						drink.erableOption = false;
+					}
+					else {
+						System.out.println(" (+) Sucre d'Erable");
+						optionSugar = true;
+						drink.erableOption = true;
+					}
+					updateUI();
 				}
-				else {
-					System.out.println(" (+) Sucre d'Erable");
-					optionSugar = true;
-					drink.erableOption = true;
-				}
-				updateUI();
 			}
 		});
 
@@ -256,17 +267,19 @@ public class DrinkFactoryMachine extends JFrame {
 		optionCroutonButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (optionCrouton) {
-					System.out.println(" (-) Crouton");
-					optionCrouton = false;
-					drink.croutonOption = false;
+				if (modifiable) {
+					if (optionCrouton) {
+						System.out.println(" (-) Crouton");
+						optionCrouton = false;
+						drink.croutonOption = false;
+					}
+					else {
+						System.out.println(" (+) Crouton");
+						optionCrouton = true;
+						drink.croutonOption = true;
+					}
+					updateUI();
 				}
-				else {
-					System.out.println(" (+) Crouton");
-					optionCrouton = true;
-					drink.croutonOption = true;
-				}
-				updateUI();
 			}
 		});
 
@@ -278,17 +291,19 @@ public class DrinkFactoryMachine extends JFrame {
 		optionIceCreamButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (optionIceCream) {
-					System.out.println(" (-) Creme glacée");
-					optionIceCream = false;
-					drink.glaceOption = false;
+				if (modifiable) {
+					if (optionIceCream) {
+						System.out.println(" (-) Creme glacée");
+						optionIceCream = false;
+						drink.glaceOption = false;
+					}
+					else {
+						System.out.println(" (+) Creme glacée");
+						optionIceCream = true;
+						drink.glaceOption = true;
+					}
+					updateUI();
 				}
-				else {
-					System.out.println(" (+) Creme glacée");
-					optionIceCream = true;
-					drink.glaceOption = true;
-				}
-				updateUI();
 			}
 		});
 
@@ -300,17 +315,19 @@ public class DrinkFactoryMachine extends JFrame {
 		optionMilkButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (optionMilk) {
-					System.out.println(" (-) Lait");
-					optionMilk = false;
-					drink.milkOption = false;
+				if (modifiable) {
+					if (optionMilk) {
+						System.out.println(" (-) Lait");
+						optionMilk = false;
+						drink.milkOption = false;
+					}
+					else {
+						System.out.println(" (+) Lait");
+						optionMilk = true;
+						drink.milkOption = true;
+					}
+					updateUI();
 				}
-				else {
-					System.out.println(" (+) Lait");
-					optionMilk = true;
-					drink.milkOption = true;
-				}
-				updateUI();
 			}
 		});
 
@@ -337,8 +354,10 @@ public class DrinkFactoryMachine extends JFrame {
 		sugarSlider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				theFSM.raiseSugarTrigger();
-				drink.CondimentDose = sugarSlider.getValue();
+				if (modifiable) {
+					theFSM.raiseSugarTrigger();
+					drink.CondimentDose = sugarSlider.getValue();
+				}
 			}
 		});
 
@@ -357,10 +376,12 @@ public class DrinkFactoryMachine extends JFrame {
 		sizeSlider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				theFSM.raiseSizeTrigger();
-				drink.size = sizeSlider.getValue();
-				if (drink.type != null) {
-					updateUI();
+				if (modifiable) {
+					theFSM.raiseSizeTrigger();
+					drink.size = sizeSlider.getValue();
+					if (drink.type != null) {
+						updateUI();
+					}
 				}
 			}
 		});
@@ -379,8 +400,10 @@ public class DrinkFactoryMachine extends JFrame {
 		temperatureSlider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				theFSM.raiseTemperatureTrigger();
-				drink.temperature = temperatureSlider.getValue();
+				if (modifiable) {
+					theFSM.raiseTemperatureTrigger();
+					drink.temperature = temperatureSlider.getValue();
+				}
 			}
 		});
 
@@ -550,20 +573,22 @@ public class DrinkFactoryMachine extends JFrame {
 		addOwnCupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				persoCup = false;
-				reduction = 0;
-				updateUI();
-				System.out.println("You take off your personnal cup");
-				theFSM.raiseAddCupB();
-				//------------------------------------
-				BufferedImage myPicture = null;
-				try {
-					myPicture = ImageIO.read(new File("./picts/vide2.jpg"));
-				} catch (IOException ee) {
-					ee.printStackTrace();
+				if (modifiable) {
+					persoCup = false;
+					reduction = 0;
+					updateUI();
+					System.out.println("You take off your personnal cup");
+					theFSM.raiseAddCupB();
+					//------------------------------------
+					BufferedImage myPicture = null;
+					try {
+						myPicture = ImageIO.read(new File("./picts/vide2.jpg"));
+					} catch (IOException ee) {
+						ee.printStackTrace();
+					}
+					labelForPictures.setIcon(new ImageIcon(myPicture));
+					//------------------------------------
 				}
-				labelForPictures.setIcon(new ImageIcon(myPicture));
-				//------------------------------------
 			}
 		});
 
@@ -575,20 +600,22 @@ public class DrinkFactoryMachine extends JFrame {
 		addCupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				persoCup = true;
-				reduction = 0.10;
-				updateUI();
-				System.out.println("You add your personnal cup");
-				theFSM.raiseAddCupB();
-				//------------------------------------
-				BufferedImage myPicture = null;
-				try {
-					myPicture = ImageIO.read(new File("./picts/ownCup.jpg"));
-				} catch (IOException ee) {
-					ee.printStackTrace();
+				if (modifiable) {
+					persoCup = true;
+					reduction = 0.10;
+					updateUI();
+					System.out.println("You add your personnal cup");
+					theFSM.raiseAddCupB();
+					//------------------------------------
+					BufferedImage myPicture = null;
+					try {
+						myPicture = ImageIO.read(new File("./picts/ownCup.jpg"));
+					} catch (IOException ee) {
+						ee.printStackTrace();
+					}
+					labelForPictures.setIcon(new ImageIcon(myPicture));
+					//------------------------------------
 				}
-				labelForPictures.setIcon(new ImageIcon(myPicture));
-				//------------------------------------
 			}
 		});
 
@@ -646,7 +673,7 @@ public class DrinkFactoryMachine extends JFrame {
 		drink.glaceOption = false;
 		drink.milkOption = false;
 		System.out.println("INIT DRINK CREATED");
-		
+		modifiable = true;
 		//------------------------------------
 		BufferedImage myPicture = null;
 		try {
@@ -736,23 +763,23 @@ public class DrinkFactoryMachine extends JFrame {
 
 	public void doAddSugar() {
 		if (!optionSugar) {
-			System.out.println("Adding " + sugarSlider.getValue() + " doses of sugar");
+			System.out.println("Adding " + drink.CondimentDose + " doses of sugar");
 			progressBarIncrement();
 		}
 		else {
-			System.out.println("Adding " + sugarSlider.getValue() + " doses of erable sugar");
+			System.out.println("Adding " + drink.CondimentDose + " doses of erable sugar");
 			progressBarIncrement();
 		}
 	}
 
 	public void doAddSpices() {
-		System.out.println("Adding " + sugarSlider.getValue() + " doses of spices");
+		System.out.println("Adding " + drink.CondimentDose + " doses of spices");
 		progressBarIncrement();
 	}
 
 	public boolean isHot() {
 		int goal = 0;
-		switch(temperatureSlider.getValue()){
+		switch(drink.temperature){
 			case 0:
 				goal = 20;
 				break;
@@ -924,6 +951,8 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	public void doPay() {
+		modifiable = false;
+		System.out.println("TRIGGERS NOT MODIFIABLE");
 		if (paymentType.equals(PayType.NFC)) {
 			userCard.addCommande(drink.price());
 			reduction += userCard.getReduction();
@@ -956,6 +985,10 @@ public class DrinkFactoryMachine extends JFrame {
 				steps = 6;
 				break;
 		}
+		if (drink.croutonOption) steps++;
+		if (drink.milkOption) steps++;
+		if (drink.glaceOption) steps++;
+		if (drink.erableOption) steps++;
 		float increment = 100/steps;
 		progress += increment;
 		System.out.println("Progress raised by "+increment+" !");
@@ -970,18 +1003,21 @@ public class DrinkFactoryMachine extends JFrame {
 	public void doCrouton() {
 		if (optionCrouton) {
 			System.out.println("Add some crouton to your soup");
+			progressBarIncrement();
 		}
 	}
 
 	public void addMilk() {
 		if (optionMilk) {
 			System.out.println("Add some Milk");
+			progressBarIncrement();
 		}
 	}
 
 	public void addIceCream() {
 		if (optionIceCream)  {
 			System.out.println("Add ice cream");
+			progressBarIncrement();
 		}
 	}
 
@@ -995,7 +1031,7 @@ public class DrinkFactoryMachine extends JFrame {
 
 	public boolean isCooled() {
 		int goal = 0;
-		switch(temperatureSlider.getValue()){
+		switch(drink.temperature){
 			case 0:
 				goal = 0;
 				break;
@@ -1035,10 +1071,6 @@ public class DrinkFactoryMachine extends JFrame {
 		stock.put("Glace vanille", 5);
 		stock.put("Sirop d'erable", 5);
 	}
-
-
-
-
 
 	public void doGrainCompacting() {
 		System.out.println("Compacting grains...");
