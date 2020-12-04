@@ -1195,6 +1195,7 @@
       <styles xsi:type="notation:ConnectorStyle" xmi:id="_vqPIBDJMEeu0cfxvkNlTdA" routing="Rectilinear" lineColor="4210752"/>
       <styles xsi:type="notation:FontStyle" xmi:id="_vqPIBTJMEeu0cfxvkNlTdA" fontName="Verdana"/>
       <bendpoints xsi:type="notation:RelativeBendpoints" xmi:id="_vqPIBjJMEeu0cfxvkNlTdA" points="[-4, 6, -34, -72]$[-4, 37, -34, -41]"/>
+      <targetAnchor xsi:type="notation:IdentityAnchor" xmi:id="_EKS5wDXREeuFO77YkexAvw" id="(0.33707865168539325,0.13253012048192772)"/>
     </edges>
     <edges xmi:id="_vqPvEDJMEeu0cfxvkNlTdA" type="Transition" element="_vqEv-jJMEeu0cfxvkNlTdA" source="_vp-paDJMEeu0cfxvkNlTdA" target="_vp-pgDJMEeu0cfxvkNlTdA">
       <children xsi:type="notation:DecorationNode" xmi:id="_vqPvETJMEeu0cfxvkNlTdA" type="TransitionExpression">

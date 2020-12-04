@@ -1,5 +1,6 @@
 package fr.univcotedazur.polytech.si4.fsm.project;
 
+import fr.univcotedazur.polytech.si4.fsm.project.Drink.DrinkType;
 import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.DefaultSMStatemachine;
 
 import java.awt.*;
@@ -43,7 +44,6 @@ public class DrinkFactoryMachine extends JFrame {
 	public JSlider sizeSlider;
 	public JSlider temperatureSlider;
 	public double payment;
-	public double price;
 	public int temperature;
 	public PayType paymentType;
 	public double reduction;
@@ -54,6 +54,7 @@ public class DrinkFactoryMachine extends JFrame {
 	Hashtable<Integer, JLabel> temperatureTable;
 	Hashtable<Integer, JLabel> coldTemperatureTable;
 	JProgressBar progressBar;
+	Drink drink = new Drink();
 
 	/**
 	 * @wbp.nonvisual location=311,475
@@ -137,8 +138,7 @@ public class DrinkFactoryMachine extends JFrame {
 				if (isInStock("Coffee")) {
 					theFSM.setSelection("Coffee");
 					theFSM.raiseClassicDrinkTrigger();
-					price = 0.35;
-					updatePrice();
+					drink.type = DrinkType.COFFEE;
 
 					updateUI();
 				}
@@ -159,8 +159,7 @@ public class DrinkFactoryMachine extends JFrame {
 				if (isInStock("Expresso")) {
 					theFSM.setSelection("Expresso");
 					theFSM.raiseClassicDrinkTrigger();
-					price = 0.50;
-					updatePrice();
+					drink.type = DrinkType.EXPRESSO;
 					updateUI();
 				}
 				else {
@@ -180,8 +179,7 @@ public class DrinkFactoryMachine extends JFrame {
 				if (isInStock("Tea")) {
 					theFSM.setSelection("Tea");
 					theFSM.raiseClassicDrinkTrigger();
-					price = 0.40;
-					updatePrice();
+					drink.type = DrinkType.TEA;
 					updateUI();
 				}
 				else {
@@ -202,8 +200,7 @@ public class DrinkFactoryMachine extends JFrame {
 				if (isInStock("IcedTea")) {
 					theFSM.setSelection("IcedTea");
 					theFSM.raiseIceTeaTrigger();
-					price = 1.0;
-					updatePrice();
+					drink.type = DrinkType.ICEDTEA;
 					updateUI();
 				}
 				else {
@@ -223,8 +220,7 @@ public class DrinkFactoryMachine extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				theFSM.setSelection("Soup");
 				theFSM.raiseSoupTrigger();
-				price = 1.0;
-				updatePrice();
+				drink.type = DrinkType.SOUP;
 				updateUI();
 			}
 		});
@@ -240,10 +236,12 @@ public class DrinkFactoryMachine extends JFrame {
 				if (optionSugar) {
 					System.out.println(" (-) Sucre d'Erable");
 					optionSugar = false;
+					drink.erableOption = false;
 				}
 				else {
 					System.out.println(" (+) Sucre d'Erable");
 					optionSugar = true;
+					drink.erableOption = true;
 				}
 				updateUI();
 			}
@@ -260,10 +258,12 @@ public class DrinkFactoryMachine extends JFrame {
 				if (optionCrouton) {
 					System.out.println(" (-) Crouton");
 					optionCrouton = false;
+					drink.croutonOption = false;
 				}
 				else {
 					System.out.println(" (+) Crouton");
 					optionCrouton = true;
+					drink.croutonOption = true;
 				}
 				updateUI();
 			}
@@ -280,10 +280,12 @@ public class DrinkFactoryMachine extends JFrame {
 				if (optionIceCream) {
 					System.out.println(" (-) Creme glacée");
 					optionIceCream = false;
+					drink.glaceOption = false;
 				}
 				else {
 					System.out.println(" (+) Creme glacée");
 					optionIceCream = true;
+					drink.glaceOption = true;
 				}
 				updateUI();
 			}
@@ -300,10 +302,12 @@ public class DrinkFactoryMachine extends JFrame {
 				if (optionMilk) {
 					System.out.println(" (-) Lait");
 					optionMilk = false;
+					drink.milkOption = false;
 				}
 				else {
 					System.out.println(" (+) Lait");
 					optionMilk = true;
+					drink.milkOption = true;
 				}
 				updateUI();
 			}
@@ -333,6 +337,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				theFSM.raiseSugarTrigger();
+				drink.CondimentDose = sugarSlider.getValue();
 			}
 		});
 
@@ -352,6 +357,10 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				theFSM.raiseSizeTrigger();
+				drink.size = sizeSlider.getValue();
+				if (drink.type != null) {
+					updateUI();
+				}
 			}
 		});
 
@@ -370,6 +379,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				theFSM.raiseTemperatureTrigger();
+				drink.temperature = temperatureSlider.getValue();
 			}
 		});
 
@@ -615,7 +625,6 @@ public class DrinkFactoryMachine extends JFrame {
 		this.temperature = 0;
 		this.reduction = 0;
 		this.payment = 0;
-		this.price = 0;
 		this.persoCup = false;
 		theFSM.setSelection(" ");
 		messagesToUser.setText("<html>Welcome");
@@ -624,7 +633,15 @@ public class DrinkFactoryMachine extends JFrame {
 		temperatureSlider.setValue(0);
 		progress = 0;
 		progressBar.setValue(progress);
-
+		drink = new Drink();
+		drink.CondimentDose = sugarSlider.getValue();
+		drink.size = sizeSlider.getValue();
+		drink.temperature = temperatureSlider.getValue();
+		drink.croutonOption = false;
+		drink.erableOption = false;
+		drink.glaceOption = false;
+		drink.milkOption = false;
+		System.out.println("INIT DRINK CREATED");
 	}
 
 	public void doWaterHeat() {
@@ -751,7 +768,6 @@ public class DrinkFactoryMachine extends JFrame {
 	 * Méthode qui s'occupe de l'affichage utilisateur
 	 */
 	private void updateUI() {
-		updatePrice();
 		String messageOptionCrouton;
 		String messageOptionLait;
 		String messageOptionIceCream;
@@ -787,7 +803,7 @@ public class DrinkFactoryMachine extends JFrame {
 
 
 		String message = "<html>Bienvenue<br>Selection : " + theFSM.getSelection()
-				+ "<br>Coût : " + String.format("%.2f", this.price-this.reduction) + "€"
+				+ "<br>Coût : " + String.format("%.2f", drink.price()-this.reduction) + "€"
 				+ "<br>Paiement : " + this.payment + "€"
 				+ "<br>"
 				+ "<br>OPTIONS :"
@@ -832,7 +848,7 @@ public class DrinkFactoryMachine extends JFrame {
 			if (paymentType.equals(PayType.NFC)) {
 				return true;
 			}
-		return (payment >= price);
+		return (payment >= drink.price());
 	}
 
 	public boolean isComplete() {
@@ -886,14 +902,13 @@ public class DrinkFactoryMachine extends JFrame {
 
 	public void doPay() {
 		if (paymentType.equals(PayType.NFC)) {
-			userCard.addCommande(price);
+			userCard.addCommande(drink.price());
 			reduction += userCard.getReduction();
-			price -= reduction;
-			System.out.println("You paid " + price +"€");
+			System.out.println("You paid " + (drink.price()-reduction) +"€");
 		}
 
-		if (paymentType.equals(PayType.COIN) && price < payment) {
-			System.out.println("You're refund of :" + (payment - price) + "€");
+		if (paymentType.equals(PayType.COIN) && (drink.price()-reduction) < payment) {
+			System.out.println("You're refund of :" + (payment - (drink.price()-reduction)) + "€");
 		}
 	}
 
@@ -948,28 +963,7 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 
-	/**
-	 * Permet d'ajouter le prix des options à la selection
-	 */
-	public void updatePrice() {
-		if (optionSugar) {
-			if (theFSM.getSelection().equals("Tea") || theFSM.getSelection().equals("Coffee") || theFSM.getSelection().equals("Expresso") || theFSM.getSelection().equals("Iced Tea")) {
-				price += 0.10;
-			}
-		}
-		if (optionIceCream) {
-			if (theFSM.getSelection().equals("Coffee") || theFSM.getSelection().equals("Expresso")) {
-				price += 0.60;
-			}
-		}
-		if (optionCrouton && theFSM.getSelection().equals("Soup")) {
-			price += 0.30;
-		}
-		if (optionMilk) {
-			if (theFSM.getSelection().equals("Tea") || theFSM.getSelection().equals("Coffee") || theFSM.getSelection().equals("Expresso"))
-				price += 0.10;
-		}
-	}
+	
 	
 	public void doCooling() {
 		temperature -= 2;
@@ -1003,23 +997,6 @@ public class DrinkFactoryMachine extends JFrame {
 		return false;
 	}
 
-	public void doGrainCompacting() {
-		System.out.println("Compacting grains...");
-		progressBarIncrement();
-	}
-	
-	public void enableSliders() {
-		sugarSlider.setEnabled(true);
-		sizeSlider.setEnabled(true);
-		temperatureSlider.setEnabled(true);
-	}
-	
-	public void disableSliders() {
-		sugarSlider.setEnabled(false);
-		sizeSlider.setEnabled(false);
-		temperatureSlider.setEnabled(false);
-	}
-
 	/**
 	 * Initialisation des stocks
 	 */
@@ -1034,5 +1011,14 @@ public class DrinkFactoryMachine extends JFrame {
 		stock.put("Croutons", 5);
 		stock.put("Glace vanille", 5);
 		stock.put("Sirop d'erable", 5);
+	}
+
+
+
+
+
+	public void doGrainCompacting() {
+		System.out.println("Compacting grains...");
+		progressBarIncrement();
 	}
 }
