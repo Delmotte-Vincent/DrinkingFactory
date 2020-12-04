@@ -1007,13 +1007,25 @@ public class DrinkFactoryMachine extends JFrame {
 		System.out.println("Compacting grains...");
 		progressBarIncrement();
 	}
+	
+	public void enableSliders() {
+		sugarSlider.setEnabled(true);
+		sizeSlider.setEnabled(true);
+		temperatureSlider.setEnabled(true);
+	}
+	
+	public void disableSliders() {
+		sugarSlider.setEnabled(false);
+		sizeSlider.setEnabled(false);
+		temperatureSlider.setEnabled(false);
+	}
 
 	/**
 	 * Initialisation des stocks
 	 */
 	public void initialisationStock() {
 		stock = new Hashtable<>();
-		stock.put("Coffee", 0);
+		stock.put("Coffee", 10);
 		stock.put("Expresso", 20);
 		stock.put("Tea", 8);
 		stock.put("Soup", 1);
